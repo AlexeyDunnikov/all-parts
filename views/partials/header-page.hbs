@@ -1,0 +1,159 @@
+<header class="header">
+  <div class="header__top">
+    <div class="container">
+      <div class="header__top-inner">
+        <ul class="nav-list">
+
+          <li class="nav-item">
+            {{#if isHome}}
+              <a class="nav-item__link active" href="/">
+                Главная
+              </a>
+            {{else}}
+              <a class="nav-item__link" href="/">
+                Главная
+              </a>
+            {{/if}}
+          </li>
+
+          <li class="nav-item">
+            {{#if isCatalog}}
+              <a class="nav-item__link active" href="/catalog">
+                Каталог
+              </a>
+            {{else}}
+              <a class="nav-item__link" href="/catalog">
+                Каталог
+              </a>
+            {{/if}}
+          </li>
+
+          <li class="nav-item">
+            {{#if isDelivery}}
+              <a class="nav-item__link active" href="/delivery">
+                Доставка
+              </a>
+            {{else}}
+              <a class="nav-item__link" href="/delivery">
+                Доставка
+              </a>
+            {{/if}}
+          </li>
+
+          <li class="nav-item">
+            {{#if isPay}}
+              <a class="nav-item__link active" href="/pay">
+                Оплата
+              </a>
+            {{else}}
+              <a class="nav-item__link" href="/pay">
+                Оплата
+              </a>
+            {{/if}}
+          </li>
+
+          <li class="nav-item">
+            {{#if isAbout}}
+              <a class="nav-item__link active" href="/about">
+                О магазине
+              </a>
+            {{else}}
+              <a class="nav-item__link" href="/about">
+                О магазине
+              </a>
+            {{/if}}
+          </li>
+
+          <li class="nav-item">
+            {{#if isGaranty}}
+              <a class="nav-item__link active" href="/garanty">
+                Гарантия
+              </a>
+            {{else}}
+              <a class="nav-item__link" href="/garanty">
+                Гарантия
+              </a>
+            {{/if}}
+          </li>
+
+        </ul>
+
+        <div class="header__top-info">
+          <a
+            class="header__top-info__phone"
+            href="tel:+375(33)390-33-03"
+          >+375(33)390-33-03</a>
+          <div class="header__top-info__address">
+            <img
+              class="header__top-info__address-img"
+              src="images/icons/address.svg"
+              alt="address"
+            />
+            <a class="header__top-info__address-link" href="#">Гродно</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header__content">
+    <div class="container">
+      <div class="header__content-inner">
+        <div class="logo-wrapper">
+          <a class="logo-link" href="/">
+            <img class="logo-img" src="images/logo.png" alt="logo" />
+          </a>
+        </div>
+
+        <form class="header__search-form" action="">
+          <input class="header__search-input" type="text" />
+          <button class="header__search-btn">
+            <img
+              class="header__search-btn__img"
+              src="images/icons/search.svg"
+              alt="search"
+            />
+          </button>
+        </form>
+
+        <ul class="header__content-nav">
+            <li class="header__content-nav__item">
+                <a class="header__content-nav__item-link" href="#">
+                    <img class="header__content-nav__item-img" src="images/icons/user.svg" alt="user">
+                    <span class="header__content-nav__item-text">
+                        Войти
+                    </span>
+                </a>
+            </li>
+          {{#if isAuth}}
+            <li class="header__content-nav__item">
+                <a class="header__content-nav__item-link" href="/basket">
+                    <img class="header__content-nav__item-img" src="images/icons/basket.svg" alt="basket">
+                    <span class="header__content-nav__item-text">
+                        Корзина
+                    </span>
+                </a>
+            </li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="header__menu">
+    <div class="container">
+      <div class="header__menu-inner">
+          {{#if categories.length}}
+                <ul class="header__menu-list">
+                    {{#each categories}} 
+                        <li class="header__menu-item">
+                            <a href="/categories/{{id}}" class="header__menu-item__link">
+                                {{name}}
+                            </a>
+                        </li>
+                    {{/each}}
+                </ul>
+          {{else}}
+          {{/if}}
+      </div>
+    </div>
+  </div>
+</header>

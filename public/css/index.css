@@ -1,2 +1,6 @@
 @import "./reset.css";
 @import "./global.css";
+
+.header{
+    background-color: #111;
+}
