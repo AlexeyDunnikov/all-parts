@@ -32,6 +32,10 @@ body{
   padding: 0 15px;
 }
 
+svg path{
+	transition: ease 0.3s;
+}
+
 
 
 

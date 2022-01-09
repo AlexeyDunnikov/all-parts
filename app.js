@@ -3,7 +3,7 @@ const mysql = require("mysql");
 const path = require("path");
 const exphbs = require("express-handlebars");
 
-const homeRoutes = require("./routes/home");
+
 
 const Handlebars = require("handlebars");
 const {
@@ -26,9 +26,16 @@ const connection = mysql.createConnection({
   database: "allparts",
 });
 
+
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
+
+require("./routes/home")(app, connection);
+require("./routes/categories")(app, connection);
+
+//const homeRoutes = require("./routes/home");
+
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
@@ -38,8 +45,6 @@ app.use(
   })
 );
 
-//Registration rotes
-// app.use("/", homeRoutes);
 
 const PORT = process.env.PORT || 3000;
 
@@ -59,54 +64,3 @@ function normalizeArr(arr) {
   return res;
 }
 
-app.get("/", (req, res) => {
-  let categoriesList = {};
-
-  const categories = new Promise((resolve, reject) => {
-    connection.query(
-      "SELECT * FROM parts_categories",
-      (err, result, fields) => {
-        if (err) reject(err);
-        resolve(result);
-      }
-    );
-  })
-
-  const subcategories = new Promise((resolve, reject) => {
-      connection.query(
-        `SELECT * FROM parts_subcategories`,
-        (err, result, fields) => {
-          if (err) reject(err);
-          resolve(result);
-        }
-      );
-    });
-
-  Promise.all([categories, subcategories]).then(([categories, subcategories]) => {
-    const categoriesList = normalizeArr(categories);
-
-    const subcategoriesList = normalizeArr(subcategories);
-
-    for (let key of Object.keys(subcategoriesList)) {
-      if (!categoriesList[subcategoriesList[key].id_category].subcategories) {
-        categoriesList[subcategoriesList[key].id_category].subcategories = [];
-      }
-      categoriesList[subcategoriesList[key].id_category].subcategories.push(
-        subcategoriesList[key]
-      );
-    }
-
-    const arr = [];
-    for (let key in categoriesList){
-      arr.push(categoriesList[key]);
-    }
-
-    console.log(arr);
-
-    res.render("index", {
-      title: "Главная страница",
-      isHome: true,
-      categories: arr,
-    });
-  });
-});

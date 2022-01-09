@@ -1,6 +1,265 @@
 @import "./reset.css";
 @import "./global.css";
 
-.header{
-    background-color: #111;
+.header {
+  color: #fff;
+  background-color: #111;
+  position: relative;
+}
+
+.header__top {
+  padding: 20px 0;
+  border-bottom: 1px solid #fff;
+}
+
+.header__top-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.nav-item:not(:last-of-type) {
+  margin-right: 30px;
+}
+
+.nav-item__link {
+  font-size: 18px;
+  line-height: 22px;
+  transition: ease 0.3s;
+}
+
+.nav-item__link:hover {
+  color: #338cf0;
+}
+
+.nav-item__link.active {
+  color: #338cf0;
+}
+
+.header__top-info {
+  display: flex;
+  align-items: center;
+}
+
+.header__top-info__phone {
+  margin-right: 45px;
+}
+
+.header__top-info__address {
+  display: flex;
+  align-items: center;
+}
+
+.header__top-info__address-img {
+  margin-right: 7px;
+}
+
+.header__content {
+  padding-bottom: 30px;
+}
+
+.header__content-inner {
+  display: flex;
+  align-items: center;
+}
+
+.logo-wrapper {
+  margin-left: 40px;
+  margin-right: 107px;
+}
+
+.header__search-form {
+  position: relative;
+  margin-right: 50px;
+  width: 624px;
+}
+
+.header__search-input {
+  width: 100%;
+  padding: 8px 80px 8px 18px;
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+  transition: ease 0.3s;
+}
+
+.header__search-input:focus {
+  outline: none;
+  border-color: #202020;
+}
+
+.header__search-input::placeholder {
+  color: #828282;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.header__search-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: none;
+  padding: 5px 15px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #338cf0;
+  cursor: pointer;
+}
+
+.header__search-btn:hover .header__search-btn__img path {
+  fill: #111;
+}
+
+.header__content-nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.header__content-nav__item {
+}
+
+.header__content-nav__item:not(:last-of-type) {
+  margin-right: 30px;
+}
+
+.header__content-nav__item-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header__content-nav__item-link__img-box {
+  position: relative;
+}
+
+.header__content-nav__item-link:hover .header__content-nav__item-img path {
+  fill: #338cf0;
+}
+
+.header__content-nav__item-img {
+  margin-bottom: 5px;
+}
+
+.basket-num {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #338cf0;
+  width: 18px;
+  height: 18px;
+  font-size: 8px;
+  line-height: 8px;
+  border-radius: 50%;
+  right: 0;
+  bottom: 0;
+}
+
+.header__menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateY(50%);
+  z-index: 10;
+}
+
+.header__menu-inner {
+  padding: 0 15px;
+}
+
+.header__menu-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #000;
+  border-radius: 5px;
+}
+
+.header__menu-item {
+  position: relative;
+  padding: 10px 0;
+}
+
+.header__menu-item__link {
+  position: relative;
+  padding: 10px 35px 10px 15px;
+}
+
+.header__menu-item:not(:last-of-type) .header__menu-item__link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #000;
+}
+
+.header__menu-item__link-img {
+  position: absolute;
+  transition: ease 0.3s;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-30%);
+}
+
+.header__menu__dropdown-list {
+  position: absolute;
+  visibility: hidden;
+  min-width: 255px;
+  opacity: 0;
+  transform: scaleY(0.3);
+  transform-origin: 0 0;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  padding: 10px 15px;
+  left: 0;
+  top: 100%;
+  transition: ease 0.3s;
+}
+
+.header__menu-item:hover .header__menu__dropdown-list {
+  visibility: visible;
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.header__menu-item:hover .header__menu-item__link-img {
+  transform: translateY(-30%) rotate(180deg);
+}
+
+.header__menu__dropdown-item:not(:last-of-type) {
+  margin-bottom: 7px;
+}
+
+.header__menu__dropdown-link {
+  position: relative;
+}
+
+.header__menu__dropdown-link::after {
+  content: "";
+  transition: ease 0.3s;
+  position: absolute;
+  bottom: 0;
+  left: auto;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background-color: #000;
+}
+
+.header__menu__dropdown-link:hover::after {
+  right: auto;
+  left: 0;
+  width: 100%;
 }
