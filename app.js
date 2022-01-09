@@ -3,8 +3,6 @@ const mysql = require("mysql");
 const path = require("path");
 const exphbs = require("express-handlebars");
 
-
-
 const Handlebars = require("handlebars");
 const {
   allowInsecurePrototypeAccess,
@@ -26,7 +24,6 @@ const connection = mysql.createConnection({
   database: "allparts",
 });
 
-
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
@@ -36,7 +33,6 @@ require("./routes/categories")(app, connection);
 
 //const homeRoutes = require("./routes/home");
 
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(
@@ -44,7 +40,6 @@ app.use(
     extended: true,
   })
 );
-
 
 const PORT = process.env.PORT || 3000;
 
@@ -63,4 +58,3 @@ function normalizeArr(arr) {
 
   return res;
 }
-
