@@ -1,17 +1,9 @@
+const normalizeArr = require('../utils/normalize_arr');
+
 function CategoriesController(connection) {
   controllerMethods = {};
   controllerMethods.render = function (req, res) {
-    function normalizeArr(arr) {
-      const res = {};
-
-      arr = JSON.parse(JSON.stringify(arr));
-
-      arr.forEach((item) => {
-        res[item.id] = item;
-      });
-
-      return res;
-    }
+    
 
     const categories = new Promise((resolve, reject) => {
       connection.query(
@@ -56,8 +48,6 @@ function CategoriesController(connection) {
           arr.push(categoriesList[key]);
         }
 
-        console.log(arr);
-
         res.render("index", {
           title: "Главная страница",
           isHome: true,
@@ -66,7 +56,6 @@ function CategoriesController(connection) {
       }
     );
 
-    //connection.end();
   };
 
   controllerMethods.renderCategory = function (req, res) {
