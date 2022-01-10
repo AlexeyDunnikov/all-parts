@@ -35,3 +35,7 @@ body {
 svg path {
   transition: ease 0.3s;
 }
+
+.page-section{
+	margin-bottom: 65px;
+}

@@ -5,6 +5,7 @@
   color: #fff;
   background-color: #111;
   position: relative;
+  margin-bottom: 50px;
 }
 
 .header__top {
@@ -262,4 +263,41 @@
   right: auto;
   left: 0;
   width: 100%;
+}
+
+.select-car__inner {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 40px 50px 70px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.select-car__title {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 54px;
+  margin-bottom: 7px;
+  color: #fff;
+}
+
+.select-car__text {
+  font-size: 22px;
+  line-height: 25px;
+  margin-bottom: 33px;
+  color: #fff;
+}
+
+.select-car__form{
+    padding: 12px 25px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.select-car__input:not(:last-of-type){
+    margin-right: 25px;
 }

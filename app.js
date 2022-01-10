@@ -10,6 +10,7 @@ const {
 
 const app = express();
 
+
 const hbs = exphbs.create({
   defaultLayout: "main",
   extname: "hbs",
@@ -30,8 +31,10 @@ app.set("views", "views");
 
 require("./routes/home")(app, connection);
 require("./routes/categories")(app, connection);
+require("./routes/select_car")(app, connection);
 
 //const homeRoutes = require("./routes/home");
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
