@@ -290,14 +290,107 @@
   color: #fff;
 }
 
-.select-car__form{
-    padding: 12px 25px;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.select-car__form {
+  padding: 12px 25px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.select-car__input:not(:last-of-type){
-    margin-right: 25px;
+.select-car__input:not(:last-of-type) {
+  margin-right: 25px;
+}
+
+.categories__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 20px;
+}
+
+.categories__item {
+  display: flex;
+}
+
+.categories__item-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 20px 11px 20px;
+  border: 1px solid #e5e5e5;
+  transition: ease 0.3s;
+}
+
+.categories__item-link:hover {
+  transform: scale(1.05);
+}
+
+.categories__item-link__img {
+  width: auto;
+  max-height: 120px;
+  margin-bottom: 17px;
+}
+
+.marks__inner {
+  background-color: #f0f0f2;
+}
+
+.marks__top {
+  padding: 24px 38px;
+  border-bottom: 1px solid #cdcdcd;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+.marks__title {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 46px;
+  margin-bottom: 10px;
+}
+
+.marks__logo-list {
+  display: flex;
+  align-items: center;
+}
+
+.marks__logo-item:not(:last-of-type) {
+  margin-right: 30px;
+}
+
+.marks__logo-item__img {
+  max-height: 70px;
+}
+
+.marks__bottom{
+    padding: 24px 38px;
+}
+
+.marks__list{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px 30px;
+}
+
+.marks__item-link{
+    font-size: 18px;
+    line-height: 22px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.marks__item-link::after{
+    content: "";
+    position: absolute;
+    opacity: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #000;
+    transition: ease 0.3s;
+}
+
+.marks__item-link:hover::after{
+    opacity: 1;
 }

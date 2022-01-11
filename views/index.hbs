@@ -1,29 +1,110 @@
 <section class="select-car page-section">
-    <div class="container">
-        <div class="select-car__inner" style="background-image: url('./images/select-car-bg.png');">
-            <h3 class="select-car__title">
-                Выберите свой автомобиль
-            </h3>
-            <p class="select-car__text">
-                Это поможет ускорить подбор необходимых вам запчастей
-            </p>
-            <form class="select-car__form" action="">
-                <select class="select-car__input" name="car-year" id="car-year">
-                    <option disabled selected>Год выпуска</option>
-                </select>
-                 <select class="select-car__input" name="car-mark" id="car-mark">
-                   <option disabled selected>Марка</option>
-                </select>
-                <select class="select-car__input" name="car-model" id="car-model">
-                   <option disabled selected>Модель</option>
-                </select>
-                <select class="select-car__input" name="car-generation" id="car-generation">
-                   <option disabled selected>Поколение</option>
-                </select>
-                <select class="select-car__input" name="car-modification" id="car-modification" >
-                   <option disabled selected>Модификация</option>
-                </select>
-            </form>
-        </div>
+  <div class="container">
+    <div
+      class="select-car__inner"
+      style="background-image: url('./images/select-car-bg.png');"
+    >
+      <h3 class="select-car__title">
+        Выберите свой автомобиль
+      </h3>
+      <p class="select-car__text">
+        Это поможет ускорить подбор необходимых вам запчастей
+      </p>
+      <form class="select-car__form" action="">
+        <select class="select-car__input" name="car-year" id="car-year">
+          <option disabled selected>Год выпуска</option>
+        </select>
+        <select class="select-car__input" name="car-mark" id="car-mark">
+          <option disabled selected>Марка</option>
+        </select>
+        <select class="select-car__input" name="car-model" id="car-model">
+          <option disabled selected>Модель</option>
+        </select>
+        <select
+          class="select-car__input"
+          name="car-generation"
+          id="car-generation"
+        >
+          <option disabled selected>Поколение</option>
+        </select>
+        <select
+          class="select-car__input"
+          name="car-modification"
+          id="car-modification"
+        >
+          <option disabled selected>Модификация</option>
+        </select>
+      </form>
     </div>
+  </div>
+</section>
+
+<section class="categories page-section">
+  <div class="container">
+    <h3 class="categories__title page-title">
+      Категории товаров
+    </h3>
+    {{#if categories.length}}
+      <ul class="categories__list">
+        {{#each categories}}
+          <li class="categories__item">
+            <a class="categories__item-link" href="/categories/{{id}}">
+              <img
+                class="categories__item-link__img"
+                src="./images/part-categories/{{img}}"
+                alt="image"
+              />
+              <span class="categories__item-link__text">
+                {{name}}
+              </span>
+
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+
+  </div>
+</section>
+
+<section class="marks page-section">
+  <div class="container">
+    <div class="marks__inner">
+      <div class="marks__top">
+        <h3 class="marks__title">
+          Марки авто
+        </h3>
+        {{#if cars.length}}
+          <ul class="marks__logo-list">
+            {{#each cars}}
+              <li class="marks__logo-item">
+                <a href="/cars/{{id}}" class="marks__logo-item__link">
+                  <img
+                    class="marks__logo-item__img"
+                    src="./images/cars-logo/{{img}}"
+                    alt=""
+                  />
+                </a>
+
+              </li>
+            {{/each}}
+          </ul>
+        {{/if}}
+
+      </div>
+      <div class="marks__bottom">
+        {{#if cars.length}}
+          <ul class="marks__list">
+            {{#each cars}}
+              <li class="marks__item">
+                <a class="marks__item-link" href="/cars/{{id}}" >
+                  {{name}}
+                </a>
+              </li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      </div>
+    </div>
+  </div>
 </section>

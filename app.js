@@ -34,8 +34,6 @@ require("./routes/categories")(app, connection);
 require("./routes/select_car")(app, connection);
 
 //const homeRoutes = require("./routes/home");
-
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(

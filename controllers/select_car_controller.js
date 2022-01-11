@@ -1,57 +1,33 @@
 const normalizeArr = require("../utils/normalize_arr");
 
 function SelectCarController(connection) {
+  const CarsModel = require('../models/cars_model')(connection);
+
   controllerMethods = {};
 
-  controllerMethods.getYears = function (req, res) {
-    connection.query(
-      "SELECT MIN(year_from), MAX(year_to) FROM generations",
-      (err, result, fields) => {
-        if (err) throw err;
-        res.json(result);
-      }
-    );
+  controllerMethods.getYears = async function (req, res) {
+    const years = await CarsModel.getYears(req, res);
+    res.json(years);
   };
 
-  controllerMethods.getMarks = function (req, res) {
-    connection.query(
-      `SELECT id, name FROM cars WHERE id IN (SELECT DISTINCT car_id FROM car_models WHERE id IN (SELECT DISTINCT model_id FROM generations WHERE year_from <= ${req.body.year} AND year_to >= ${req.body.year})) ORDER BY name`,
-      (err, result, fields) => {
-        if (err) throw err;
-        res.json(result);
-      }
-    );
+  controllerMethods.getMarks = async function (req, res) {
+    const marks = await CarsModel.getMarks(req, res);
+    res.json(marks);
   };
 
-  controllerMethods.getModels = function (req, res) {
-    connection.query(
-      `SELECT DISTINCT id, name FROM car_models WHERE car_id = ${req.body.markId} AND id IN (SELECT DISTINCT model_id FROM generations WHERE year_from <= ${req.body.year} AND year_to >= ${req.body.year}) ORDER BY name`,
-      (err, result, fields) => {
-        if (err) throw err;
-        res.json(result);
-      }
-    );
+  controllerMethods.getModels = async function (req, res) {
+    const models = await CarsModel.getModels(req, res);
+    res.json(models);
   };
 
-  controllerMethods.getGenerations = function (req, res) {
-    connection.query(
-      `SELECT id, name FROM generations WHERE model_id = ${req.body.modelId} AND  year_from <= ${req.body.year} AND year_to >= ${req.body.year} ORDER BY name`,
-      (err, result, fields) => {
-        if (err) throw err;
-        res.json(result);
-      }
-    );
+  controllerMethods.getGenerations = async function (req, res) {
+    const generations = await CarsModel.getGenerations(req, res);
+    res.json(generations);
   };
 
-  controllerMethods.getModifications = function (req, res) {
-    connection.query(
-      `SELECT Concat(value, " ", horses, "л.с. / ", power, "к.в. / ", name) as name FROM engines WHERE id IN(SELECT id_engine FROM modifications WHERE id_generation = ${req.body.generationId});
-`,
-      (err, result, fields) => {
-        if (err) throw err;
-        res.json(result);
-      }
-    );
+  controllerMethods.getModifications = async function (req, res) {
+    const modifications = await CarsModel.getModifications(req, res);
+    res.json(modifications);
   };
 
   return controllerMethods;

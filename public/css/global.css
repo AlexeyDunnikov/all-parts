@@ -36,6 +36,15 @@ svg path {
   transition: ease 0.3s;
 }
 
-.page-section{
-	margin-bottom: 65px;
+.page-section {
+  margin-bottom: 65px;
 }
+
+.page-title {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 46px;
+  margin-bottom: 30px;
+}
+
+

@@ -38,7 +38,7 @@ async function initialSelectCarForm() {
   });
 
   //input generation
-  form["car-model"].addEventListener("change", async (evt) => {
+  form["car-generation"].addEventListener("change", async (evt) => {
     const selectedModelId = getIdFromOption(evt.target);
     const modifications = await getModifications(selectedYear, selectedModelId);
     setDefaultModifications();
