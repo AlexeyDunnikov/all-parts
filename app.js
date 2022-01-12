@@ -29,9 +29,9 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
-require("./routes/home")(app, connection);
-require("./routes/categories")(app, connection);
-require("./routes/select_car")(app, connection);
+require("./routes/homeRoute")(app, connection);
+require("./routes/categoriesRoute")(app, connection);
+require("./routes/carRoute")(app, connection);
 
 //const homeRoutes = require("./routes/home");
 app.use(express.static(path.join(__dirname, "public")));

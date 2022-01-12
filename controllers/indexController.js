@@ -1,12 +1,12 @@
-function IndexController(connection) {
-  const CategoriesModel = require("../models/categories_model")(connection);
-  const CarsModel = require('../models/cars_model')(connection);
+module.exports = (connection) => {
+  const CategoriesModel = require("../models/categoriesModel")(connection);
+  const carsModel = require('../models/carsModel')(connection);
 
   controllerMethods = {};
   controllerMethods.render = async function (req, res) {
     const categories = await CategoriesModel.getCategoriesAndSubcategories();
 
-    const cars = await CarsModel.getCarsInfo(req, res);
+    const cars = await carsModel.getCarsInfo(req, res);
 
     res.render("index", {
       title: "Главная страница",
@@ -19,4 +19,3 @@ function IndexController(connection) {
   return controllerMethods;
 }
 
-module.exports = IndexController;

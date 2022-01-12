@@ -1,6 +1,13 @@
-async function initialSelectCarForm() {
+async function initialSelectCarForm(flag = false) {
   const form = document.querySelector(".select-car__form");
   if (!form) return;
+
+
+  const selectSection = document.querySelector(".select-car");
+  if (JSON.parse(localStorage.getItem('garage')) && !flag){
+    selectSection.classList.add('hide');
+    return;
+  }
 
   const [minYear, maxYear] = await getYears();
   const years = [];
@@ -12,7 +19,8 @@ async function initialSelectCarForm() {
   }
   renderSelect("#car-year", years);
   let selectedYear;
-
+  let selectedGenerationId;
+  let selectedEngineId;
   //input year
   form["car-year"].addEventListener("change", async (evt) => {
     selectedYear = +evt.target.value;
@@ -39,10 +47,25 @@ async function initialSelectCarForm() {
 
   //input generation
   form["car-generation"].addEventListener("change", async (evt) => {
-    const selectedModelId = getIdFromOption(evt.target);
-    const modifications = await getModifications(selectedYear, selectedModelId);
+    selectedGenerationId = getIdFromOption(evt.target);
+    const modifications = await getModifications(
+      selectedYear,
+      selectedGenerationId
+    );
     setDefaultModifications();
     renderSelect("#car-modification", modifications);
+  });
+
+  //input modification
+  form["car-modification"].addEventListener("change", async (evt) => {
+    selectedEngineId = getIdFromOption(evt.target);
+    const modificationId = await getModificationId(
+      selectedGenerationId,
+      selectedEngineId
+    );
+    addToLocalStorage(modificationId);
+    document.querySelector(".select-car").classList.add('hide');
+    renderGarage();
   });
 
   function setDefaultMarks() {
@@ -72,6 +95,37 @@ async function initialSelectCarForm() {
     return +selectedOption.dataset.id;
   }
 }
+
+function addToLocalStorage(modificationId){
+  let garageArr = JSON.parse(localStorage.getItem("garage"));
+  if (!garageArr) {
+    garageArr = [];
+  }
+  if (!garageArr.includes(modificationId)) {
+    garageArr.push(modificationId);
+  }
+  localStorage.setItem("garage", JSON.stringify(garageArr));
+
+  localStorage.setItem("currModificationId", modificationId);
+}
+
+function renderSelect(selectSelector, values) {
+  const selectEl = document.querySelector(selectSelector);
+  if (!selectEl) return;
+
+  values.forEach((item) => {
+    const optionEl = document.createElement("option");
+    optionEl.classList.add("select-car__option");
+    optionEl.dataset.id = item.id;
+    optionEl.value = item.name;
+    optionEl.innerHTML = item.name;
+
+    selectEl.add(optionEl);
+  });
+}
+
+
+
 
 async function getYears() {
   const years = await fetch("/get-car-years", {
@@ -143,19 +197,20 @@ async function getModifications(year, generationId) {
   return await modifications.json();
 }
 
-function renderSelect(selectSelector, values) {
-  const selectEl = document.querySelector(selectSelector);
-  if (!selectEl) return;
-
-  values.forEach((item) => {
-    const optionEl = document.createElement("option");
-    optionEl.classList.add("select-car__option");
-    optionEl.dataset.id = item.id;
-    optionEl.value = item.name;
-    optionEl.innerHTML = item.name;
-
-    selectEl.add(optionEl);
+async function getModificationId(generationId, engineId) {
+  const modificationId = await fetch("/get-car-modification-id", {
+    method: "POST",
+    body: JSON.stringify({
+      generationId,
+      engineId,
+    }),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
   });
+
+  return await modificationId.json();
 }
 
-initialSelectCarForm();
+initialSelectCarForm(true);

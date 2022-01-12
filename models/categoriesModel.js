@@ -1,8 +1,8 @@
-const normalizeArr = require("../utils/normalize_arr");
+const normalizeArr = require("../utils/normalizeArr");
 
-function CategoriesModel(connection) {
+module.exports = (connection) => {
   modelMethods = {};
-  modelMethods.getCategoriesAndSubcategories = function () {
+  modelMethods.getCategoriesAndSubcategories = () => {
     const categories = new Promise((resolve, reject) => {
       connection.query(
         "SELECT * FROM parts_categories",
@@ -53,5 +53,3 @@ function CategoriesModel(connection) {
 
   return modelMethods;
 }
-
-module.exports = CategoriesModel;

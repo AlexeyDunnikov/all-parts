@@ -1,4 +1,4 @@
-function normalizeArr(arr) {
+module.exports = (arr) => {
   const res = {};
 
   arr = JSON.parse(JSON.stringify(arr));
@@ -9,5 +9,3 @@ function normalizeArr(arr) {
 
   return res;
 }
-
-module.exports = normalizeArr;

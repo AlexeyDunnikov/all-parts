@@ -1,6 +1,4 @@
-const normalizeArr = require("../utils/normalize_arr");
-
-function CategoriesController(connection) {
+module.exports = (connection) => {
   controllerMethods = {};
 
   controllerMethods.renderCategory = function (req, res) {
@@ -9,5 +7,3 @@ function CategoriesController(connection) {
 
   return controllerMethods;
 }
-
-module.exports = CategoriesController;

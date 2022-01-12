@@ -265,6 +265,10 @@
   width: 100%;
 }
 
+.select-car.hide{
+    display: none;
+}
+
 .select-car__inner {
   background-size: cover;
   background-repeat: no-repeat;
@@ -393,4 +397,110 @@
 
 .marks__item-link:hover::after{
     opacity: 1;
+}
+
+.garage__top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.garage__list{
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.garage__item{
+    position: relative;
+}
+
+.garage__item.active .garage__item-link{
+    border-color: #338cf0;
+    box-shadow: 0 0 5px rgba(51, 140, 240, 0.8);
+}
+
+.garage__item-link{
+    display: flex;
+    align-items: center;
+    padding: 10px 50px 10px 15px;
+    background-color: #f0f0f2;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+.garage__item-img{
+    width: auto;
+    max-height: 100px;
+    margin-right: 30px;
+}
+
+.garage__item-content{
+    font-size: 18px;
+    line-height: 22px;
+    margin-right: 30px;
+    align-self: flex-start;  
+}
+
+.garage__item-name{
+    font-weight: 500;
+}
+
+.garage__item-delete{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+.footer{
+    color: #fff;
+    background-color: #111;
+}
+
+.footer__top{
+    padding: 50px 0;
+    border-bottom: 1px solid #515151;
+}
+
+.footer__top-inner{
+    display: flex;
+}
+
+.footer__list:not(:last-of-type){
+    margin-right: 85px;
+}
+
+.footer__item--title{
+    margin-bottom: 15px;
+}
+
+.footer__item{
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.footer__item:not(:last-of-type){
+    margin-bottom: 10px;
+}
+
+.footer__bottom{
+    padding: 25px 0;
+}
+
+.footer__copy{
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
 }
