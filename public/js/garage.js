@@ -5,9 +5,14 @@ function renderGarage() {
   garageList.innerHTML = "";
 
   const modificationsArr = JSON.parse(localStorage.getItem("garage"));
-  if (!modificationsArr) return;
+  console.log(modificationsArr);
+  if (modificationsArr.length === 0) {
+    document.querySelector(".garage").classList.add("hide");
+    return;
+  }
+  document.querySelector(".garage").classList.remove("hide");
 
-  const currModificationId = +localStorage.getItem("currModificationId") ?? 0;
+  const currModificationId = +localStorage.getItem("currModificationId") ?? 1;
 
   modificationsArr.reverse();
 
@@ -50,22 +55,29 @@ function renderGarage() {
               ></path>
             </svg>`;
 
-    delBtn.addEventListener('click', (evt) => {
-        const target = evt.target.closest(".garage__item-delete");
-        const id = target.dataset.modId
+    delBtn.addEventListener("click", (evt) => {
+      const target = evt.target.closest(".garage__item-delete");
+      const id = target.dataset.modId;
 
-        const index = modificationsArr.indexOf(+id);
-        const newArr = modificationsArr.splice(index - 1, 1);
+      console.log(id);
 
-        localStorage.setItem('garage', JSON.stringify(newArr));
+      const index = modificationsArr.indexOf(+id);
+      modificationsArr.splice(index, 1);
+      if (modificationsArr.length === 0) {
+        document.querySelector(".select-car").classList.remove("hide");
+        const form = document.querySelector(".select-car__form");
+        if (!form) return;
+        setDefaultYears(form);
+      }
 
-        target.parentNode.remove();
-    })
+      localStorage.setItem("garage", JSON.stringify(modificationsArr));
+
+      renderGarage();
+    });
 
     li.append(delBtn);
 
     if (currModificationId === modificationId) {
-      li.classList.add("active");
       garageList.prepend(li);
     } else {
       garageList.append(li);
@@ -94,7 +106,9 @@ function addToGarageBtn() {
 
   addBtn.addEventListener("click", async (evt) => {
     document.querySelector(".select-car").classList.remove("hide");
-    await initialSelectCarForm(true);
+    const form = document.querySelector(".select-car__form");
+    if (!form) return;
+    setDefaultYears(form);
   });
 }
 

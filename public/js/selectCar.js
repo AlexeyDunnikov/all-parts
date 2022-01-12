@@ -1,23 +1,9 @@
-async function initialSelectCarForm(flag = false) {
+async function initialSelectCarForm() {
   const form = document.querySelector(".select-car__form");
   if (!form) return;
 
+  setDefaultYears(form);
 
-  const selectSection = document.querySelector(".select-car");
-  if (JSON.parse(localStorage.getItem('garage')) && !flag){
-    selectSection.classList.add('hide');
-    return;
-  }
-
-  const [minYear, maxYear] = await getYears();
-  const years = [];
-  for (let year = minYear; year <= maxYear; year++) {
-    years.push({
-      id: year,
-      name: year,
-    });
-  }
-  renderSelect("#car-year", years);
   let selectedYear;
   let selectedGenerationId;
   let selectedEngineId;
@@ -25,7 +11,7 @@ async function initialSelectCarForm(flag = false) {
   form["car-year"].addEventListener("change", async (evt) => {
     selectedYear = +evt.target.value;
     const marks = await getMarks(selectedYear);
-    setDefaultMarks();
+    setDefaultMarks(form);
     renderSelect("#car-mark", marks);
   });
 
@@ -33,7 +19,7 @@ async function initialSelectCarForm(flag = false) {
   form["car-mark"].addEventListener("change", async (evt) => {
     const selectedMarkId = getIdFromOption(evt.target);
     const models = await getModels(selectedYear, selectedMarkId);
-    setDefaultModels();
+    setDefaultModels(form);
     renderSelect("#car-model", models);
   });
 
@@ -41,7 +27,7 @@ async function initialSelectCarForm(flag = false) {
   form["car-model"].addEventListener("change", async (evt) => {
     const selectedModelId = getIdFromOption(evt.target);
     const generations = await getGenerations(selectedYear, selectedModelId);
-    setDefaultGenerations();
+    setDefaultGenerations(form);
     renderSelect("#car-generation", generations);
   });
 
@@ -52,7 +38,7 @@ async function initialSelectCarForm(flag = false) {
       selectedYear,
       selectedGenerationId
     );
-    setDefaultModifications();
+    setDefaultModifications(form);
     renderSelect("#car-modification", modifications);
   });
 
@@ -64,39 +50,53 @@ async function initialSelectCarForm(flag = false) {
       selectedEngineId
     );
     addToLocalStorage(modificationId);
-    document.querySelector(".select-car").classList.add('hide');
+    document.querySelector(".select-car").classList.add("hide");
     renderGarage();
   });
-
-  function setDefaultMarks() {
-    form["car-mark"].innerHTML = `<option disabled selected>Марка</option>`;
-    setDefaultModels();
-  }
-
-  function setDefaultModels() {
-    form["car-model"].innerHTML = `<option disabled selected>Модель</option>`;
-    setDefaultGenerations();
-  }
-  function setDefaultGenerations() {
-    form[
-      "car-generation"
-    ].innerHTML = `<option disabled selected>Поколение</option>`;
-    setDefaultModifications();
-  }
-  function setDefaultModifications() {
-    form[
-      "car-modification"
-    ].innerHTML = `<option disabled selected>Модификация</option>`;
-  }
-
-  function getIdFromOption(target) {
-    const selectedInd = target.selectedIndex;
-    const selectedOption = target.children[selectedInd];
-    return +selectedOption.dataset.id;
-  }
 }
 
-function addToLocalStorage(modificationId){
+function getIdFromOption(target) {
+  const selectedInd = target.selectedIndex;
+  const selectedOption = target.children[selectedInd];
+  return +selectedOption.dataset.id;
+}
+
+async function setDefaultYears(form){
+  const [minYear, maxYear] = await getYears();
+  const years = [];
+  for (let year = minYear; year <= maxYear; year++) {
+    years.push({
+      id: year,
+      name: year,
+    });
+  }
+  form["car-year"].innerHTML = `<option disabled selected>Год выпуска</option>`;
+  renderSelect("#car-year", years);
+  setDefaultMarks(form);
+}
+
+function setDefaultMarks(form) {
+  form["car-mark"].innerHTML = `<option disabled selected>Марка</option>`;
+  setDefaultModels(form);
+}
+
+function setDefaultModels(form) {
+  form["car-model"].innerHTML = `<option disabled selected>Модель</option>`;
+  setDefaultGenerations(form);
+}
+function setDefaultGenerations(form) {
+  form[
+    "car-generation"
+  ].innerHTML = `<option disabled selected>Поколение</option>`;
+  setDefaultModifications(form);
+}
+function setDefaultModifications(form) {
+  form[
+    "car-modification"
+  ].innerHTML = `<option disabled selected>Модификация</option>`;
+}
+
+function addToLocalStorage(modificationId) {
   let garageArr = JSON.parse(localStorage.getItem("garage"));
   if (!garageArr) {
     garageArr = [];
@@ -123,9 +123,6 @@ function renderSelect(selectSelector, values) {
     selectEl.add(optionEl);
   });
 }
-
-
-
 
 async function getYears() {
   const years = await fetch("/get-car-years", {
@@ -213,4 +210,4 @@ async function getModificationId(generationId, engineId) {
   return await modificationId.json();
 }
 
-initialSelectCarForm(true);
+initialSelectCarForm();
