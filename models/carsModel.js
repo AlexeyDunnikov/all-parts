@@ -1,9 +1,9 @@
 module.exports = (connection) => {
-  modelMethods = {};
+  const modelMethods = {};
 
-  modelMethods.getCarsInfo = (req, res) => {
+  modelMethods.getAllCars = (req, res) => {
     return new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM cars", (err, result, fields) => {
+      connection.query("SELECT * FROM car_marks", (err, result, fields) => {
         if (err) reject(err);
         resolve(result);
       });
@@ -13,7 +13,7 @@ module.exports = (connection) => {
   modelMethods.getYears = (req, res) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        "SELECT MIN(year_from), MAX(year_to) FROM generations",
+        "SELECT MIN(year_from), MAX(year_to) FROM car_generations",
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -25,7 +25,11 @@ module.exports = (connection) => {
   modelMethods.getMarks = (req, res) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT id, name FROM cars WHERE id IN (SELECT DISTINCT car_id FROM car_models WHERE id IN (SELECT DISTINCT model_id FROM generations WHERE year_from <= ${req.body.year} AND year_to >= ${req.body.year})) ORDER BY name`,
+        `SELECT DISTINCT marks.id, marks.name FROM car_marks AS marks 
+        INNER JOIN car_models AS models ON marks.id = models.car_id
+        INNER JOIN car_generations AS gen ON models.id = gen.model_id
+        WHERE year_from <= ${req.body.year} AND year_to >= ${req.body.year} 
+        ORDER BY name`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -37,7 +41,11 @@ module.exports = (connection) => {
   modelMethods.getModels = (req, res) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT DISTINCT id, name FROM car_models WHERE car_id = ${req.body.markId} AND id IN (SELECT DISTINCT model_id FROM generations WHERE year_from <= ${req.body.year} AND year_to >= ${req.body.year}) ORDER BY name`,
+        `SELECT DISTINCT model.id, model.name 
+        FROM car_generations AS gen INNER JOIN car_models AS model 
+        ON model.id = gen.model_id 
+        WHERE gen.year_from <= ${req.body.year} AND gen.year_to >= ${req.body.year} AND model.car_id = ${req.body.markId}
+        ORDER BY name`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -49,7 +57,7 @@ module.exports = (connection) => {
   modelMethods.getGenerations = (req, res) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT id, name FROM generations WHERE model_id = ${req.body.modelId} AND  year_from <= ${req.body.year} AND year_to >= ${req.body.year} ORDER BY name`,
+        `SELECT id, name FROM car_generations WHERE model_id = ${req.body.modelId} AND  year_from <= ${req.body.year} AND year_to >= ${req.body.year} ORDER BY name`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -61,7 +69,11 @@ module.exports = (connection) => {
   modelMethods.getModifications = (req, res) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT Concat(value, " ", horses, "л.с. / ", power, "к.в. / ", name) as name, id FROM engines WHERE id IN(SELECT id_engine FROM modifications WHERE id_generation = ${req.body.generationId});
+        `SELECT Concat(e.value, " ", e.horses, "л.с. / ", e.power, "к.в. / ", e.name) AS name, e.id 
+        FROM car_engines AS e 
+        INNER JOIN car_modifications AS m 
+        ON e.id = m.id_engine 
+        WHERE m.id_generation = ${req.body.generationId};
 `,
         (err, result, fields) => {
           if (err) reject(err);
@@ -74,7 +86,9 @@ module.exports = (connection) => {
   modelMethods.getModificationId = (req, res) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT DISTINCT id FROM modifications WHERE id_generation = ${req.body.generationId} AND id_engine = ${req.body.engineId}`,
+        `SELECT DISTINCT id 
+        FROM car_modifications 
+        WHERE id_generation = ${req.body.generationId} AND id_engine = ${req.body.engineId}`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -86,17 +100,13 @@ module.exports = (connection) => {
   modelMethods.getModificationInfo = (req, res) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT
-	(SELECT name FROM cars WHERE id IN(SELECT car_id FROM car_models WHERE id IN(SELECT model_id FROM generations WHERE id IN(SELECT id_generation FROM modifications WHERE id = ${req.body.modificationId})))) AS mark,
-    (SELECT name FROM car_models WHERE id IN(SELECT model_id FROM generations WHERE id IN(SELECT id_generation FROM modifications WHERE id = ${req.body.modificationId}))) AS model,
-    (SELECT name FROM generations WHERE id IN(SELECT id_generation FROM modifications WHERE id = ${req.body.modificationId})) AS generation,
-    (SELECT img FROM generations WHERE id IN(SELECT id_generation FROM modifications WHERE id = ${req.body.modificationId})) AS img,
-    (SELECT year_from FROM generations WHERE id IN(SELECT id_generation FROM modifications WHERE id = ${req.body.modificationId})) AS year_from,
-    (SELECT year_to FROM generations WHERE id IN(SELECT id_generation FROM modifications WHERE id = ${req.body.modificationId})) AS year_to,
-    (SELECT name FROM engines WHERE id IN(SELECT id_engine FROM modifications WHERE id = ${req.body.modificationId})) AS engine_name,
-    (SELECT power FROM engines WHERE id IN(SELECT id_engine FROM modifications WHERE id = ${req.body.modificationId})) AS engine_power,
-    (SELECT horses FROM engines WHERE id IN(SELECT id_engine FROM modifications WHERE id = ${req.body.modificationId})) AS engine_horses,
-    (SELECT value FROM engines WHERE id IN(SELECT id_engine FROM modifications WHERE id = ${req.body.modificationId})) AS engine_value`,
+        `SELECT marks.name AS mark, models.name AS model, gen.name AS generation, gen.img AS img, gen.year_from AS year_from, gen.year_to AS year_to, engines.name AS engine_name, engines.power AS engine_power, engines.horses AS engine_horses, engines.value AS engine_value
+        FROM car_marks AS marks 
+        INNER JOIN car_models AS models ON marks.id = models.car_id
+        INNER JOIN car_generations AS gen ON models.id = gen.model_id
+        INNER JOIN car_modifications AS modifications ON gen.id = modifications.id_generation
+        INNER JOIN car_engines AS engines ON engines.id = modifications.id_engine
+        WHERE modifications.id = ${req.body.modificationId}`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);

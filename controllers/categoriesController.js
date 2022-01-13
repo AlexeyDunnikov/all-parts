@@ -1,7 +1,7 @@
 module.exports = (connection) => {
-  controllerMethods = {};
+  const controllerMethods = {};
 
-  controllerMethods.renderCategory = function (req, res) {
+  controllerMethods.renderCategory = (req, res) => {
     res.json(req.params.id);
   };
 

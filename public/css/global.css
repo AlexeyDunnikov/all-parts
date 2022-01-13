@@ -47,4 +47,19 @@ svg path {
   margin-bottom: 30px;
 }
 
+.btn{
+  border:none;
+  border-radius: 5px;
+  color: #fff;
+  padding: 8px 20px;
+  background-color: #338cf0;
+  cursor: pointer;
+  transition: ease 0.3s;
+}
+
+.btn:hover{
+  color: #338cf0;
+  background-color: #fff;
+}
+
 

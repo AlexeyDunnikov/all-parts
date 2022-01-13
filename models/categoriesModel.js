@@ -1,9 +1,9 @@
 const normalizeArr = require("../utils/normalizeArr");
 
 module.exports = (connection) => {
-  modelMethods = {};
-  modelMethods.getCategoriesAndSubcategories = () => {
-    const categories = new Promise((resolve, reject) => {
+  const modelMethods = {};
+  modelMethods.getCategories = async () => {
+    return new Promise((resolve, reject) => {
       connection.query(
         "SELECT * FROM parts_categories",
         (err, result, fields) => {
@@ -12,8 +12,10 @@ module.exports = (connection) => {
         }
       );
     });
+  };
 
-    const subcategories = new Promise((resolve, reject) => {
+  modelMethods.getSubcategories = async () => {
+    return new Promise((resolve, reject) => {
       connection.query(
         `SELECT * FROM parts_subcategories`,
         (err, result, fields) => {
@@ -22,34 +24,28 @@ module.exports = (connection) => {
         }
       );
     });
+  };
 
-    return Promise.all([categories, subcategories]).then(
-      ([categories, subcategories]) => {
-        const categoriesList = normalizeArr(categories);
+  modelMethods.getCategoriesAndSubcategories = async function(){
+    let categories = await this.getCategories();
+    const subcategories = await this.getSubcategories();
 
-        const subcategoriesList = normalizeArr(subcategories);
+    categories = normalizeArr(categories, "id");
 
-        for (let key of Object.keys(subcategoriesList)) {
-          if (
-            !categoriesList[subcategoriesList[key].id_category].subcategories
-          ) {
-            categoriesList[subcategoriesList[key].id_category].subcategories =
-              [];
-          }
-          categoriesList[subcategoriesList[key].id_category].subcategories.push(
-            subcategoriesList[key]
-          );
-        }
-
-        const arr = [];
-        for (let key in categoriesList) {
-          arr.push(categoriesList[key]);
-        }
-
-        return arr;
+    subcategories.forEach((subcategory) => {
+      const catId = subcategory.id_category;
+      if (!categories[catId].subcategories) {
+        categories[catId].subcategories = [];
       }
-    );
+      categories[catId].subcategories.push(subcategory);
+    });
+
+    const catArr = [];
+    for (let key in categories) {
+      catArr.push(categories[key]);
+    }
+    return catArr;
   };
 
   return modelMethods;
-}
+};

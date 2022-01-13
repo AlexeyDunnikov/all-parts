@@ -1,10 +1,8 @@
-module.exports = (arr) => {
+module.exports = (arr, key) => {
   const res = {};
 
-  arr = JSON.parse(JSON.stringify(arr));
-
   arr.forEach((item) => {
-    res[item.id] = item;
+    res[item[key]] = item;
   });
 
   return res;

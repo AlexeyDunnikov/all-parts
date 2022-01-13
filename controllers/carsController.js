@@ -1,7 +1,7 @@
 module.exports = (connection) => {
   const carsModel = require('../models/carsModel')(connection);
 
-  controllerMethods = {};
+  const controllerMethods = {};
 
   controllerMethods.getYears = async (req, res) => {
     const years = await carsModel.getYears(req, res);

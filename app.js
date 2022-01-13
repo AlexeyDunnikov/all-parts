@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const path = require("path");
 const exphbs = require("express-handlebars");
 
@@ -32,6 +32,8 @@ app.set("views", "views");
 require("./routes/homeRoute")(app, connection);
 require("./routes/categoriesRoute")(app, connection);
 require("./routes/carRoute")(app, connection);
+require("./routes/userRoute")(app, connection);
+require("./routes/catalogRoute")(app, connection);
 
 //const homeRoutes = require("./routes/home");
 app.use(express.static(path.join(__dirname, "public")));
@@ -48,14 +50,3 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-function normalizeArr(arr) {
-  const res = {};
-
-  arr = JSON.parse(JSON.stringify(arr));
-
-  arr.forEach((item) => {
-    res[item.id] = item;
-  });
-
-  return res;
-}
