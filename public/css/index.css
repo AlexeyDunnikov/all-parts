@@ -511,14 +511,14 @@
   text-decoration: underline;
 }
 
-.catalog__top{
+.catalog-categories__top{
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 25px;
 }
 
-.catalog__item {
+.catalog-categories__item {
   padding: 8px 20px;
   border: 1px solid #cdcdcd;
   border-radius: 5px;
@@ -526,36 +526,36 @@
   transition: ease 0.3s;
 }
 
-.catalog__item.active {
+.catalog-categories__item.active {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 }
 
-.catalog__item:not(:last-of-type) {
+.catalog-categories__item:not(:last-of-type) {
   margin-bottom: 15px;
 }
 
-.catalog__item:hover {
+.catalog-categories__item:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 }
 
-.catalog__item-category {
+.catalog-categories__item-category {
   display: flex;
   align-items: center;
 }
 
-.catalog__item-img {
+.catalog-categories__item-img {
   max-height: 120px;
   width: auto;
   margin-right: 50px;
 }
 
-.catalog__item-text {
+.catalog-categories__item-text {
   position: relative;
   font-size: 20px;
   line-height: 24px;
 }
 
-.catalog__item-btn {
+.catalog-categories__item-btn {
   background-color: transparent;
   border: none;
   margin-left: auto;
@@ -563,7 +563,7 @@
   transition: ease 0.3s;
 }
 
-.catalog__dropdown-list {
+.catalog-subcategories__dropdown-list, .catalog-subcategories__list {
   display: grid;
   grid-gap: 30px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -571,25 +571,29 @@
 }
 
 
-.catalog__item.active .catalog__item-btn {
+.catalog-categories__item.active .catalog-categories__item-btn {
   transform: rotateX(180deg);
 }
 
-.catalog__dropdown-item {
+.catalog-subcategories__dropdown-item, .catalog-subcategories__item {
   display: flex;
   flex-direction: column;
 }
 
-.catalog__dropdown-item__link {
+.catalog-subcategories__dropdown-item__link, .catalog-subcategories__item-link {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.catalog__dropdown-item__img {
+.catalog-subcategories__dropdown-item__img, .catalog-subcategories__item-img {
   width: auto;
   max-height: 100px;
+}
+
+.catalog-subcategories__title{
+  
 }
 
 .car-info{

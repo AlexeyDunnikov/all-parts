@@ -1,8 +1,8 @@
-<section class="catalog page-section">
+<section class="catalog-categories page-section">
   <div class="container">
-    <div class="catalog__top">
-      <h3 class="catalog__title page-title">
-        Каталог
+    <div class="catalog-categories__top">
+      <h3 class="catalog-categories__title page-title">
+        Категории товаров
       </h3>
 
       {{#if car}}
@@ -27,7 +27,7 @@
           <div class="car-info__img">
             <img
               class="car-info__img"
-              src="./images/cars-images/{{car.img}}"
+              src="/images/cars-images/{{car.img}}"
               alt="image"
             />
           </div>
@@ -36,22 +36,25 @@
     </div>
 
     {{#if categories.length}}
-      <ul class="catalog__list">
+      <ul class="catalog-categories__list">
         {{#each categories}}
-          <li class="catalog__item">
-            <div class="catalog__item-category">
+          <li class="catalog-categories__item">
+            <div class="catalog-categories__item-category">
               <img
-                class="catalog__item-img"
-                src="./images/part-categories/{{img}}"
+                class="catalog-categories__item-img"
+                src="/images/part-categories/{{img}}"
                 alt="image"
               />
-              <span class="catalog__item-text" href="/categories/{{id}}">
+              <span
+                class="catalog-categories__item-text"
+                href="/categories/{{id}}"
+              >
                 {{name}}
               </span>
               {{#if subcategories.length}}
-                <button class="catalog__item-btn">
+                <button class="catalog-categories__item-btn">
                   <svg
-                    class="catalog__item__btn-img"
+                    class="catalog-categories__item__btn-img"
                     width="30"
                     height="20"
                     viewBox="0 0 40 22"
@@ -69,55 +72,59 @@
               {{/if}}
             </div>
             {{#if subcategories.length}}
-              <ul class="catalog__dropdown-list">
+              <ul class="catalog-subcategories__dropdown-list">
                 {{#each subcategories}}
-                  <li class="catalog__dropdown-item">
+                  <li class="catalog-subcategories__dropdown-item">
                     {{#if @root.modId}}
                       <a
-                        href="/catalog/subcategories/{{id}}?mod_id={{@root.modId}}"
-                        class="catalog__dropdown-item__link"
+                        href="/subcategories/{{id}}?mod_id={{@root.modId}}"
+                        class="catalog-subcategories__dropdown-item__link"
                       >
 
                         {{#if img}}
                           <img
-                            class="catalog__dropdown-item__img"
-                            src="./images/part-subcategories/{{img}}"
+                            class="catalog-subcategories__dropdown-item__img"
+                            src="/images/part-subcategories/{{img}}"
                             alt="image"
                           />
                         {{else}}
                           <img
-                            class="catalog__dropdown-item__img"
-                            src="./images/no-photo.png"
+                            class="catalog-subcategories__dropdown-item__img"
+                            src="/images/no-photo.png"
                             alt="image"
                           />
                         {{/if}}
 
-                        <span class="catalog__dropdown-item__text">
+                        <span
+                          class="catalog-subcategories__dropdown-item__text"
+                        >
                           {{name}}
                         </span>
 
                       </a>
                     {{else}}
                       <a
-                        href="/catalog/subcategories/{{id}}"
-                        class="catalog__dropdown-item__link"
+                        href="/subcategories/{{id}}"
+                        class="catalog-subcategories__dropdown-item__link"
                       >
 
                         {{#if img}}
                           <img
-                            class="catalog__dropdown-item__img"
-                            src="./images/part-subcategories/{{img}}"
+                            class="catalog-subcategories__dropdown-item__img"
+                            src="/images/part-subcategories/{{img}}"
                             alt="image"
                           />
                         {{else}}
                           <img
-                            class="catalog__dropdown-item__img"
-                            src="./images/no-photo.png"
+                            class="catalog-subcategories__dropdown-item__img"
+                            src="/images/no-photo.png"
                             alt="image"
                           />
                         {{/if}}
 
-                        <span class="catalog__dropdown-item__text">
+                        <span
+                          class="catalog-subcategories__dropdown-item__text"
+                        >
                           {{name}}
                         </span>
 
@@ -127,7 +134,6 @@
                   </li>
                 {{/each}}
               </ul>
-
             {{/if}}
           </li>
         {{/each}}

@@ -55,7 +55,7 @@ async function initialSelectCarForm() {
 }
 
 async function toCatalog(modificationId) {
-  window.location.href = `/catalog?mod_id=${modificationId}`;
+  window.location.href = `/categories?mod_id=${modificationId}`;
 }
 
 function getIdFromOption(target) {

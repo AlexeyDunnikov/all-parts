@@ -2,7 +2,7 @@ const normalizeArr = require("../utils/normalizeArr");
 
 module.exports = (connection) => {
   const modelMethods = {};
-  modelMethods.getCategories = async () => {
+  modelMethods.getCategories = () => {
     return new Promise((resolve, reject) => {
       connection.query(
         "SELECT * FROM parts_categories",
@@ -14,7 +14,19 @@ module.exports = (connection) => {
     });
   };
 
-  modelMethods.getSubcategories = async () => {
+  modelMethods.getCategoryName = (catId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT name FROM parts_categories WHERE id = ${catId}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
+  modelMethods.getSubcategories = () => {
     return new Promise((resolve, reject) => {
       connection.query(
         `SELECT * FROM parts_subcategories`,
@@ -26,7 +38,19 @@ module.exports = (connection) => {
     });
   };
 
-  modelMethods.getCategoriesAndSubcategories = async function(){
+  modelMethods.getSubcategoriesWhereId = (id) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT * FROM parts_subcategories WHERE id_category = ${id}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
+  modelMethods.getCategoriesAndSubcategories = async function () {
     let categories = await this.getCategories();
     const subcategories = await this.getSubcategories();
 

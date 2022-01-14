@@ -1,13 +1,13 @@
-const categoriesModelModule = require("../models/categoriesModel");
+const catalogModelModule = require("../models/catalogModel");
 const carsModelModule = require("../models/carsModel");
 module.exports = (connection) => {
-  const categoriesModel = categoriesModelModule(connection);
+  const catalogModel = catalogModelModule(connection);
   const carsModel = carsModelModule(connection);
 
   const controllerMethods = {};
 
   controllerMethods.render = async (req, res) => {
-    let categories = await categoriesModel.getCategoriesAndSubcategories();
+    let categories = await catalogModel.getCategoriesAndSubcategories();
 
     const cars = await carsModel.getAllCars(req, res);
 
