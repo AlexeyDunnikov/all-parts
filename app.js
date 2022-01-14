@@ -30,7 +30,6 @@ app.set("view engine", "hbs");
 app.set("views", "views");
 
 require("./routes/homeRoute")(app, connection);
-require("./routes/categoriesRoute")(app, connection);
 require("./routes/carRoute")(app, connection);
 require("./routes/userRoute")(app, connection);
 require("./routes/catalogRoute")(app, connection);

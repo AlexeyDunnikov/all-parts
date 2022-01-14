@@ -1,10 +1,11 @@
+const categoriesModelModule = require("../models/categoriesModel");
 module.exports = (connection) => {
-  const CategoriesModel = require("../models/categoriesModel")(connection);
+  const categoriesModel = categoriesModelModule(connection);
 
   const controllerMethods = {};
 
   controllerMethods.renderCatalog = async (req, res) => {
-      const categories = await CategoriesModel.           getCategoriesAndSubcategories();
+      const categories = await categoriesModel.           getCategoriesAndSubcategories();
 
       const options = {
         title: "Каталог",

@@ -1,6 +1,8 @@
+const categoriesModelModule = require("../models/categoriesModel");
+const carsModelModule = require("../models/carsModel");
 module.exports = (connection) => {
-  const categoriesModel = require("../models/categoriesModel")(connection);
-  const carsModel = require("../models/carsModel")(connection);
+  const categoriesModel = categoriesModelModule(connection);
+  const carsModel = carsModelModule(connection);
 
   const controllerMethods = {};
 

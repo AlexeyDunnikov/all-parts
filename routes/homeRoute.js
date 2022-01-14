@@ -1,4 +1,6 @@
+const controller = require("../controllers/indexController");
 module.exports = (app, connection) => {
-  const index = require("../controllers/indexController")(connection);
+  const index = controller(connection)
+
   app.get("/", index.render);
 };

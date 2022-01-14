@@ -1,5 +1,6 @@
+const controller = require("../controllers/carsController");
 module.exports = (app, connection) => {
-  const index = require("../controllers/carsController")(connection);
+  const index = controller(connection);
 
   app.post("/get-car-years", index.getYears);
   app.post("/get-car-marks", index.getMarks);
