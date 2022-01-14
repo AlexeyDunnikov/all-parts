@@ -50,9 +50,12 @@ async function initialSelectCarForm() {
       selectedEngineId
     );
     addToLocalStorage(modificationId);
-    document.querySelector(".select-car").classList.add("hide");
-    renderGarage();
+    await toCatalog(modificationId);
   });
+}
+
+async function toCatalog(modificationId) {
+  window.location.href = `/catalog?mod_id=${modificationId}`;
 }
 
 function getIdFromOption(target) {
@@ -61,7 +64,7 @@ function getIdFromOption(target) {
   return +selectedOption.dataset.id;
 }
 
-async function setDefaultYears(form){
+async function setDefaultYears(form) {
   const [minYear, maxYear] = await getYears();
   const years = [];
   for (let year = minYear; year <= maxYear; year++) {

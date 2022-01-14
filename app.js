@@ -2,6 +2,8 @@ const express = require("express");
 const mysql = require("mysql2");
 const path = require("path");
 const exphbs = require("express-handlebars");
+const session = require("express-session");
+const keys = require("./keys/keys");
 
 const Handlebars = require("handlebars");
 const {
@@ -40,6 +42,14 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(
   express.urlencoded({
     extended: true,
+  })
+);
+
+app.use(
+  session({
+    secret: keys.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
   })
 );
 

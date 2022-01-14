@@ -1,16 +1,18 @@
-function renderGarage() {
+function renderGarage(isFirstRender = false) {
   const garageList = document.querySelector(".garage__list");
   if (!garageList) return;
 
   garageList.innerHTML = "";
 
   const modificationsArr = JSON.parse(localStorage.getItem("garage"));
-  console.log(modificationsArr);
+
   if (modificationsArr.length === 0) {
     document.querySelector(".garage").classList.add("hide");
     return;
   }
-  document.querySelector(".garage").classList.remove("hide");
+  if(isFirstRender){
+    document.querySelector(".select-car").classList.add("hide");
+  }
 
   const currModificationId = +localStorage.getItem("currModificationId") ?? 1;
 
@@ -33,8 +35,6 @@ function renderGarage() {
                 Двигатель: ${info.engine_name}, ${info.engine_horses} л.с., ${info.engine_power} к.в., ${info.year_from} - ${info.year_to}
             </p>
           </div>
-
-          
         </a>
     `;
 
@@ -58,8 +58,6 @@ function renderGarage() {
     delBtn.addEventListener("click", (evt) => {
       const target = evt.target.closest(".garage__item-delete");
       const id = target.dataset.modId;
-
-      console.log(id);
 
       const index = modificationsArr.indexOf(+id);
       modificationsArr.splice(index, 1);
@@ -112,5 +110,5 @@ function addToGarageBtn() {
   });
 }
 
-renderGarage();
+renderGarage(true);
 addToGarageBtn();

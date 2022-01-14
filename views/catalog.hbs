@@ -1,8 +1,40 @@
 <section class="catalog page-section">
   <div class="container">
-    <h3 class="catalog__title page-title">
-      Каталог
-    </h3>
+    <div class="catalog__top">
+      <h3 class="catalog__title page-title">
+        Каталог
+      </h3>
+
+      {{#if car}}
+        <div class="car-info">
+          <div class="car-info__content">
+            <div class="car-info__content-title">
+              {{car.mark}}
+              {{car.model}}
+              {{car.generation}}
+              {{car.engine_value}}
+            </div>
+            <div class="car-info__content-text">
+              Двигатель:
+              {{car.engine_name}}
+              /
+              {{car.engine_power}}
+              К.В. /
+              {{car.engine_horses}}
+              л.с.
+            </div>
+          </div>
+          <div class="car-info__img">
+            <img
+              class="car-info__img"
+              src="./images/cars-images/{{car.img}}"
+              alt="image"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
     {{#if categories.length}}
       <ul class="catalog__list">
         {{#each categories}}
