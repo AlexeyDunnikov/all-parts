@@ -4,13 +4,17 @@ module.exports = (connection) => {
   const controllerMethods = {};
 
   controllerMethods.renderCatalog = async (req, res) => {
-      const categories = await CategoriesModel.getCategoriesAndSubcategories();
+      const categories = await CategoriesModel.           getCategoriesAndSubcategories();
 
-      res.render("catalog", {
+      const options = {
         title: "Каталог",
         isCatalog: true,
-        categories,
-      });
+        categories,  
+      };
+
+      if (req.query.mod_id) options.modId = req.query.mod_id
+      
+      res.render("catalog", options);
   };
 
   return controllerMethods;

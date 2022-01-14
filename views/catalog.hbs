@@ -1,1 +1,106 @@
-<h1>catalog</h1>
+<section class="catalog page-section">
+  <div class="container">
+    <h3 class="catalog__title page-title">
+      Каталог
+    </h3>
+    {{#if categories.length}}
+      <ul class="catalog__list">
+        {{#each categories}}
+          <li class="catalog__item">
+            <div class="catalog__item-category">
+              <img
+                class="catalog__item-img"
+                src="./images/part-categories/{{img}}"
+                alt="image"
+              />
+              <span class="catalog__item-text" href="/categories/{{id}}">
+                {{name}}
+              </span>
+              {{#if subcategories.length}}
+                <button class="catalog__item-btn">
+                  <svg
+                    class="catalog__item__btn-img"
+                    width="30"
+                    height="20"
+                    viewBox="0 0 40 22"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M37.7429 -3.86489e-06L20 17.6344L2.25712 -3.86489e-06L0 2.18278L20 22L40 2.18278L37.7429 -3.86489e-06Z"
+                      fill="#2F3035"
+                    ></path>
+                  </svg>
+                </button>
+              {{/if}}
+            </div>
+            {{#if subcategories.length}}
+              <ul class="catalog__dropdown-list">
+                {{#each subcategories}}
+                  <li class="catalog__dropdown-item">
+                    {{#if @root.modId}}
+                      <a
+                        href="/subcategory/{{id}}?mod_id={{@root.modId}}"
+                        class="catalog__dropdown-item__link"
+                      >
+
+                        {{#if img}}
+                          <img
+                            class="catalog__dropdown-item__img"
+                            src="./images/part-subcategories/{{img}}"
+                            alt="image"
+                          />
+                        {{else}}
+                          <img
+                            class="catalog__dropdown-item__img"
+                            src="./images/no-photo.png"
+                            alt="image"
+                          />
+                        {{/if}}
+
+                        <span class="catalog__dropdown-item__text">
+                          {{name}}
+                        </span>
+
+                      </a>
+                    {{else}}
+                      <a
+                        href="/subcategory/{{id}}"
+                        class="catalog__dropdown-item__link"
+                      >
+
+                        {{#if img}}
+                          <img
+                            class="catalog__dropdown-item__img"
+                            src="./images/part-subcategories/{{img}}"
+                            alt="image"
+                          />
+                        {{else}}
+                          <img
+                            class="catalog__dropdown-item__img"
+                            src="./images/no-photo.png"
+                            alt="image"
+                          />
+                        {{/if}}
+
+                        <span class="catalog__dropdown-item__text">
+                          {{name}}
+                        </span>
+
+                      </a>
+                    {{/if}}
+
+                  </li>
+                {{/each}}
+              </ul>
+
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+
+  </div>
+</section>

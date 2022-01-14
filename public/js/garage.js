@@ -23,7 +23,7 @@ function renderGarage() {
     li.classList.add("garage__item");
 
     li.innerHTML = `
-       <a href="/modification/${modificationId}" class="garage__item-link">
+       <a href="/catalog?mod_id=${modificationId}" class="garage__item-link">
           <img class="garage__item-img" src="./images/cars-images/${info.img}" alt="car" />
           <div class="garage__item-content">
             <p class="garage__item-name">
