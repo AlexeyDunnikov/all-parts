@@ -99,8 +99,6 @@ module.exports = (connection) => {
 
   modelMethods.getModificationInfo = (modificationId) => {
     return new Promise((resolve, reject) => {
-      modId = 
-
       connection.query(
         `SELECT marks.name AS mark, models.name AS model, gen.name AS generation, gen.img AS img, gen.year_from AS year_from, gen.year_to AS year_to, engines.name AS engine_name, engines.power AS engine_power, engines.horses AS engine_horses, engines.value AS engine_value
         FROM car_marks AS marks 
@@ -111,7 +109,7 @@ module.exports = (connection) => {
         WHERE modifications.id = ${modificationId}`,
         (err, result, fields) => {
           if (err) reject(err);
-          resolve(result);
+          resolve(result[0]);
         }
       );
     });

@@ -47,7 +47,7 @@ module.exports = (connection) => {
   controllerMethods.getModificationInfo = async (req, res) => {
     const result = await carsModel.getModificationInfo(req.body.modificationId);
 
-    res.json(result[0]);
+    res.json(result);
   };
 
   return controllerMethods;
