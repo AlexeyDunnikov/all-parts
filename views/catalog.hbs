@@ -67,21 +67,26 @@
                 </p>
 
                 <div class="catalog__filters-item__range-wrapper">
-                  <span
-                    class="catalog__filters-item__min-value custom-range__min-value custom-range__price price"
-                  >
-                    {{minPrice}}
-                  </span>
-                  <span
-                    class="catalog__filters-item__max-value custom-range__max-value custom-range__price price"
-                  >
-                    {{maxPrice}}
-                  </span>
+                  <div class="catalog__filters-item__range-text__wrapper">
+
+                    <span
+                      class="catalog__filters-item__min-value custom-range__min-value custom-range__price price"
+                    >
+                      {{minPrice}}
+                    </span>
+                    <span
+                      class="catalog__filters-item__max-value custom-range__max-value custom-range__price price"
+                    >
+                      {{maxPrice}}
+                    </span>
+
+                  </div>
 
                   <div
-                    class="catalog__filters-range custom-range"
+                    class="catalog__filters-range catalog__filters-range--price custom-range"
                     data-min-value="{{minPrice}}"
                     data-max-value="{{maxPrice}}"
+                    data-type="price"
                   ></div>
                 </div>
 
@@ -93,24 +98,55 @@
                 </p>
 
                 <div class="catalog__filters-item__range-wrapper">
-                  <span
-                    class="catalog__filters-item__min-value custom-range__min-value custom-range__amount integer"
-                  >
-                    {{minAmount}}
-                  </span>
-                  <span
-                    class="catalog__filters-item__max-value custom-range__max-value custom-range__amount integer"
-                  >
-                    {{maxAmount}}
-                  </span>
+                  <div class="catalog__filters-item__range-text__wrapper">
+                    <p class="catalog__filters-item__range-text">
+                      <span
+                        class="catalog__filters-item__min-value custom-range__min-value custom-range__amount integer"
+                      >
+                        {{minAmount}}
+                      </span>
+                      шт.
+                    </p>
+                    <p class="catalog__filters-item__range-text">
+                      <span
+                        class="catalog__filters-item__max-value custom-range__max-value custom-range__amount integer"
+                      >
+                        {{maxAmount}}
+                      </span>
+                      шт.
+                    </p>
+                  </div>
 
                   <div
-                    class="catalog__filters-range custom-range"
+                    class="catalog__filters-range catalog__filters-range--amount custom-range"
                     data-min-value="{{minAmount}}"
                     data-max-value="{{maxAmount}}"
+                    data-type="amount"
                   ></div>
                 </div>
 
+              </li>
+
+              <li class="catalog__filters-item">
+                <p class="catalog__filters-item__title">
+                  Бренды
+                </p>
+                <ul class="catalog__filters-item__brands-list">
+                  {{#each brands}}
+                    <li class="catalog__filters-item__brands-item">
+                      <label class="catalog__filters-item__brands-item__label">
+                        <input
+                          class="catalog__filters-item__brands-item__checkbox"
+                          type="checkbox"
+                          data-brand="{{name}}"
+                        />
+                        {{name}}
+                      </label>
+
+                    </li>
+
+                  {{/each}}
+                </ul>
               </li>
             </ul>
           </div>

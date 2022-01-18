@@ -2,7 +2,6 @@ const catalogModelModule = require("../models/catalogModel");
 const carsModelModule = require("../models/carsModel");
 
 module.exports = (connection) => {
-
   const catalogModel = catalogModelModule(connection);
   const carsModel = carsModelModule(connection);
 
@@ -30,7 +29,9 @@ module.exports = (connection) => {
   controllerMethods.renderSubcategories = async (req, res) => {
     const categories = await catalogModel.getCategoriesAndSubcategories();
 
-    const subcategories = await catalogModel.getSubcategoriesByCategoryId(req.params.id);
+    const subcategories = await catalogModel.getSubcategoriesByCategoryId(
+      req.params.id
+    );
 
     const categoryName = await catalogModel.getCategoryName(req.params.id);
 
@@ -64,7 +65,9 @@ module.exports = (connection) => {
     const categories = await catalogModel.getCategoriesAndSubcategories();
 
     const categoryId = category.id;
-    const subcategories = await catalogModel.getSubcategoriesByCategoryId(categoryId);
+    const subcategories = await catalogModel.getSubcategoriesByCategoryId(
+      categoryId
+    );
     //console.log(subcategories);
 
     const parts = await catalogModel.getPartsBySubcatId(subcatId);
@@ -77,15 +80,15 @@ module.exports = (connection) => {
     const minAmount = await catalogModel.getMinAmountBySubcatId(subcatId);
     const maxAmount = await catalogModel.getMaxAmountBySubcatId(subcatId);
 
-   //console.log(parts);
+    //console.log(parts);
 
     const options = {
-      title: 'Каталог',
+      title: "Каталог",
       isCatalog: true,
       categories,
       subcategoryName,
       subcategories,
-      parts, 
+      parts,
       brands,
       minPrice,
       maxPrice,

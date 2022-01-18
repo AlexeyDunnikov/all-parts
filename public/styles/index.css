@@ -627,32 +627,65 @@
   margin-right: 50px;
 }
 
-.catalog__aside-block{
+.catalog__aside-block {
   padding: 15px;
   background-color: #f5f5f5;
 }
 
-.catalog__aside-block:not(:last-of-type){
+.catalog__aside-block:not(:last-of-type) {
   margin-bottom: 30px;
 }
 
-.catalog__aside-block__title{
+.catalog__aside-block__title {
   font-size: 20px;
   font-weight: 500;
   line-height: 24px;
   margin-bottom: 15px;
 }
 
-.catalog__aside-block__categories-list{
+.catalog__aside-block__categories-list {
   padding-left: 20px;
 }
 
-.catalog__aside-block__categories-item:not(:last-of-type){
+.catalog__aside-block__categories-item:not(:last-of-type) {
   margin-bottom: 5px;
 }
 
-.catalog__aside-block__categories-link:hover{
+.catalog__aside-block__categories-link:hover {
   text-decoration: underline;
+}
+
+.catalog__filters-item:not(:last-of-type) {
+  position: relative;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+}
+.catalog__filters-item:not(:last-of-type)::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+.catalog__filters-item__title{
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 10px;
+}
+
+.catalog__filters-item__range-text__wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.catalog__filters-range{
+  margin: 0 20px;
 }
 
 .catalog__body {
@@ -690,6 +723,20 @@
   display: grid;
   grid-gap: 30px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.catalog__body-item.hidden {
+  display: none !important;
+}
+
+.catalog__body-item.hidden-by-brand {
+  display: none !important;
+}
+.catalog__body-item.hidden-by-price {
+  display: none !important;
+}
+.catalog__body-item.hidden-by-amount {
+  display: none !important;
 }
 
 .catalog__body-list.grid .catalog__body-item {
@@ -750,7 +797,7 @@
   text-align: right;
 }
 
-.catalog__body-list.flex .catalog__body-item__price{
+.catalog__body-list.flex .catalog__body-item__price {
   display: inline-block;
   margin-bottom: 10px;
 }

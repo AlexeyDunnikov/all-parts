@@ -1,5 +1,5 @@
 import { formatPrice } from "./formatPrice.js";
-import {initialRanges} from './catalogFilters.js';
+import { initialFilters } from "./catalogFilters.js";
 
-initialRanges();
+initialFilters();
 formatPrice('.price');

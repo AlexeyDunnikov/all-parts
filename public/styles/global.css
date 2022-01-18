@@ -47,8 +47,8 @@ svg path {
   margin-bottom: 30px;
 }
 
-.btn{
-  border:none;
+.btn {
+  border: none;
   border-radius: 5px;
   color: #fff;
   padding: 8px 20px;
@@ -57,9 +57,11 @@ svg path {
   transition: ease 0.3s;
 }
 
-.btn:hover{
+.btn:hover {
   color: #338cf0;
   background-color: #fff;
 }
 
-
+.catalog__filters-list .noUi-connect {
+  background-color: #338cf0;
+}
