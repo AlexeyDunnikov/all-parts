@@ -622,9 +622,37 @@
   display: flex;
 }
 
-.catalog__filters {
+.catalog__aside {
   width: 250px;
   margin-right: 50px;
+}
+
+.catalog__aside-block{
+  padding: 15px;
+  background-color: #f5f5f5;
+}
+
+.catalog__aside-block:not(:last-of-type){
+  margin-bottom: 30px;
+}
+
+.catalog__aside-block__title{
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  margin-bottom: 15px;
+}
+
+.catalog__aside-block__categories-list{
+  padding-left: 20px;
+}
+
+.catalog__aside-block__categories-item:not(:last-of-type){
+  margin-bottom: 5px;
+}
+
+.catalog__aside-block__categories-link:hover{
+  text-decoration: underline;
 }
 
 .catalog__body {

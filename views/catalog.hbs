@@ -36,10 +36,84 @@
     </div>
     {{#if parts.length}}
       <div class="catalog__inner">
-        <div class="catalog__filters">
-          <p class="catalog__fiters-title">
-            Фильтры
-          </p>
+        <div class="catalog__aside">
+          {{#if subcategories.length}}
+            <div class="catalog__aside-block">
+              <p class="catalog__aside-block__title">
+                Сопутствующие категории
+              </p>
+              <ul class="catalog__aside-block__categories-list">
+                {{#each subcategories}}
+                  <li class="catalog__aside-block__categories-item">
+                    <a
+                      class="catalog__aside-block__categories-link"
+                      href="/subcategories/{{id}}"
+                    >
+                      {{name}}
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+          <div class="catalog__aside-block">
+            <p class="catalog__aside-block__title">
+              Фильтры
+            </p>
+            <ul class="catalog__filters-list">
+              <li class="catalog__filters-item">
+                <p class="catalog__filters-item__title">
+                  Цена
+                </p>
+
+                <div class="catalog__filters-item__range-wrapper">
+                  <span
+                    class="catalog__filters-item__min-value custom-range__min-value custom-range__price price"
+                  >
+                    {{minPrice}}
+                  </span>
+                  <span
+                    class="catalog__filters-item__max-value custom-range__max-value custom-range__price price"
+                  >
+                    {{maxPrice}}
+                  </span>
+
+                  <div
+                    class="catalog__filters-range custom-range"
+                    data-min-value="{{minPrice}}"
+                    data-max-value="{{maxPrice}}"
+                  ></div>
+                </div>
+
+              </li>
+
+              <li class="catalog__filters-item">
+                <p class="catalog__filters-item__title">
+                  Наличие на складе
+                </p>
+
+                <div class="catalog__filters-item__range-wrapper">
+                  <span
+                    class="catalog__filters-item__min-value custom-range__min-value custom-range__amount integer"
+                  >
+                    {{minAmount}}
+                  </span>
+                  <span
+                    class="catalog__filters-item__max-value custom-range__max-value custom-range__amount integer"
+                  >
+                    {{maxAmount}}
+                  </span>
+
+                  <div
+                    class="catalog__filters-range custom-range"
+                    data-min-value="{{minAmount}}"
+                    data-max-value="{{maxAmount}}"
+                  ></div>
+                </div>
+
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div class="catalog__body">
@@ -150,7 +224,12 @@
           <ul class="catalog__body-list grid">
             {{#each parts}}
 
-              <li class="catalog__body-item">
+              <li
+                class="catalog__body-item"
+                data-price="{{price}}"
+                data-brand="{{brand}}"
+                data-amount="{{amount}}"
+              >
                 <div class="catalog__body-item__img-box">
                   {{#if img}}
                     <img

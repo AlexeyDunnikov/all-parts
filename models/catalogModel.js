@@ -76,7 +76,7 @@ module.exports = (connection) => {
         }
       );
     });
-  }
+  };
 
   modelMethods.getCategoriesAndSubcategories = async function () {
     let categories = await this.getCategories();
@@ -109,7 +109,7 @@ module.exports = (connection) => {
         INNER JOIN parts_brands AS brand
         ON parts.id_brand = brand.id
         WHERE subcat.id = ${subcatId}
-        ORDER BY brand.name;`,
+        ORDER BY parts.price;`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -137,10 +137,9 @@ module.exports = (connection) => {
   modelMethods.getMinPriceBySubcatId = (subcatId) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT MIN(parts.price)
+        `SELECT MIN(price)
           FROM parts
-          INNER JOIN parts_subcategories AS subcat ON subcat.id = parts.id_subcategory
-          WHERE subcat.id = ${subcatId}`,
+          WHERE id_subcategory = ${subcatId}`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(Object.values(result[0])[0]);
@@ -152,10 +151,9 @@ module.exports = (connection) => {
   modelMethods.getMaxPriceBySubcatId = (subcatId) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT MAX(parts.price)
+        `SELECT MAX(price)
           FROM parts
-          INNER JOIN parts_subcategories AS subcat ON subcat.id = parts.id_subcategory
-          WHERE subcat.id = ${subcatId}`,
+          WHERE id_subcategory = ${subcatId}`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(Object.values(result[0])[0]);
@@ -163,5 +161,34 @@ module.exports = (connection) => {
       );
     });
   };
+
+  modelMethods.getMinAmountBySubcatId = (subcatId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT MIN(amount)
+          FROM parts
+          WHERE id_subcategory = ${subcatId}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(Object.values(result[0])[0]);
+        }
+      );
+    });
+  };
+
+  modelMethods.getMaxAmountBySubcatId = (subcatId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT MAX(amount)
+          FROM parts
+          WHERE id_subcategory = ${subcatId}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(Object.values(result[0])[0]);
+        }
+      );
+    });
+  };
+
   return modelMethods;
 };

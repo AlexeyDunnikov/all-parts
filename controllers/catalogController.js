@@ -61,6 +61,7 @@ module.exports = (connection) => {
     const subcategoryName = await catalogModel.getSubcategoryNameById(subcatId);
 
     //console.log(subcategoryName);
+    const categories = await catalogModel.getCategoriesAndSubcategories();
 
     const categoryId = category.id;
     const subcategories = await catalogModel.getSubcategoriesByCategoryId(categoryId);
@@ -71,20 +72,25 @@ module.exports = (connection) => {
     const brands = await catalogModel.getBrandsBySubcatId(subcatId);
 
     const minPrice = await catalogModel.getMinPriceBySubcatId(subcatId);
-
     const maxPrice = await catalogModel.getMaxPriceBySubcatId(subcatId);
+
+    const minAmount = await catalogModel.getMinAmountBySubcatId(subcatId);
+    const maxAmount = await catalogModel.getMaxAmountBySubcatId(subcatId);
 
    //console.log(parts);
 
     const options = {
       title: 'Каталог',
       isCatalog: true,
+      categories,
       subcategoryName,
       subcategories,
       parts, 
       brands,
       minPrice,
       maxPrice,
+      minAmount,
+      maxAmount,
     };
 
     if (req.query.mod_id) {
