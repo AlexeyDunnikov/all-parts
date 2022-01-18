@@ -655,13 +655,18 @@
   text-decoration: underline;
 }
 
+.catalog__filters-item{
+  display: flex;
+  flex-direction: column;
+}
+
 .catalog__filters-item:not(:last-of-type) {
   position: relative;
   margin-bottom: 10px;
   padding-bottom: 20px;
 }
-.catalog__filters-item:not(:last-of-type)::after{
-  content: '';
+.catalog__filters-item:not(:last-of-type)::after {
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -671,21 +676,32 @@
   background-color: #fff;
 }
 
-.catalog__filters-item__title{
+.catalog__filters-item__title {
   font-size: 18px;
   line-height: 22px;
   margin-bottom: 10px;
 }
 
-.catalog__filters-item__range-text__wrapper{
+.catalog__filters-item__range-text__wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-.catalog__filters-range{
+.catalog__filters-range {
   margin: 0 20px;
+}
+
+.catalog__filters-item__brand__btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.catalog__filters-item__brand__btn.hidden{
+  display: none;
 }
 
 .catalog__body {

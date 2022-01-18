@@ -21,7 +21,8 @@ export function initialFilters() {
   createRange(amountRange);
   addHandlersToAmountRange(amountRange, catalogItems);
 
-  addHandlersTobrandsCheckboxes(brandsCheckboxes, catalogItems);
+  addHandlersToBrandsCheckboxes(brandsCheckboxes, catalogItems);
+  initialBrandsBtns(brandsCheckboxes);
 }
 
 function createRange(range) {
@@ -74,7 +75,7 @@ function addHandlersToAmountRange(amountRange, catalogItems) {
   });
 }
 
-function addHandlersTobrandsCheckboxes(brandsCheckboxes, catalogItems) {
+function addHandlersToBrandsCheckboxes(brandsCheckboxes, catalogItems) {
   brandsCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", (evt) => {
       const brands = [];
@@ -82,11 +83,52 @@ function addHandlersTobrandsCheckboxes(brandsCheckboxes, catalogItems) {
         if (checkbox.checked) brands.push(checkbox.dataset.brand);
       });
 
+      if (brands.length === 0) {
+        switchBrandsBtn();
+      } else if (brands.length === brandsCheckboxes.length) {
+        switchBrandsBtn();
+      }
+
       setClassesForCatalogItems(catalogItems, "hidden-by-brand", (item) => {
         return !brands.includes(item.dataset.brand);
       });
     });
   });
+}
+
+function initialBrandsBtns(brandsCheckboxes) {
+  const brandsBtns = document.querySelectorAll(
+    ".catalog__filters-item__brand__btn"
+  );
+  if(!brandsBtns) return;
+
+  brandsBtns.forEach(brandBtn => {
+    brandBtn.addEventListener('click', (evt) => {
+      brandsBtnHandler(evt.target, brandsCheckboxes);
+    })
+  });
+}
+
+function brandsBtnHandler(target, brandsCheckboxes) {
+  brandsCheckboxes.forEach((brandsCheckbox) => {
+    if (target.dataset.type === "check" && !brandsCheckbox.checked) {
+      brandsCheckbox.click();
+    } else if (target.dataset.type === "checkout" && brandsCheckbox.checked) {
+      brandsCheckbox.click();
+    }
+  });
+}
+
+function switchBrandsBtn() {
+  const brandsCheckAllBtn = document.querySelector(
+    ".catalog__filters-item__brand__btn-check-all"
+  );
+  const brandsCheckoutAllBtn = document.querySelector(
+    ".catalog__filters-item__brand__btn-checkout-all "
+  );
+
+  brandsCheckAllBtn.classList.toggle("hidden");
+  brandsCheckoutAllBtn.classList.toggle("hidden");
 }
 
 function setClassesForCatalogItems(catalogItems, itemClass, isRight) {
