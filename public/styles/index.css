@@ -511,6 +511,17 @@
   text-decoration: underline;
 }
 
+.catalog__top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.catalog__title{
+  margin-bottom: 0;
+}
+
 .catalog-categories__top {
   display: flex;
   align-items: center;

@@ -57,21 +57,16 @@ module.exports = (connection) => {
     const subcatId = req.params.id;
 
     const category = await catalogModel.getCategoryBySubcategoryId(subcatId);
-    //console.log(category);
 
     const subcategoryName = await catalogModel.getSubcategoryNameById(subcatId);
 
-    //console.log(subcategoryName);
     const categories = await catalogModel.getCategoriesAndSubcategories();
 
     const categoryId = category.id;
     const subcategories = await catalogModel.getSubcategoriesByCategoryId(
       categoryId
     );
-    //console.log(subcategories);
-
-    const parts = await catalogModel.getPartsBySubcatId(subcatId);
-
+   
     const brands = await catalogModel.getBrandsBySubcatId(subcatId);
 
     const minPrice = await catalogModel.getMinPriceBySubcatId(subcatId);
@@ -80,15 +75,12 @@ module.exports = (connection) => {
     const minAmount = await catalogModel.getMinAmountBySubcatId(subcatId);
     const maxAmount = await catalogModel.getMaxAmountBySubcatId(subcatId);
 
-    //console.log(parts);
-
     const options = {
       title: "Каталог",
       isCatalog: true,
       categories,
       subcategoryName,
       subcategories,
-      parts,
       brands,
       minPrice,
       maxPrice,
@@ -97,10 +89,15 @@ module.exports = (connection) => {
     };
 
     if (req.query.mod_id) {
-      options.modId = req.query.mod_id;
+      const modId = req.query.mod_id;
+      options.modId = modId;
 
-      const car = await carsModel.getModificationInfo(req.query.mod_id);
-      options.car = car[0];
+      options.parts = await catalogModel.getPartsByModIdAndSubcatId(modId, subcatId);
+
+      const car = await carsModel.getModificationInfo(modId);
+      options.car = car;
+    } else {
+      options.parts = await catalogModel.getPartsBySubcatId(subcatId);
     }
 
     res.render("catalog", options);

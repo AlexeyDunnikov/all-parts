@@ -118,6 +118,22 @@ module.exports = (connection) => {
     });
   };
 
+  modelMethods.getPartsByModIdAndSubcatId = (modId, subcatId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT parts.id, parts.img, parts.price, parts.articul, parts.amount, brands.name AS brand
+        FROM parts_to_modifications AS parts_to_mod
+        INNER JOIN parts ON parts_to_mod.id_part = parts.id
+        INNER JOIN parts_brands AS brands ON parts.id_brand = brands.id
+        WHERE parts.id_subcategory = ${subcatId} AND parts_to_mod.id_modification = ${modId}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }
+
   modelMethods.getBrandsBySubcatId = (subcatId) => {
     return new Promise((resolve, reject) => {
       connection.query(

@@ -3,30 +3,37 @@
     <div class="auth__form-wrapper">
       <div class="auth__form-body">
         <h1 class="auth__title page-title">Регистрация</h1>
-        <form class="auth__form" action="POST">
-          <input
-            class="auth__form-input"
-            name="login"
-            type="text"
-            placeholder="Введите логин"
-          />
+        {{#if signupError}}
+          <p class="alert">{{signupError}}</p>
+        {{/if}}
+        <form class="auth__form" action="/signup" method="POST">
           <input
             class="auth__form-input"
             name="email"
             type="text"
             placeholder="Введите e-mail"
+            required
+          />
+          <input
+            class="auth__form-input"
+            name="name"
+            type="text"
+            placeholder="Придумайте имя"
+            required
           />
           <input
             class="auth__form-input"
             name="password"
             type="text"
             placeholder="Введите пароль"
+            required
           />
           <input
             class="auth__form-input"
             name="password-confirm"
             type="text"
             placeholder="Подтвердите пароль"
+            required
           />
           <button class="auth__btn btn" type="submit">
             Зарегестрироваться

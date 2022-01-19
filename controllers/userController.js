@@ -1,17 +1,87 @@
+const userModelModule = require('../models/userModel');
+const bcrypt = require("bcryptjs");
+const { validationResult } = require("express-validator");
+
 module.exports = (connection) => {
+  const userModel = userModelModule(connection)
+
   const controllerMethods = {};
 
-  controllerMethods.renderSingin = async function (req, res) {
+  controllerMethods.renderSignin = async (req, res) => {
     res.render("signin", {
       title: "Вход в аккаунт",
+      signinError: req.flash("signinError"),
     });
   };
 
-  controllerMethods.renderSingup = async function (req, res) {
+  controllerMethods.renderSignup = async (req, res) => {
     res.render("signup", {
       title: "Регистрация",
+      signupError: req.flash("signupError"),
     });
   };
+
+  controllerMethods.signout = async (req, res) => {
+    req.session.destroy(() => {
+      res.redirect("/signin");
+    });
+  };
+
+  controllerMethods.signin = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+
+      const candidate = await userModel.getUserByEmail(email);
+
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash("signinError", errors.array()[0].msg);
+        return res.status(422).redirect("/signin");
+      }
+
+      const areSame = await bcrypt.compare(password, candidate.password);
+      if (areSame) {
+        const user = candidate;
+        req.session.user = user;
+        req.session.isAuthenticated = true;
+        req.session.save((err) => {
+          if (err) {
+            throw err;
+          }
+          res.redirect("/");
+        });
+      } else {
+        req.flash("signinError", "Неверный пароль");
+        res.redirect("/signin");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }; 
+
+  controllerMethods.signup = async (req, res) => {
+    try {
+      const { email, name, password } = req.body;
+
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash("signupError", errors.array()[0].msg);
+        return res.status(422).redirect("/signup");
+      }
+
+      const hashPassword = await bcrypt.hash(password, 10);
+
+      userModel.createUser({
+        email,
+        name,
+        password: hashPassword,
+      });
+
+      res.redirect("/signin");
+    } catch (err) {
+      console.log(err);
+    }
+  }; 
 
   return controllerMethods;
 };

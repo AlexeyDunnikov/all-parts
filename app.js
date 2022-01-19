@@ -1,9 +1,13 @@
 const express = require("express");
-const mysql = require("mysql2");
 const path = require("path");
+const mysql = require("mysql2");
+const flash = require('connect-flash');
 const exphbs = require("express-handlebars");
 const session = require("express-session");
 const keys = require("./keys/keys");
+
+const varMiddleware = require("./middleware/variables");
+const userMiddleware = require("./middleware/user");
 
 const Handlebars = require("handlebars");
 const {
@@ -31,11 +35,6 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
-require("./routes/homeRoute")(app, connection);
-require("./routes/carRoute")(app, connection);
-require("./routes/userRoute")(app, connection);
-require("./routes/catalogRoute")(app, connection);
-
 //const homeRoutes = require("./routes/home");
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
@@ -52,6 +51,18 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(flash());
+
+//Middlewares
+app.use(varMiddleware);
+app.use(userMiddleware(connection).user);
+
+//Routes
+require("./routes/homeRoute")(app, connection);
+require("./routes/carRoute")(app, connection);
+require("./routes/userRoute")(app, connection);
+require("./routes/catalogRoute")(app, connection);
 
 const PORT = process.env.PORT || 3000;
 

@@ -105,7 +105,11 @@
         </div>
 
         <form class="header__search-form" action="">
-          <input class="header__search-input" placeholder="Введите название детали" type="text" />
+          <input
+            class="header__search-input"
+            placeholder="Введите название детали"
+            type="text"
+          />
           <button class="header__search-btn">
             <svg
               class="header__search-btn__img"
@@ -133,55 +137,80 @@
         </form>
 
         <ul class="header__content-nav">
-          <li class="header__content-nav__item">
-            <a class="header__content-nav__item-link" href="/signin">
-              <svg
-                class="header__content-nav__item-img"
-                width="30"
-                height="30"
-                viewBox="0 0 30 31"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M26.029 23.374C21.7301 22.3484 17.7287 21.4494 19.6663 17.6674C25.5665 6.15608 21.2301 0 15.0011 0C8.6484 0 4.42076 6.39246 10.336 17.6674C12.3323 21.4714 8.17963 22.3704 3.97324 23.374C0.131862 24.2911 -0.0118929 26.2622 0.000607543 29.7083L0.00560771 31H29.9941L29.9991 29.7484C30.0141 26.2764 29.8841 24.295 26.029 23.374V23.374Z"
-                  fill="white"
-                ></path>
-              </svg>
-
-              <span class="header__content-nav__item-text">
-                Войти
-              </span>
-            </a>
-          </li>
-          {{!-- {{#if isAuth}} --}}
-          <li class="header__content-nav__item">
-            <a class="header__content-nav__item-link" href="/basket">
-              <div class="header__content-nav__item-link__img-box">
+          {{#if isAuth}}
+            <li class="header__content-nav__item">
+              <a class="header__content-nav__item-link" href="/signout">
                 <svg
                   class="header__content-nav__item-img"
-                  width="32"
-                  height="26"
-                  viewBox="0 0 37 29"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 30 31"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M37 0L35.8545 3.22222H32.8807L27.5249 22.5556H7.11479L0 4.83333H25.9185L25.049 8.05556H4.63733L9.16521 19.3333H25.2417L30.5327 0H37V0ZM13.1042 24.1667C11.8277 24.1667 10.7917 25.2493 10.7917 26.5833C10.7917 27.9189 11.8277 29 13.1042 29C14.3807 29 15.4167 27.9189 15.4167 26.5833C15.4167 25.2493 14.3807 24.1667 13.1042 24.1667ZM23.7417 12.8889L20.8125 24.1667C19.536 24.1667 18.5 25.2477 18.5 26.5833C18.5 27.9189 19.536 29 20.8125 29C22.089 29 23.125 27.9189 23.125 26.5833C23.125 25.2493 22.089 24.1667 20.8125 24.1667L23.7417 12.8889Z"
+                    d="M26.029 23.374C21.7301 22.3484 17.7287 21.4494 19.6663 17.6674C25.5665 6.15608 21.2301 0 15.0011 0C8.6484 0 4.42076 6.39246 10.336 17.6674C12.3323 21.4714 8.17963 22.3704 3.97324 23.374C0.131862 24.2911 -0.0118929 26.2622 0.000607543 29.7083L0.00560771 31H29.9941L29.9991 29.7484C30.0141 26.2764 29.8841 24.295 26.029 23.374V23.374Z"
                     fill="white"
                   ></path>
                 </svg>
-                <span class="basket-num">
-                  10
-                </span>
-              </div>
 
-              <span class="header__content-nav__item-text">
-                Корзина
-              </span>
-            </a>
-          </li>
-          {{!-- {{/if}} --}}
+                <span class="header__content-nav__item-text">
+                  Выйти
+                </span>
+              </a>
+            </li>
+          {{else}}
+            <li class="header__content-nav__item">
+              <a class="header__content-nav__item-link" href="/signin">
+                <svg
+                  class="header__content-nav__item-img"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 30 31"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M26.029 23.374C21.7301 22.3484 17.7287 21.4494 19.6663 17.6674C25.5665 6.15608 21.2301 0 15.0011 0C8.6484 0 4.42076 6.39246 10.336 17.6674C12.3323 21.4714 8.17963 22.3704 3.97324 23.374C0.131862 24.2911 -0.0118929 26.2622 0.000607543 29.7083L0.00560771 31H29.9941L29.9991 29.7484C30.0141 26.2764 29.8841 24.295 26.029 23.374V23.374Z"
+                    fill="white"
+                  ></path>
+                </svg>
+
+                <span class="header__content-nav__item-text">
+                  Войти
+                </span>
+              </a>
+            </li>
+          {{/if}}
+
+          {{#if isAuth}}
+            <li class="header__content-nav__item">
+              <a class="header__content-nav__item-link" href="/basket">
+                <div class="header__content-nav__item-link__img-box">
+                  <svg
+                    class="header__content-nav__item-img"
+                    width="32"
+                    height="26"
+                    viewBox="0 0 37 29"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M37 0L35.8545 3.22222H32.8807L27.5249 22.5556H7.11479L0 4.83333H25.9185L25.049 8.05556H4.63733L9.16521 19.3333H25.2417L30.5327 0H37V0ZM13.1042 24.1667C11.8277 24.1667 10.7917 25.2493 10.7917 26.5833C10.7917 27.9189 11.8277 29 13.1042 29C14.3807 29 15.4167 27.9189 15.4167 26.5833C15.4167 25.2493 14.3807 24.1667 13.1042 24.1667ZM23.7417 12.8889L20.8125 24.1667C19.536 24.1667 18.5 25.2477 18.5 26.5833C18.5 27.9189 19.536 29 20.8125 29C22.089 29 23.125 27.9189 23.125 26.5833C23.125 25.2493 22.089 24.1667 20.8125 24.1667L23.7417 12.8889Z"
+                      fill="white"
+                    ></path>
+                  </svg>
+                  <span class="basket-num">
+                    10
+                  </span>
+                </div>
+
+                <span class="header__content-nav__item-text">
+                  Корзина
+                </span>
+              </a>
+            </li>
+          {{/if}}
         </ul>
       </div>
     </div>
