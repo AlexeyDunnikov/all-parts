@@ -1,22 +1,23 @@
-const userModelModule = require('../models/userModel');
+const userModelModule = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
+const TITLES = require('../keys/titles');
 
 module.exports = (connection) => {
-  const userModel = userModelModule(connection)
+  const userModel = userModelModule(connection);
 
   const controllerMethods = {};
 
   controllerMethods.renderSignin = async (req, res) => {
     res.render("signin", {
-      title: "Вход в аккаунт",
+      title: TITLES.SIGNIN,
       signinError: req.flash("signinError"),
     });
   };
 
   controllerMethods.renderSignup = async (req, res) => {
     res.render("signup", {
-      title: "Регистрация",
+      title: TITLES.SIGNUP,
       signupError: req.flash("signupError"),
     });
   };
@@ -57,7 +58,7 @@ module.exports = (connection) => {
     } catch (err) {
       console.log(err);
     }
-  }; 
+  };
 
   controllerMethods.signup = async (req, res) => {
     try {
@@ -81,7 +82,11 @@ module.exports = (connection) => {
     } catch (err) {
       console.log(err);
     }
-  }; 
+  };
+
+  controllerMethods.isUserAuth = (req, res) => {
+    req.session.user ? res.json(true) : res.json(false);
+  };
 
   return controllerMethods;
 };

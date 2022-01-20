@@ -1,6 +1,30 @@
 module.exports = (connection) => {
   const modelMethods = {};
 
+  modelMethods.addCarModificationToUser = (userId, modId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `INSERT INTO garage (id_user_garage, id_car_mod_garage) VALUES ('${userId}', '${modId}')`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }
+
+  modelMethods.delModFromGarage = (userId, modId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `DELETE FROM garage WHERE (id_user_garage = ${userId} AND id_car_mod_garage = ${modId})`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }
+
   modelMethods.getAllCars = () => {
     return new Promise((resolve, reject) => {
       connection.query("SELECT * FROM car_marks", (err, result, fields) => {
@@ -100,7 +124,7 @@ module.exports = (connection) => {
   modelMethods.getModificationInfo = (modificationId) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT marks.name AS mark, models.name AS model, gen.name AS generation, gen.img AS img, gen.year_from AS year_from, gen.year_to AS year_to, engines.name AS engine_name, engines.power AS engine_power, engines.horses AS engine_horses, engines.value AS engine_value
+        `SELECT modifications.id AS id, marks.name AS mark, models.name AS model, gen.name AS generation, gen.img AS img, gen.year_from AS year_from, gen.year_to AS year_to, engines.name AS engine_name, engines.power AS engine_power, engines.horses AS engine_horses, engines.value AS engine_value
         FROM car_marks AS marks 
         INNER JOIN car_models AS models ON marks.id = models.car_id
         INNER JOIN car_generations AS gen ON models.id = gen.model_id
@@ -110,6 +134,19 @@ module.exports = (connection) => {
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result[0]);
+        }
+      );
+    });
+  };
+
+  modelMethods.getCarsModFromGarageWhereUserId = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT id_car_mod_garage FROM garage WHERE id_user_garage = ${userId}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          const carsModId = result.map((car) => car.id_car_mod_garage);
+          resolve(carsModId);
         }
       );
     });

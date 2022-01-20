@@ -11,4 +11,5 @@ module.exports = (app, connection) => {
 
   app.post("/signin", validator.signinValidators, index.signin);
   app.post("/signup", validator.signupValidators, index.signup);
+  app.post("/is-user-auth", index.isUserAuth);
 };

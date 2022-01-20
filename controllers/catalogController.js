@@ -1,5 +1,6 @@
 const catalogModelModule = require("../models/catalogModel");
 const carsModelModule = require("../models/carsModel");
+const TITLES = require('../keys/titles');
 
 module.exports = (connection) => {
   const catalogModel = catalogModelModule(connection);
@@ -11,7 +12,7 @@ module.exports = (connection) => {
     const categories = await catalogModel.getCategoriesAndSubcategories();
 
     const options = {
-      title: "Категории товаров",
+      title: TITLES.CATEGORIES,
       isCatalog: true,
       categories,
     };
@@ -76,7 +77,7 @@ module.exports = (connection) => {
     const maxAmount = await catalogModel.getMaxAmountBySubcatId(subcatId);
 
     const options = {
-      title: "Каталог",
+      title: TITLES.CATALOG,
       isCatalog: true,
       categories,
       subcategoryName,

@@ -8,6 +8,7 @@ const keys = require("./keys/keys");
 
 const varMiddleware = require("./middleware/variables");
 const userMiddleware = require("./middleware/user");
+const errorHandler = require("./middleware/error");
 
 const Handlebars = require("handlebars");
 const {
@@ -63,6 +64,8 @@ require("./routes/homeRoute")(app, connection);
 require("./routes/carRoute")(app, connection);
 require("./routes/userRoute")(app, connection);
 require("./routes/catalogRoute")(app, connection);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 

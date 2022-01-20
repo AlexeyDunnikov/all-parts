@@ -4,6 +4,26 @@ module.exports = (connection) => {
 
   const controllerMethods = {};
 
+  controllerMethods.addCarModification = async (req, res) => {
+    const carsModifications = await carsModel.getCarsModFromGarageWhereUserId(
+      req.user.id
+    );
+
+    if (!carsModifications.includes(req.body.modificationId)) {
+      const result = await carsModel.addCarModificationToUser(
+        req.user.id,
+        req.body.modificationId
+      );
+
+      res.json(result);
+    }
+  };
+
+  controllerMethods.delModFromGarage = async (req, res) => {
+    const result = await carsModel.delModFromGarage(req.user.id, req.body.modificationId);
+    res.json(result);
+  }
+
   controllerMethods.getYears = async (req, res) => {
     const years = await carsModel.getYears();
     res.json(years);
@@ -37,7 +57,7 @@ module.exports = (connection) => {
   controllerMethods.getModificationId = async (req, res) => {
     const result = await carsModel.getModificationId(
       req.body.generationId,
-      req.body.engineId,
+      req.body.engineId
     );
     const modificationId = result[0].id;
 

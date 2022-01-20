@@ -1,3 +1,5 @@
+import { isUserAuth } from "./helper.js";
+
 async function initialSelectCarForm() {
   const form = document.querySelector(".select-car__form");
   if (!form) return;
@@ -38,6 +40,7 @@ async function initialSelectCarForm() {
       selectedYear,
       selectedGenerationId
     );
+
     setDefaultModifications(form);
     renderSelect("#car-modification", modifications);
   });
@@ -49,9 +52,31 @@ async function initialSelectCarForm() {
       selectedGenerationId,
       selectedEngineId
     );
-    addToLocalStorage(modificationId);
+
+    const isAuth = await isUserAuth();
+    if (isAuth) {
+      console.log(isAuth);
+      await addCarModification(modificationId);
+    } else {
+      addToLocalStorage(modificationId);
+    }
+
     await toCatalog(modificationId);
   });
+}
+
+async function addCarModification(modificationId) {
+  await fetch("/add-car-modification", {
+    method: "POST",
+    body: JSON.stringify({
+      modificationId,
+    }),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  return;
 }
 
 async function toCatalog(modificationId) {

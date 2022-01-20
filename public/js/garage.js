@@ -1,6 +1,16 @@
-function renderGarage(isFirstRender = false) {
+import { isUserAuth } from "./helper.js";
+
+async function renderGarage() {
   const garageList = document.querySelector(".garage__list");
   if (!garageList) return;
+
+  const isAuth = await isUserAuth();
+  if (isAuth) {
+    if (garageList.children.length === 0) {
+      document.querySelector(".garage").classList.add("hide");
+    }
+    return;
+  }
 
   garageList.innerHTML = "";
 
@@ -10,13 +20,8 @@ function renderGarage(isFirstRender = false) {
     document.querySelector(".garage").classList.add("hide");
     return;
   }
-  if(isFirstRender){
-    document.querySelector(".select-car").classList.add("hide");
-  }
 
   const currModificationId = +localStorage.getItem("currModificationId") ?? 1;
-
-  modificationsArr.reverse();
 
   modificationsArr.forEach(async (modificationId) => {
     const info = await getModificationInfo(modificationId);
@@ -38,7 +43,7 @@ function renderGarage(isFirstRender = false) {
         </a>
     `;
 
-    delBtn = document.createElement("button");
+    const delBtn = document.createElement("button");
     delBtn.classList.add("garage__item-delete");
     delBtn.dataset.modId = modificationId;
     delBtn.innerHTML = ` <svg
@@ -55,23 +60,7 @@ function renderGarage(isFirstRender = false) {
               ></path>
             </svg>`;
 
-    delBtn.addEventListener("click", (evt) => {
-      const target = evt.target.closest(".garage__item-delete");
-      const id = target.dataset.modId;
-
-      const index = modificationsArr.indexOf(+id);
-      modificationsArr.splice(index, 1);
-      if (modificationsArr.length === 0) {
-        document.querySelector(".select-car").classList.remove("hide");
-        const form = document.querySelector(".select-car__form");
-        if (!form) return;
-        setDefaultYears(form);
-      }
-
-      localStorage.setItem("garage", JSON.stringify(modificationsArr));
-
-      renderGarage();
-    });
+    delBtn.addEventListener("click", delBtnHandler);
 
     li.append(delBtn);
 
@@ -81,6 +70,49 @@ function renderGarage(isFirstRender = false) {
       garageList.append(li);
     }
   });
+}
+
+function initialDelBtns() {
+  const deleteBtns = document.querySelectorAll(".garage__item-delete");
+  if (!deleteBtns) return;
+
+  deleteBtns.forEach((deleteBtn) => {
+    deleteBtn.addEventListener("click", delBtnHandler);
+  });
+}
+
+async function delBtnHandler(evt) {
+  const target = evt.target.closest(".garage__item-delete");
+  const modId = target.dataset.modId;
+
+  const isAuth = await isUserAuth();
+  if (isAuth) {
+    await delModFromGarage(modId);
+    target.closest(".garage__item").remove();
+  } else {
+    const modificationsArr = JSON.parse(localStorage.getItem("garage"));
+
+    const index = modificationsArr.indexOf(+modId);
+    modificationsArr.splice(index, 1);
+
+    localStorage.setItem("garage", JSON.stringify(modificationsArr));
+  }
+
+  renderGarage();
+}
+
+async function delModFromGarage(modificationId) {
+  await fetch("/del-car-from-garage", {
+    method: "DELETE",
+    body: JSON.stringify({
+      modificationId,
+    }),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  return;
 }
 
 async function getModificationInfo(modificationId) {
@@ -98,17 +130,5 @@ async function getModificationInfo(modificationId) {
   return await modificationInfo.json();
 }
 
-function addToGarageBtn() {
-  const addBtn = document.querySelector(".garage__add-btn");
-  if (!addBtn) return;
-
-  addBtn.addEventListener("click", async (evt) => {
-    document.querySelector(".select-car").classList.remove("hide");
-    const form = document.querySelector(".select-car__form");
-    if (!form) return;
-    setDefaultYears(form);
-  });
-}
-
-renderGarage(true);
-addToGarageBtn();
+renderGarage();
+initialDelBtns();
