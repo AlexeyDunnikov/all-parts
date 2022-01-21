@@ -1,4 +1,4 @@
-import {isUserAuth} from './helper.js';
+import { isUserAuth } from "./helper.js";
 
 function initialToBasketBtns() {
   const toBasketBtns = document.querySelectorAll(
@@ -55,11 +55,11 @@ async function delBasketHandler(evt) {
 }
 
 async function addToBasket(partId) {
-    const isAuth = await isUserAuth();
-    if(!isAuth){
-        toSignin();
-        return;
-    }
+  const isAuth = await isUserAuth();
+  if (!isAuth) {
+    toSignin();
+    return;
+  }
 
   await fetch("/add-to-basket", {
     method: "POST",

@@ -8,4 +8,5 @@ module.exports = {
   DELIVERY: "Доставка",
   PAY: "Оплата",
   GUARANTEE: "Гарантия",
+  BASKET: "Корзина",
 };
