@@ -140,3 +140,4 @@ function setClassesForCatalogItems(catalogItems, itemClass, isRight) {
     }
   });
 }
+

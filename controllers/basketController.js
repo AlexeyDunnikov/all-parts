@@ -1,23 +1,36 @@
-const basketModelModule = require('../models/basketModel');
+const basketModelModule = require("../models/basketModel");
 
 module.exports = (connection) => {
-    const basketModel = basketModelModule(connection);
+  const basketModel = basketModelModule(connection);
 
   const controllerMethods = {};
 
-  controllerMethods.addToBasket = async (req, res, next) => {
+  controllerMethods.addToBasket = async (req, res) => {
     try {
-        const { partId, subcategoryId} = req.body;
-        const userId = req.user.id;
+      const { partId } = req.body;
 
-        console.log(partId, subcategoryId);
+      const userId = req.user.id;
 
-        const result = await basketModel.addPartToBasket(userId, partId);
-        res.json(result);
+      await basketModel.addPartToBasket(userId, partId);
+
+      res.end();
     } catch (err) {
       console.log(err);
     }
-    
+  };
+
+  controllerMethods.deleteFromBasket = async (req, res) => {
+    try {
+
+      const { partId } = req.body;
+      const userId = req.user.id;
+
+      await basketModel.delPartFromBasket(userId, partId);
+
+      res.end();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return controllerMethods;
