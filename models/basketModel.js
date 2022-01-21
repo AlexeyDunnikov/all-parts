@@ -13,6 +13,18 @@ module.exports = (connection) => {
     });
   };
 
+  modelMethods.delPartFromBasket = (userId, partId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `DELETE FROM basket WHERE (id_user_basket = ${userId} AND id_part_basket = ${partId});`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+ }
+
   modelMethods.getBasketIdFromUserAndPart = (userId, partId) => {
     return new Promise((resolve, reject) => {
       connection.query(
