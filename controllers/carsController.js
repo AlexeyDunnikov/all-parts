@@ -10,18 +10,18 @@ module.exports = (connection) => {
     );
 
     if (!carsModifications.includes(req.body.modificationId)) {
-      const result = await carsModel.addCarModificationToUser(
+      await carsModel.addCarModificationToUser(
         req.user.id,
         req.body.modificationId
       );
 
-      res.json(result);
     }
+    res.sendStatus(200);
   };
 
   controllerMethods.delModFromGarage = async (req, res) => {
-    const result = await carsModel.delModFromGarage(req.user.id, req.body.modificationId);
-    res.json(result);
+    await carsModel.delModFromGarage(req.user.id, req.body.modificationId);
+    res.sendStatus(200);
   }
 
   controllerMethods.getYears = async (req, res) => {

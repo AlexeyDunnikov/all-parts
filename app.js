@@ -64,6 +64,7 @@ require("./routes/homeRoute")(app, connection);
 require("./routes/carRoute")(app, connection);
 require("./routes/userRoute")(app, connection);
 require("./routes/catalogRoute")(app, connection);
+require("./routes/basketRoute")(app, connection);
 
 app.use(errorHandler);
 

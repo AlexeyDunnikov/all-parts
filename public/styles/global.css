@@ -57,6 +57,11 @@ svg path {
   transition: ease 0.3s;
 }
 
+.btn.active{
+  color: #338cf0;
+  background-color: #fff;
+}
+
 .btn:hover {
   color: #338cf0;
   background-color: #fff;

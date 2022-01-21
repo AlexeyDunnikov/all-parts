@@ -100,12 +100,12 @@ function initialBrandsBtns(brandsCheckboxes) {
   const brandsBtns = document.querySelectorAll(
     ".catalog__filters-item__brand__btn"
   );
-  if(!brandsBtns) return;
+  if (!brandsBtns) return;
 
-  brandsBtns.forEach(brandBtn => {
-    brandBtn.addEventListener('click', (evt) => {
+  brandsBtns.forEach((brandBtn) => {
+    brandBtn.addEventListener("click", (evt) => {
       brandsBtnHandler(evt.target, brandsCheckboxes);
-    })
+    });
   });
 }
 

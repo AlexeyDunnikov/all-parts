@@ -1,6 +1,6 @@
 const catalogModelModule = require("../models/catalogModel");
 const carsModelModule = require("../models/carsModel");
-const TITLES = require('../keys/titles');
+const TITLES = require("../keys/titles");
 
 module.exports = (connection) => {
   const catalogModel = catalogModelModule(connection);
@@ -67,7 +67,7 @@ module.exports = (connection) => {
     const subcategories = await catalogModel.getSubcategoriesByCategoryId(
       categoryId
     );
-   
+
     const brands = await catalogModel.getBrandsBySubcatId(subcatId);
 
     const minPrice = await catalogModel.getMinPriceBySubcatId(subcatId);
@@ -81,6 +81,7 @@ module.exports = (connection) => {
       isCatalog: true,
       categories,
       subcategoryName,
+      subcategoryId: subcatId,
       subcategories,
       brands,
       minPrice,
@@ -93,12 +94,30 @@ module.exports = (connection) => {
       const modId = req.query.mod_id;
       options.modId = modId;
 
-      options.parts = await catalogModel.getPartsByModIdAndSubcatId(modId, subcatId);
+      if (req.user) {
+        options.parts = await catalogModel.getPartsByUserAndModIdAndSubcatId(
+          req.user.id,
+          modId,
+          subcatId
+        );
+      } else {
+        options.parts = await catalogModel.getPartsByModIdAndSubcatId(
+          modId,
+          subcatId
+        );
+      }
 
       const car = await carsModel.getModificationInfo(modId);
       options.car = car;
     } else {
-      options.parts = await catalogModel.getPartsBySubcatId(subcatId);
+      if (req.user) {
+        options.parts = await catalogModel.getPartsByUserAndSubcat(
+          req.user.id,
+          subcatId
+        );
+      } else {
+        options.parts = await catalogModel.getPartsBySubcatId(subcatId);
+      }
     }
 
     res.render("catalog", options);

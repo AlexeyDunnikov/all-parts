@@ -104,11 +104,27 @@ module.exports = (connection) => {
       connection.query(
         `SELECT parts.id, parts.img, parts.price, parts.articul, parts.amount, brand.name AS brand
         FROM parts
-        INNER JOIN parts_subcategories AS subcat 
-        ON parts.id_subcategory = subcat.id
         INNER JOIN parts_brands AS brand
         ON parts.id_brand = brand.id
-        WHERE subcat.id = ${subcatId}
+        WHERE parts.id_subcategory = ${subcatId}
+        ORDER BY parts.price;`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
+  modelMethods.getPartsByUserAndSubcat = (userId, subcatId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT parts.id, parts.img, parts.price, parts.articul, parts.amount, brand.name AS brand, basket.id_user_basket AS user_id FROM parts
+        INNER JOIN parts_brands AS brand ON parts.id_brand = brand.id
+        LEFT JOIN (
+          SELECT * FROM basket WHERE basket.id_user_basket = ${userId}
+        ) AS basket ON basket.id_part_basket = parts.id
+        WHERE parts.id_subcategory = ${subcatId}
         ORDER BY parts.price;`,
         (err, result, fields) => {
           if (err) reject(err);
@@ -125,14 +141,34 @@ module.exports = (connection) => {
         FROM parts_to_modifications AS parts_to_mod
         INNER JOIN parts ON parts_to_mod.id_part = parts.id
         INNER JOIN parts_brands AS brands ON parts.id_brand = brands.id
-        WHERE parts.id_subcategory = ${subcatId} AND parts_to_mod.id_modification = ${modId}`,
+        WHERE parts.id_subcategory = ${subcatId} AND parts_to_mod.id_modification = ${modId} ORDER BY parts.price`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
         }
       );
     });
-  }
+  };
+
+  modelMethods.getPartsByUserAndModIdAndSubcatId = (userId, modId, subcatId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `
+        SELECT parts.id, parts.img, parts.price, parts.articul, parts.amount, brand.name AS brand, basket.id_user_basket AS user_id
+        FROM parts_to_modifications AS parts_to_mod
+        INNER JOIN parts ON parts_to_mod.id_part = parts.id
+        INNER JOIN parts_brands AS brand ON parts.id_brand = brand.id
+        LEFT JOIN (
+          SELECT * FROM basket WHERE basket.id_user_basket = ${userId}
+        ) AS basket ON basket.id_part_basket = parts.id
+        WHERE parts.id_subcategory = ${subcatId} AND parts_to_mod.id_modification = ${modId} ORDER BY parts.price`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
 
   modelMethods.getBrandsBySubcatId = (subcatId) => {
     return new Promise((resolve, reject) => {
