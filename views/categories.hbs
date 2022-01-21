@@ -1,0 +1,144 @@
+<section class="catalog-categories page-section">
+  <div class="container">
+    <div class="catalog-categories__top">
+      <h3 class="catalog-categories__title page-title">
+        Категории товаров
+      </h3>
+
+      {{#if car}}
+        <div class="car-info">
+          <div class="car-info__content">
+            <div class="car-info__content-title">
+              {{car.mark}}
+              {{car.model}}
+              {{car.generation}}
+              {{car.engine_value}}
+            </div>
+            <div class="car-info__content-text">
+              Двигатель:
+              {{car.engine_name}}
+              /
+              {{car.engine_power}}
+              К.В. /
+              {{car.engine_horses}}
+              л.с.
+            </div>
+          </div>
+          <div class="car-info__img">
+            <img
+              class="car-info__img"
+              src="/images/cars-images/{{car.img}}"
+              alt="image"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    {{#if categories.length}}
+      <ul class="catalog-categories__list">
+        {{#each categories}}
+          <li class="catalog-categories__item">
+            <div class="catalog-categories__item-category">
+              <img
+                class="catalog-categories__item-img"
+                src="/images/part-categories/{{img}}"
+                alt="image"
+              />
+              <span
+                class="catalog-categories__item-text"
+                href="/categories/{{id}}"
+              >
+                {{name}}
+              </span>
+              {{#if subcategories.length}}
+                <button class="catalog-categories__item-btn">
+                  <svg
+                    class="catalog-categories__item__btn-img"
+                    width="30"
+                    height="20"
+                    viewBox="0 0 40 22"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M37.7429 -3.86489e-06L20 17.6344L2.25712 -3.86489e-06L0 2.18278L20 22L40 2.18278L37.7429 -3.86489e-06Z"
+                      fill="#2F3035"
+                    ></path>
+                  </svg>
+                </button>
+              {{/if}}
+            </div>
+            {{#if subcategories.length}}
+              <ul class="catalog-subcategories__dropdown-list">
+                {{#each subcategories}}
+                  <li class="catalog-subcategories__dropdown-item">
+                    {{#if @root.modId}}
+                      <a
+                        href="/subcategories/{{id}}?mod_id={{@root.modId}}"
+                        class="catalog-subcategories__dropdown-item__link"
+                      >
+
+                        {{#if img}}
+                          <img
+                            class="catalog-subcategories__dropdown-item__img"
+                            src="/images/part-subcategories/{{img}}"
+                            alt="image"
+                          />
+                        {{else}}
+                          <img
+                            class="catalog-subcategories__dropdown-item__img"
+                            src="/images/no-photo.png"
+                            alt="image"
+                          />
+                        {{/if}}
+
+                        <span
+                          class="catalog-subcategories__dropdown-item__text"
+                        >
+                          {{name}}
+                        </span>
+
+                      </a>
+                    {{else}}
+                      <a
+                        href="/subcategories/{{id}}"
+                        class="catalog-subcategories__dropdown-item__link"
+                      >
+
+                        {{#if img}}
+                          <img
+                            class="catalog-subcategories__dropdown-item__img"
+                            src="/images/part-subcategories/{{img}}"
+                            alt="image"
+                          />
+                        {{else}}
+                          <img
+                            class="catalog-subcategories__dropdown-item__img"
+                            src="/images/no-photo.png"
+                            alt="image"
+                          />
+                        {{/if}}
+
+                        <span
+                          class="catalog-subcategories__dropdown-item__text"
+                        >
+                          {{name}}
+                        </span>
+
+                      </a>
+                    {{/if}}
+
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+
+  </div>
+</section>

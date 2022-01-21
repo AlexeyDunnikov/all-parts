@@ -1,0 +1,371 @@
+<section class="catalog page-section">
+  <div class="container">
+    <div class="catalog__top">
+      <h3 class="catalog__title page-title">
+        {{subcategoryName}}
+      </h3>
+
+      {{#if car}}
+        <div class="car-info">
+          <div class="car-info__content">
+            <div class="car-info__content-title">
+              {{car.mark}}
+              {{car.model}}
+              {{car.generation}}
+              {{car.engine_value}}
+            </div>
+            <div class="car-info__content-text">
+              Двигатель:
+              {{car.engine_name}}
+              /
+              {{car.engine_power}}
+              К.В. /
+              {{car.engine_horses}}
+              л.с.
+            </div>
+          </div>
+          <div class="car-info__img">
+            <img
+              class="car-info__img"
+              src="/images/cars-images/{{car.img}}"
+              alt="image"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    {{#if parts.length}}
+      <div class="catalog__inner">
+        <div class="catalog__aside">
+          {{#if subcategories.length}}
+            <div class="catalog__aside-block">
+              <p class="catalog__aside-block__title">
+                Сопутствующие категории
+              </p>
+              <ul class="catalog__aside-block__categories-list">
+                {{#each subcategories}}
+                  <li class="catalog__aside-block__categories-item">
+                    <a
+                      class="catalog__aside-block__categories-link"
+                      href="/subcategories/{{id}}"
+                    >
+                      {{name}}
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+          <div class="catalog__aside-block">
+            <p class="catalog__aside-block__title">
+              Фильтры
+            </p>
+            <ul class="catalog__filters-list">
+              <li class="catalog__filters-item">
+                <p class="catalog__filters-item__title">
+                  Цена
+                </p>
+
+                <div class="catalog__filters-item__range-wrapper">
+                  <div class="catalog__filters-item__range-text__wrapper">
+
+                    <span
+                      class="catalog__filters-item__min-value custom-range__min-value custom-range__price price"
+                    >
+                      {{minPrice}}
+                    </span>
+                    <span
+                      class="catalog__filters-item__max-value custom-range__max-value custom-range__price price"
+                    >
+                      {{maxPrice}}
+                    </span>
+
+                  </div>
+
+                  <div
+                    class="catalog__filters-range catalog__filters-range--price custom-range"
+                    data-min-value="{{minPrice}}"
+                    data-max-value="{{maxPrice}}"
+                    data-type="price"
+                  ></div>
+                </div>
+
+              </li>
+
+              <li class="catalog__filters-item">
+                <p class="catalog__filters-item__title">
+                  Наличие на складе
+                </p>
+
+                <div class="catalog__filters-item__range-wrapper">
+                  <div class="catalog__filters-item__range-text__wrapper">
+                    <p class="catalog__filters-item__range-text">
+                      <span
+                        class="catalog__filters-item__min-value custom-range__min-value custom-range__amount integer"
+                      >
+                        {{minAmount}}
+                      </span>
+                      шт.
+                    </p>
+                    <p class="catalog__filters-item__range-text">
+                      <span
+                        class="catalog__filters-item__max-value custom-range__max-value custom-range__amount integer"
+                      >
+                        {{maxAmount}}
+                      </span>
+                      шт.
+                    </p>
+                  </div>
+
+                  <div
+                    class="catalog__filters-range catalog__filters-range--amount custom-range"
+                    data-min-value="{{minAmount}}"
+                    data-max-value="{{maxAmount}}"
+                    data-type="amount"
+                  ></div>
+                </div>
+
+              </li>
+
+              <li class="catalog__filters-item">
+                <p class="catalog__filters-item__title">
+                  Бренды
+                </p>
+                <ul class="catalog__filters-item__brands-list">
+                  {{#each brands}}
+                    <li class="catalog__filters-item__brands-item">
+                      <label class="catalog__filters-item__brands-item__label">
+                        <input
+                          class="catalog__filters-item__brands-item__checkbox"
+                          type="checkbox"
+                          data-brand="{{name}}"
+                        />
+                        {{name}}
+                      </label>
+
+                    </li>
+
+                  {{/each}}
+                </ul>
+
+                <button
+                  class="catalog__filters-item__brand__btn-check-all catalog__filters-item__brand__btn"
+                  data-type="check"
+                >
+                  Выбрать все
+                </button>
+                <button
+                  class="catalog__filters-item__brand__btn-checkout-all catalog__filters-item__brand__btn hidden"
+                  data-type="checkout"
+                >
+                  Отменить выбор
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="catalog__body">
+          <div class="catalog__body-top">
+            <button
+              class="catalog__body-top__btn catalog__btn-grid active"
+              data-type="grid"
+            >
+              <svg
+                class="catalog__body-top__btn-img"
+                width="23"
+                height="21"
+                viewBox="0 0 23 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="1"
+                  y="1"
+                  width="21"
+                  height="19"
+                  stroke="#cecece"
+                  stroke-width="2"
+                ></rect>
+                <rect
+                  x="7"
+                  y="6"
+                  width="2"
+                  height="2"
+                  stroke="#cecece"
+                  stroke-width="2"
+                ></rect>
+                <rect
+                  x="7"
+                  y="13"
+                  width="2"
+                  height="2"
+                  stroke="#cecece"
+                  stroke-width="2"
+                ></rect>
+                <rect
+                  x="14"
+                  y="6"
+                  width="2"
+                  height="2"
+                  stroke="#cecece"
+                  stroke-width="2"
+                ></rect>
+                <rect
+                  x="14"
+                  y="13"
+                  width="2"
+                  height="2"
+                  stroke="#cecece"
+                  stroke-width="2"
+                ></rect>
+              </svg>
+            </button>
+
+            <button
+              class="catalog__body-top__btn catalog__btn-flex"
+              data-type="flex"
+            >
+              <svg
+                class="catalog__body-top__btn-img"
+                width="25"
+                height="19"
+                viewBox="0 0 25 19"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="6"
+                  width="19"
+                  height="3"
+                  rx="1.5"
+                  fill="#cecece"
+                ></rect>
+                <rect
+                  x="6"
+                  y="8"
+                  width="19"
+                  height="3"
+                  rx="1.5"
+                  fill="#cecece"
+                ></rect>
+                <rect
+                  x="6"
+                  y="16"
+                  width="19"
+                  height="3"
+                  rx="1.5"
+                  fill="#cecece"
+                ></rect>
+                <rect width="3" height="3" rx="1.5" fill="#cecece"></rect>
+                <rect y="8" width="3" height="3" rx="1.5" fill="#cecece"></rect>
+                <rect
+                  y="16"
+                  width="3"
+                  height="3"
+                  rx="1.5"
+                  fill="#cecece"
+                ></rect>
+              </svg>
+
+            </button>
+          </div>
+          <ul class="catalog__body-list grid">
+            {{#each parts}}
+
+              <li
+                class="catalog__body-item"
+                data-price="{{price}}"
+                data-brand="{{brand}}"
+                data-amount="{{amount}}"
+              >
+                <div class="catalog__body-item__img-box">
+                  {{#if img}}
+                    <img
+                      class="catalog__body-item__img"
+                      src="/images/parts/{{img}}"
+                      alt="articul"
+                    />
+                  {{else}}
+                    <img
+                      class="catalog__body-item__img"
+                      src="/images/no-photo.png"
+                      alt="articul"
+                    />
+                  {{/if}}
+
+                </div>
+                <a class="catalog__body-item__link" href="/parts/{{id}}">
+                  {{brand}}
+                  {{articul}}
+                  <br />
+                  {{@root.subcategoryName}}
+                </a>
+                <p class="catalog__body-item__availability">
+                  В наличии:
+                  {{amount}}
+                  шт.
+                </p>
+
+                <div class="catalog__body-item__bottom">
+                  <span class="catalog__body-item__price price">
+                    {{price}}
+                  </span>
+                  <form
+                    class="catalog__body-item__basket-form"
+                    action="/add-to-basket"
+                    method="POST"
+                  >
+                    <input
+                      name="subcategoryId"
+                      type="hidden"
+                      value="{{@root.subcategoryId}}"
+                    />
+                    <input name="partId" type="hidden" value="{{id}}" />
+                    {{#if user_id}}
+                      <button
+                        class="catalog__body-item__basket-btn btn active"
+                        disabled
+                      >
+                        <span class="catalog__body-item__basket-btn__text">
+                          В корзине
+                        </span>
+                      </button>
+                    {{else}}
+                      <button
+                        class="catalog__body-item__basket-btn btn"
+                        type="submit"
+                      >
+                        <svg
+                          class="catalog__body-item__basket-btn__img"
+                          width="20"
+                          height="15"
+                          viewBox="0 0 37 29"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M37 0L35.8545 3.22222H32.8807L27.5249 22.5556H7.11479L0 4.83333H25.9185L25.049 8.05556H4.63733L9.16521 19.3333H25.2417L30.5327 0H37V0ZM13.1042 24.1667C11.8277 24.1667 10.7917 25.2493 10.7917 26.5833C10.7917 27.9189 11.8277 29 13.1042 29C14.3807 29 15.4167 27.9189 15.4167 26.5833C15.4167 25.2493 14.3807 24.1667 13.1042 24.1667ZM23.7417 12.8889L20.8125 24.1667C19.536 24.1667 18.5 25.2477 18.5 26.5833C18.5 27.9189 19.536 29 20.8125 29C22.089 29 23.125 27.9189 23.125 26.5833C23.125 25.2493 22.089 24.1667 20.8125 24.1667L23.7417 12.8889Z"
+                            fill="white"
+                          ></path>
+                        </svg>
+                        <span class="catalog__body-item__basket-btn__text">
+                          В корзину
+                        </span>
+                      </button>
+                    {{/if}}
+                  </form>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    {{else}}
+      <h3 class="catalog__empty-title">
+        К сожалению таких запчастей нету
+      </h3>
+    {{/if}}
+
+  </div>
+</section>
