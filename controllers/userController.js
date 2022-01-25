@@ -1,10 +1,12 @@
 const userModelModule = require("../models/userModel");
+const basketModelModule = require('../models/basketModel');
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const TITLES = require('../keys/titles');
 
 module.exports = (connection) => {
   const userModel = userModelModule(connection);
+  const basketModel = basketModelModule(connection);
 
   const controllerMethods = {};
 
@@ -83,6 +85,64 @@ module.exports = (connection) => {
       console.log(err);
     }
   };
+
+  controllerMethods.renderConfirmOrder = async (req, res) => {
+    const basketItems = await basketModel.getPartsToOrder(req.user.id);
+
+    const options = {
+      title: TITLES.CONFIRM_ORDER,
+      basketItems,
+    };
+
+    if(req.query.addressId){
+      const address = await userModel.getAddressInfoById(req.query.addressId);
+      options.address = address;
+    }
+
+    if(req.query.cardId){
+      const card = await userModel.getCardInfoById(req.query.cardId);
+      options.card = card;
+    }
+
+    console.log(options);
+  }
+
+  controllerMethods.addAddress = async (req, res) => {
+    try {
+      let addressId = await userModel.getAddressId(req.user.id, req.body);
+
+      if (!addressId){
+        await userModel.addAddress(req.user.id, req.body);
+        addressId = await userModel.getAddressId(req.user.id, req.body);
+      }
+
+      res.redirect(`/select-pay?addressId=${addressId}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  controllerMethods.addCard = async (req, res) => {
+    try{
+      let cardId = await userModel.getCardId(req.user.id, req.body);
+
+      if(!cardId){
+        await userModel.addCard(req.user.id, req.body);
+        cardId = await userModel.getCardId(req.user.id, req.body);
+      }
+
+      if(req.body.addressId){
+        res.redirect(
+          `/confirm-order?addressId=${req.body.addressId}&cardId=${cardId}`
+        );
+      }else{
+        res.redirect(`/confirm-order?cardId=${cardId}`);
+      }
+
+    }catch(err){
+      console.log(err);
+    }
+  }
 
   controllerMethods.isUserAuth = (req, res) => {
     req.session.user ? res.json(true) : res.json(false);

@@ -1,11 +1,9 @@
 $(function () {
-  $(".catalog-subcategories__dropdown-list").hide();
-  $(".catalog-categories__item-category").on("click", function () {
-    $(this).closest(".catalog-categories__item").toggleClass("active");
+  $(".js__dropdown-list").hide();
+  $(".js__dropdown-body").on("click", function () {
+    $(this).closest(".js__dropdown-wrapper").toggleClass("active");
     $(this)
       .next()
-      .slideToggle(200, function () {
-        if ($(this).is(":visible")) $(this).css("display", "grid");
-      });
+      .slideToggle(200);
   });
 });

@@ -55,7 +55,6 @@ async function initialSelectCarForm() {
 
     const isAuth = await isUserAuth();
     if (isAuth) {
-      console.log(isAuth);
       await addCarModification(modificationId);
     } else {
       addToLocalStorage(modificationId);

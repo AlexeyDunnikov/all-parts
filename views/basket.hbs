@@ -1,1 +1,117 @@
-<h1>Basket</h1>
+<section class="basket page-section">
+  <div class="container">
+    <h3 class="basket__title page-title">
+      Корзина
+    </h3>
+    <ul class="basket__list">
+      <li class="basket__item--title">
+        <input class="basket__item-checkbox-all" type="checkbox" />
+        <div class="basket__item__img-box">
+          Фото
+        </div>
+        <div class="basket__item-content">
+          Описание
+        </div>
+        <div class="basket__item-price-per-one">
+          Цена за ед.
+        </div>
+        <div class="basket__item-amount">
+          Кол-во
+        </div>
+        <div class="basket__item-price-total">
+          Стоимость
+        </div>
+      </li>
+      {{#each basket}}
+        <li class="basket__item">
+          <label class="basket__item-label">
+            <input
+              class="basket__item-checkbox"
+              type="checkbox"
+              name="part-id"
+              value="{{id}}"
+            />
+            <div class="basket__item__img-box">
+              {{#if img}}
+                <img
+                  class="basket__item__img"
+                  src="/images/parts/{{img}}"
+                  alt="image"
+                />
+
+              {{else}}
+                <img
+                  class="basket__item__img"
+                  src="/images/no-photo.png"
+                  alt="image"
+                />
+
+              {{/if}}
+            </div>
+            <div class="basket__item-content">
+              <a class="basket__item__content-title" href="/parts/{{id}}">
+                {{brand}}
+                {{articul}}
+              </a>
+              <p class="basket__item__content-description">
+                {{subcat}}
+              </p>
+              <p class="basket__item__content-amount">
+                На складе:
+                <span class="basket__item__content-amount__value">
+                  {{amount}}
+                </span>
+              </p>
+            </div>
+            <div
+              class="basket__item-price-per-one price"
+              data-price="{{price}}"
+            >
+              {{price}}
+            </div>
+            <div class="basket__item-amount">
+              <button
+                class="basket__item-amount__btn basket__item-amount__btn--minus"
+                data-part-id="{{id}}"
+              >
+                -
+              </button>
+              <span class="basket__item-amount__value">
+                {{basketAmount}}
+              </span>
+              <button
+                class="basket__item-amount__btn basket__item-amount__btn--plus"
+                data-part-id="{{id}}"
+              >
+                +
+              </button>
+            </div>
+            <div class="basket__item-price-total">
+
+            </div>
+          </label>
+
+        </li>
+
+      {{/each}}
+    </ul>
+
+    <div class="basket__total-wrapper">
+      <a class="basket__total" href="/select-delivery">
+        <span class="basket__total-price">
+          Итого:
+          <span class="basket__total-price__value">
+              0 BYN
+          </span>
+        </span>
+        <span class="basket__make-order">
+          Оформить заказ
+        </span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+
