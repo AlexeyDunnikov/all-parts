@@ -57,7 +57,7 @@ svg path {
   transition: ease 0.3s;
 }
 
-.btn.active{
+.btn.active {
   color: #338cf0;
   background-color: #fff;
 }
@@ -67,6 +67,29 @@ svg path {
   background-color: #fff;
 }
 
+.reverse-btn {
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: ease 0.3s;
+  color: #338cf0;
+  background-color: #fff;
+}
+
+.reverse-btn:hover {
+  color: #fff;
+  background-color: #338cf0;
+}
+
 .catalog__filters-list .noUi-connect {
   background-color: #338cf0;
+}
+
+.tabs-content {
+  display: none;
+}
+
+.tabs-content.active {
+  display: block;
 }

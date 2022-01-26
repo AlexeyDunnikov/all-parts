@@ -56,8 +56,10 @@ app.use(
 app.use(flash());
 
 //Middlewares
-app.use(varMiddleware);
 app.use(userMiddleware(connection).user);
+app.use(varMiddleware(connection).isAuth);
+app.use(varMiddleware(connection).basketAmount);
+app.use(varMiddleware(connection).categoriesList);
 
 //Routes
 require("./routes/homeRoute")(app, connection);

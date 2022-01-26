@@ -1,4 +1,5 @@
-import {isUserAuth} from './helper.js';
+import { isUserAuth } from "./helper.js";
+import {deleteFromBasket} from './helper.js';
 
 function initialToBasketBtns() {
   const toBasketBtns = document.querySelectorAll(
@@ -41,6 +42,7 @@ async function toBasketHandler(evt) {
 
   await addToBasket(partId);
   target.classList.add("active");
+
   initialToBasketBtns();
 }
 
@@ -48,18 +50,28 @@ async function delBasketHandler(evt) {
   const target = evt.target.closest(".catalog__body-item__basket-btn");
   const partId = target.dataset.partId;
 
-  await delFromBasket(partId);
+  await deleteFromBasket(partId);
   target.classList.remove("active");
 
   initialToBasketBtns();
 }
 
+function increaseBasketAmount(){
+  const basketAmountEl = document.querySelector(".basket-num");
+  if(!basketAmountEl) return;
+
+  basketAmountEl.textContent = +basketAmountEl.textContent + 1;
+}
+
+
 async function addToBasket(partId) {
-    const isAuth = await isUserAuth();
-    if(!isAuth){
-        toSignin();
-        return;
-    }
+  const isAuth = await isUserAuth();
+  if (!isAuth) {
+    toSignin();
+    return;
+  }
+
+  increaseBasketAmount();
 
   await fetch("/add-to-basket", {
     method: "POST",
@@ -78,18 +90,5 @@ async function toSignin() {
   window.location.href = `/signin`;
 }
 
-async function delFromBasket(partId) {
-  await fetch("/delete-from-basket", {
-    method: "DELETE",
-    body: JSON.stringify({
-      partId,
-    }),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-  return;
-}
 
 initialToBasketBtns();

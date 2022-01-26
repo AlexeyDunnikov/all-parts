@@ -38,8 +38,8 @@
     {{#if categories.length}}
       <ul class="catalog-categories__list">
         {{#each categories}}
-          <li class="catalog-categories__item">
-            <div class="catalog-categories__item-category">
+          <li class="catalog-categories__item js__dropdown-wrapper">
+            <div class="catalog-categories__item-category js__dropdown-body">
               <img
                 class="catalog-categories__item-img"
                 src="/images/part-categories/{{img}}"
@@ -72,7 +72,7 @@
               {{/if}}
             </div>
             {{#if subcategories.length}}
-              <ul class="catalog-subcategories__dropdown-list">
+              <ul class="catalog-subcategories__dropdown-list js__dropdown-list">
                 {{#each subcategories}}
                   <li class="catalog-subcategories__dropdown-item">
                     {{#if @root.modId}}

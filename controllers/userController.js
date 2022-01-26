@@ -84,6 +84,45 @@ module.exports = (connection) => {
     }
   };
 
+  controllerMethods.addAddress = async (req, res) => {
+    try {
+      let addressId = await userModel.getAddressId(req.user.id, req.body);
+
+      if (!addressId){
+        await userModel.addAddress(req.user.id, req.body);
+        addressId = await userModel.getAddressId(req.user.id, req.body);
+      }
+
+      res.redirect(`/select-pay?addressId=${addressId}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  controllerMethods.addCard = async (req, res) => {
+    try{
+      let cardId = await userModel.getCardId(req.user.id, req.body);
+
+      if(!cardId){
+        await userModel.addCard(req.user.id, req.body);
+        cardId = await userModel.getCardId(req.user.id, req.body);
+      }
+
+      if(req.body.addressId){
+        res.redirect(
+          `/confirm-order?addressId=${req.body.addressId}&cardId=${cardId}`
+        );
+      }else if(req.body.officeId){
+        res.redirect(
+          `/confirm-order?officeId=${req.body.officeId}&cardId=${cardId}`
+        );
+      }
+
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   controllerMethods.isUserAuth = (req, res) => {
     req.session.user ? res.json(true) : res.json(false);
   };

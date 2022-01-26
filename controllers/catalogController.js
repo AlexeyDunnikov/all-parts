@@ -9,12 +9,9 @@ module.exports = (connection) => {
   const controllerMethods = {};
 
   controllerMethods.renderCategories = async (req, res) => {
-    const categories = await catalogModel.getCategoriesAndSubcategories();
-
     const options = {
       title: TITLES.CATEGORIES,
       isCatalog: true,
-      categories,
     };
 
     if (req.query.mod_id) {
@@ -28,7 +25,6 @@ module.exports = (connection) => {
   };
 
   controllerMethods.renderSubcategories = async (req, res) => {
-    const categories = await catalogModel.getCategoriesAndSubcategories();
 
     const subcategories = await catalogModel.getSubcategoriesByCategoryId(
       req.params.id
@@ -39,7 +35,6 @@ module.exports = (connection) => {
     const options = {
       title: categoryName,
       isCatalog: true,
-      categories,
       categoryName,
       subcategories,
     };
@@ -61,8 +56,6 @@ module.exports = (connection) => {
 
     const subcategoryName = await catalogModel.getSubcategoryNameById(subcatId);
 
-    const categories = await catalogModel.getCategoriesAndSubcategories();
-
     const categoryId = category.id;
     const subcategories = await catalogModel.getSubcategoriesByCategoryId(
       categoryId
@@ -79,7 +72,6 @@ module.exports = (connection) => {
     const options = {
       title: TITLES.CATALOG,
       isCatalog: true,
-      categories,
       subcategoryName,
       subcategoryId: subcatId,
       subcategories,

@@ -6,6 +6,10 @@ module.exports = {
   CATEGORIES: "Категории товаров",
   ABOUT: "О компании",
   DELIVERY: "Доставка",
+  DELIVERY_TYPE: "Способ доставки",
   PAY: "Оплата",
+  SELECT_PAY: "Способ оплаты",
   GUARANTEE: "Гарантия",
+  BASKET: "Корзина",
+  CONFIRM_ORDER: "Подтверждение заказа",
 };

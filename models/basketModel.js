@@ -23,7 +23,55 @@ module.exports = (connection) => {
         }
       );
     });
- }
+  };
+
+  modelMethods.delPartsToOrder = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `DELETE FROM basket WHERE (id_user_basket = ${userId} AND to_order = 1);`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
+  modelMethods.updateBasketAmount = (userId, partId, amount) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE basket SET amount = ${amount} WHERE (id_user_basket = ${userId} AND id_part_basket = ${partId})`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
+  modelMethods.updateToOrderItems = (userId, partId, isAddToOrder) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE basket SET to_order = ${isAddToOrder} WHERE (id_user_basket = ${userId} AND id_part_basket = ${partId})`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }; 
+
+  modelMethods.setDefaultParts = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE basket SET to_order = 0 WHERE (id_user_basket = ${userId})`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }; 
 
   modelMethods.getBasketIdFromUserAndPart = (userId, partId) => {
     return new Promise((resolve, reject) => {
@@ -36,6 +84,64 @@ module.exports = (connection) => {
       );
     });
   };
+
+  modelMethods.getPartsFromBasket = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT parts.id AS id, parts.img, parts.price, parts.articul, parts.amount, brands.name AS brand, subcat.name AS subcat, basket.amount AS basketAmount
+        FROM parts
+        INNER JOIN parts_brands AS brands ON parts.id_brand = brands.id
+        INNER JOIN parts_subcategories AS subcat ON parts.id_subcategory = subcat.id
+        INNER JOIN basket ON basket.id_part_basket = parts.id
+        WHERE basket.id_user_basket = ${userId}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
+  modelMethods.getPartsToOrder = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT parts.id AS id, parts.img, parts.price, parts.articul, parts.amount, brands.name AS brand, subcat.name AS subcat, basket.amount AS basketAmount
+        FROM parts
+        INNER JOIN parts_brands AS brands ON parts.id_brand = brands.id
+        INNER JOIN parts_subcategories AS subcat ON parts.id_subcategory = subcat.id
+        INNER JOIN basket ON basket.id_part_basket = parts.id
+        WHERE basket.id_user_basket = ${userId} AND basket.to_order = 1`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
+  modelMethods.getBasketItemsAmount = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT COUNT(1) FROM basket WHERE id_user_basket = ${userId}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(Object.values(result[0])[0]);
+        }
+      );
+    });
+  };
+
+  modelMethods.getPartsToOrderIdAndAmount = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT id_part_basket AS id, amount FROM basket WHERE id_user_basket = ${userId} AND to_order = 1`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }
 
   return modelMethods;
 };

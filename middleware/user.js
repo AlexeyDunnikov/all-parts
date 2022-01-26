@@ -1,18 +1,18 @@
-const userModelModule = require('../models/userModel')
+const userModelModule = require("../models/userModel");
 
 module.exports = (connection) => {
-    const userModel = userModelModule(connection)
+  const userModel = userModelModule(connection);
 
-    const middlewareMethods = {};
+  const middlewareMethods = {};
 
-    middlewareMethods.user = async (req, res, next) => {
-      if (!req.session.user) {
-        return next();
-      }
+  middlewareMethods.user = async (req, res, next) => {
+    if (!req.session.user) {
+      return next();
+    }
 
-      req.user = await userModel.getUserById(req.session.user.id);
-      next();
-    };
+    req.user = await userModel.getUserById(req.session.user.id);
+    next();
+  };
 
-    return middlewareMethods;
+  return middlewareMethods;
 };
