@@ -48,9 +48,29 @@
           id="delivery-pickup"
           class="delivery__tabs-content tabs-content active"
         >
-          <p class="delivery__tabs-content__text">
-            Пункт самовывоза: г.Гродно, ул.Победы 18, 9:00 - 21:00 (ПН-ВС)
-          </p>
+          <div class="delivery-courier__item js__dropdown-wrapper">
+            <div class="delivery-courier__item-content js__dropdown-body">
+              <p class="delivery__tabs-content__text">
+                Выбрать пункт самовывоза
+              </p>
+            </div>
+            <ul class="delivery__my-address__list js__dropdown-list">
+              {{#each offices}}
+                <li class="delivery__my-address__item">
+                  <p class="delivery__my-address__item-text">
+                    {{town}}, ул.{{street}},
+                    {{house}}{{#if flat}}/{{flat}}{{/if}}
+                  </p>
+                  <a
+                    class="delivery__my-address__item-btn reverse-btn"
+                    href="/select-pay?officeId={{id}}"
+                  >
+                    Выбрать
+                  </a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
         </div>
         <div id="delivery-courier" class="delivery__tabs-content tabs-content">
           <ul class="delivery-courier__list">

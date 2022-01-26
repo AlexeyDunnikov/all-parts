@@ -1,12 +1,10 @@
 const userModelModule = require("../models/userModel");
-const basketModelModule = require('../models/basketModel');
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const TITLES = require('../keys/titles');
 
 module.exports = (connection) => {
   const userModel = userModelModule(connection);
-  const basketModel = basketModelModule(connection);
 
   const controllerMethods = {};
 
@@ -86,27 +84,6 @@ module.exports = (connection) => {
     }
   };
 
-  controllerMethods.renderConfirmOrder = async (req, res) => {
-    const basketItems = await basketModel.getPartsToOrder(req.user.id);
-
-    const options = {
-      title: TITLES.CONFIRM_ORDER,
-      basketItems,
-    };
-
-    if(req.query.addressId){
-      const address = await userModel.getAddressInfoById(req.query.addressId);
-      options.address = address;
-    }
-
-    if(req.query.cardId){
-      const card = await userModel.getCardInfoById(req.query.cardId);
-      options.card = card;
-    }
-
-    console.log(options);
-  }
-
   controllerMethods.addAddress = async (req, res) => {
     try {
       let addressId = await userModel.getAddressId(req.user.id, req.body);
@@ -135,8 +112,10 @@ module.exports = (connection) => {
         res.redirect(
           `/confirm-order?addressId=${req.body.addressId}&cardId=${cardId}`
         );
-      }else{
-        res.redirect(`/confirm-order?cardId=${cardId}`);
+      }else if(req.body.officeId){
+        res.redirect(
+          `/confirm-order?officeId=${req.body.officeId}&cardId=${cardId}`
+        );
       }
 
     }catch(err){

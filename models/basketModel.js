@@ -25,6 +25,18 @@ module.exports = (connection) => {
     });
   };
 
+  modelMethods.delPartsToOrder = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `DELETE FROM basket WHERE (id_user_basket = ${userId} AND to_order = 1);`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
   modelMethods.updateBasketAmount = (userId, partId, amount) => {
     return new Promise((resolve, reject) => {
       connection.query(
@@ -41,6 +53,18 @@ module.exports = (connection) => {
     return new Promise((resolve, reject) => {
       connection.query(
         `UPDATE basket SET to_order = ${isAddToOrder} WHERE (id_user_basket = ${userId} AND id_part_basket = ${partId})`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }; 
+
+  modelMethods.setDefaultParts = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE basket SET to_order = 0 WHERE (id_user_basket = ${userId})`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -106,6 +130,18 @@ module.exports = (connection) => {
       );
     });
   };
+
+  modelMethods.getPartsToOrderIdAndAmount = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT id_part_basket AS id, amount FROM basket WHERE id_user_basket = ${userId} AND to_order = 1`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }
 
   return modelMethods;
 };

@@ -9,7 +9,7 @@ module.exports = (app, connection) => {
   app.get("/signin", index.renderSignin);
   app.get("/signup", index.renderSignup);
   app.get("/signout", index.signout);
-  app.get("/confirm-order", authMiddleware, index.renderConfirmOrder);
+
 
   app.post("/signin", validator.signinValidators, index.signin);
   app.post("/signup", validator.signupValidators, index.signup);

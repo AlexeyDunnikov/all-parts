@@ -1,0 +1,172 @@
+<section class="confirm-order page-section">
+  <div class="container">
+    <h3 class="confirm-order__title page-title">
+      Подтверждение заказа
+    </h3>
+
+    <div class="confirm-order__info">
+      <div class="confirm-order__info-header">
+        Детали заказа
+      </div>
+      <div class="confirm-order__info-body">
+        <p class="confirm-order__info-body__text">
+          <strong>Имя получателя: </strong>{{user.name}}
+        </p>
+        <p class="confirm-order__info-body__text">
+          <strong>E-mail: </strong>{{user.email}}
+        </p>
+
+        {{#if address}}
+          <p class="confirm-order__info-body__text">
+            <strong>Способ доставки: </strong>
+            Доставка курьером
+          </p>
+          <p class="confirm-order__info-body__text">
+            <strong>Адрес доставки: </strong>
+            {{address.town}}, ул.{{address.street}}
+            {{address.house}}{{#if address.flat}}/{{address.flat}}{{/if}}
+          </p>
+        {{else}}
+          <p class="confirm-order__info-body__text">
+            <strong>Способ доставки: </strong>Самовывоз
+          </p>
+          <p class="confirm-order__info-body__text">
+            <strong>Адрес пункта выдачи: </strong>{{office.town}}, ул.{{office.street}}
+            {{office.house}}{{#if office.flat}}/{{office.flat}}{{/if}}
+          </p>
+          <p class="confirm-order__info-body__text">
+            <strong>Время работы:</strong>
+            {{office.from_time}}
+            -
+            {{office.to_time}}
+            ({{office.from_day}}
+            -
+            {{office.to_day}})
+          </p>
+        {{/if}}
+
+        {{#if card}}
+          <p class="confirm-order__info-body__text">
+            <strong>Способ оплаты: </strong>Карта
+          </p>
+          <p class="confirm-order__info-body__text">
+            <strong>Данные карты: </strong>Номер:
+            {{card.num}}, срок:
+            {{card.month}}/{{card.year}}
+          </p>
+        {{else}}
+          <p class="confirm-order__info-body__text">
+            <strong>Способ оплаты: </strong>Наличные
+          </p>
+        {{/if}}
+      </div>
+    </div>
+
+    <ul class="basket__list">
+      <li class="basket__item--title">
+        <div class="basket__item__img-box">
+          Фото
+        </div>
+        <div class="basket__item-content">
+          Описание
+        </div>
+        <div class="basket__item-price-per-one">
+          Цена за ед.
+        </div>
+        <div class="basket__item-amount">
+          Кол-во
+        </div>
+        <div class="basket__item-price-total">
+          Стоимость
+        </div>
+      </li>
+      {{#each basketItems}}
+        <li class="basket__item">
+          <label class="basket__item-label">
+            <div class="basket__item__img-box">
+              {{#if img}}
+                <img
+                  class="basket__item__img"
+                  src="/images/parts/{{img}}"
+                  alt="image"
+                />
+
+              {{else}}
+                <img
+                  class="basket__item__img"
+                  src="/images/no-photo.png"
+                  alt="image"
+                />
+
+              {{/if}}
+            </div>
+            <div class="basket__item-content">
+              <a class="basket__item__content-title" href="/parts/{{id}}">
+                {{brand}}
+                {{articul}}
+              </a>
+              <p class="basket__item__content-description">
+                {{subcat}}
+              </p>
+              <p class="basket__item__content-amount">
+                На складе:
+                <span class="basket__item__content-amount__value">
+                  {{amount}}
+                </span>
+              </p>
+            </div>
+            <div
+              class="basket__item-price-per-one price"
+              data-price="{{price}}"
+            >
+              {{price}}
+            </div>
+            <div class="basket__item-amount">
+              <span class="basket__item-amount__value">
+                {{basketAmount}}
+              </span>
+
+            </div>
+            <div class="basket__item-price-total">
+
+            </div>
+          </label>
+
+        </li>
+
+      {{/each}}
+    </ul>
+
+    <form
+      class="confirm-order__total-form"
+      action="/confirm-order"
+      method="POST"
+    >
+      {{#if address}}
+        <input type="hidden" name="deliveryType" value="курьер" />
+        <input type="hidden" name="deliveryAddressId" value="{{address.id}}" />
+      {{else}}
+        <input type="hidden" name="deliveryType" value="самовывоз" />
+        <input type="hidden" name="deliveryAddressId" value="{{office.id}}" />
+      {{/if}}
+
+      <input
+        class="confirm-order__notes-input"
+        name="note"
+        type="text"
+        placeholder="Добавить примечание к заказу"
+      />
+
+      <button class="confirm-order__total-btn" type="submit">
+        <span class="confirm-order__total-price">
+          Итого:
+          <span class="price">{{totalPrice}}</span>
+        </span>
+        <span class="onfirm-order__total__btn-text">
+          Подтвердить заказ
+        </span>
+      </button>
+
+    </form>
+  </div>
+</section>

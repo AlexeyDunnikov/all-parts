@@ -103,6 +103,18 @@ module.exports = (connection) => {
     });
   };
 
+  modelMethods.getCards = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT * FROM user_cards WHERE id_user_cards = ${userId}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
   modelMethods.getCardInfoById = (cardId) => {
     return new Promise((resolve, reject) => {
       connection.query(
@@ -120,12 +132,10 @@ module.exports = (connection) => {
 
     return new Promise((resolve, reject) => {
       connection.query(
-        `INSERT INTO user_cards (id_user_cards, num, month, year, cvv) VALUES(${userId}, "${cardNumber}", ${month}, ${year}, ${cvv})`,
+        `INSERT INTO user_cards (id_user_cards, num, month, year, cvv) VALUES(${userId}, "${cardNumber}", "${month}", "${year}", "${cvv}")`,
         (err, result, fields) => {
           if (err) reject(err);
-
-          if (result.length === 0) resolve(undefined);
-          else resolve(result[0].id);
+          resolve(result)
         }
       );
     });

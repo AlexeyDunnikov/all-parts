@@ -130,14 +130,29 @@ function updateTotalPrice() {
   const basketItems = document.querySelectorAll(".basket__item");
   if (!basketItems) return;
 
-  let sum = 0;
-  basketItems.forEach((item) => {
+  const sum = Array.from(basketItems).reduce((acc, item) => {
     const checkbox = item.querySelector(".basket__item-checkbox");
-    if (checkbox.checked) {
-      sum += +item.dataset.totalPrice;
-    }
-  });
+    return checkbox.checked ? (acc += +item.dataset.totalPrice) : acc;
+  }, 0);
+
+  totalPriceEl.dataset.totalPrice = sum;
   totalPriceEl.textContent = toCurrency(sum);
+}
+
+function initialMakeOrderBtn(){
+  const makeOrderBtn = document.querySelector(".basket__total");
+  if(!makeOrderBtn) return;
+
+  makeOrderBtn.addEventListener('click', makeOrderHandler);
+}
+
+function makeOrderHandler(evt){
+  const totalPriceEl = document.querySelector(".basket__total-price__value");
+
+  if (+totalPriceEl.dataset.totalPrice === 0){
+    evt.preventDefault();
+  }
+
 }
 
 async function updateBasketAmount(partId, amount) {
@@ -173,3 +188,4 @@ async function updateToOrderItems(partId, isAddToOrder) {
 renderTotalPrices();
 initialBasketBtns();
 initialBasketCheckboxes();
+initialMakeOrderBtn();

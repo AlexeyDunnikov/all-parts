@@ -109,13 +109,26 @@
             Оплата наличными при получении
           </p>
           {{#if addressId}}
-            <a class="order-pay__tabs-content__btn btn" href="/confirm-order">
+            <a
+              class="order-pay__tabs-content__btn btn"
+              href="/confirm-order?addressId={{addressId}}"
+            >
               Далее
             </a>
           {{else}}
-            <a class="order-pay__tabs-content__btn btn" href="/confirm-order">
-              Далее
-            </a>
+            {{#if officeId}}
+              <a
+                class="order-pay__tabs-content__btn btn"
+                href="/confirm-order?officeId={{officeId}}"
+              >
+                Далее
+              </a>
+            {{else}}
+              <a class="order-pay__tabs-content__btn btn" href="/confirm-order">
+                Далее
+              </a>
+            {{/if}}
+
           {{/if}}
 
         </div>
@@ -139,6 +152,13 @@
                         type="hidden"
                         name="addressId"
                         value="{{addressId}}"
+                      />
+                    {{/if}}
+                    {{#if officeId}}
+                      <input
+                        type="hidden"
+                        name="officeId"
+                        value="{{officeId}}"
                       />
                     {{/if}}
 
@@ -166,7 +186,7 @@
                   </div>
 
                   <button
-                    class="select-card__form-btn btn"
+                    class="select-card__form-btn reverse-btn"
                     type="submit"
                   >
                     Далее
@@ -176,7 +196,42 @@
               </div>
             </li>
             {{#if cards}}
-
+              <li class="select-card__item js__dropdown-wrapper">
+                <div class="select-card__item-content js__dropdown-body">
+                  <p class="order-pay__tabs-content__text">
+                    Выбрать из моих карт
+                  </p>
+                </div>
+                <ul class="select-card__dropdown-list js__dropdown-list">
+                  {{#each cards}}
+                    <li class="select-card__dropdown-item">
+                      <p class="select-card__dropdown-item__text">
+                        Номер каты:
+                        {{num}}, срок действия:
+                        {{month}}/{{year}}
+                      </p>
+                      {{#if @root.addressId}}
+                        <a
+                          class="select-card__dropdown-item__btn reverse-btn"
+                          href="/confirm-order?addressId={{@root.addressId}}&cardId={{id}}"
+                        >Выбрать</a>
+                      {{else}}
+                        {{#if @root.officeId}}
+                          <a
+                            class="select-card__dropdown-item__btn reverse-btn"
+                            href="/confirm-order?officeId={{@root.officeId}}&cardId={{id}}"
+                          >Выбрать</a>
+                        {{else}}
+                          <a
+                            class="select-card__dropdown-item__btn reverse-btn"
+                            href="/confirm-order?cardId={{id}}"
+                          >Выбрать</a>
+                        {{/if}}
+                      {{/if}}
+                    </li>
+                  {{/each}}
+                </ul>
+              </li>
             {{/if}}
           </ul>
 
