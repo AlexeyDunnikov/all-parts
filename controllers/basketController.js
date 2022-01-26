@@ -153,9 +153,6 @@ module.exports = (connection) => {
 
   controllerMethods.confirmOrder = async (req, res) => {
     try {
-      console.log(req.body);
-      const { deliveryType, deliveryAddressId, note } = req.body;
-
       const date = new Intl.DateTimeFormat("ru-RU", {
         year: "numeric",
         month: "long",
@@ -164,8 +161,6 @@ module.exports = (connection) => {
         minute: "numeric",
         second: "numeric",
       }).format(new Date());
-
-      console.log(date);
 
       const order = await orderModel.addOrder(req.user.id, date, req.body);
       const orderId = order.insertId;
