@@ -89,8 +89,8 @@ module.exports = (connection) => {
       let addressId = await userModel.getAddressId(req.user.id, req.body);
 
       if (!addressId){
-        await userModel.addAddress(req.user.id, req.body);
-        addressId = await userModel.getAddressId(req.user.id, req.body);
+        const address = await userModel.addAddress(req.user.id, req.body);
+        addressId = address.insertId;
       }
 
       res.redirect(`/select-pay?addressId=${addressId}`);
