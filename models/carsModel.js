@@ -50,8 +50,8 @@ module.exports = (connection) => {
     return new Promise((resolve, reject) => {
       connection.query(
         `SELECT DISTINCT marks.id, marks.name FROM car_marks AS marks 
-        INNER JOIN car_models AS models ON marks.id = models.car_id
-        INNER JOIN car_generations AS gen ON models.id = gen.model_id
+        INNER JOIN car_models AS models ON marks.id = models.id_car
+        INNER JOIN car_generations AS gen ON models.id = gen.id_model
         WHERE year_from <= ${year} AND year_to >= ${year} 
         ORDER BY name`,
         (err, result, fields) => {
@@ -67,8 +67,8 @@ module.exports = (connection) => {
       connection.query(
         `SELECT DISTINCT model.id, model.name 
         FROM car_generations AS gen INNER JOIN car_models AS model 
-        ON model.id = gen.model_id 
-        WHERE gen.year_from <= ${year} AND gen.year_to >= ${year} AND model.car_id = ${markId}
+        ON model.id = gen.id_model 
+        WHERE gen.year_from <= ${year} AND gen.year_to >= ${year} AND model.id_car = ${markId}
         ORDER BY name`,
         (err, result, fields) => {
           if (err) reject(err);
@@ -81,7 +81,7 @@ module.exports = (connection) => {
   modelMethods.getGenerations = (year, modelId) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT id, name FROM car_generations WHERE model_id = ${modelId} AND  year_from <= ${year} AND year_to >= ${year} ORDER BY name`,
+        `SELECT id, name FROM car_generations WHERE id_model = ${modelId} AND  year_from <= ${year} AND year_to >= ${year} ORDER BY name`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -126,8 +126,8 @@ module.exports = (connection) => {
       connection.query(
         `SELECT modifications.id AS id, marks.name AS mark, models.name AS model, gen.name AS generation, gen.img AS img, gen.year_from AS year_from, gen.year_to AS year_to, engines.name AS engine_name, engines.power AS engine_power, engines.horses AS engine_horses, engines.value AS engine_value
         FROM car_marks AS marks 
-        INNER JOIN car_models AS models ON marks.id = models.car_id
-        INNER JOIN car_generations AS gen ON models.id = gen.model_id
+        INNER JOIN car_models AS models ON marks.id = models.id_car
+        INNER JOIN car_generations AS gen ON models.id = gen.id_model
         INNER JOIN car_modifications AS modifications ON gen.id = modifications.id_generation
         INNER JOIN car_engines AS engines ON engines.id = modifications.id_engine
         WHERE modifications.id = ${modificationId}`,
@@ -138,6 +138,25 @@ module.exports = (connection) => {
       );
     });
   };
+
+  modelMethods.getCarsInfoFromGarageByUser = (userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT modifications.id AS id, marks.name AS mark, models.name AS model, gen.name AS generation, gen.img AS img, gen.year_from AS year_from, gen.year_to AS year_to, engines.name AS engine_name, engines.power AS engine_power, engines.horses AS engine_horses, engines.value AS engine_value
+		FROM garage
+        INNER JOIN car_modifications AS modifications ON garage.id_car_mod_garage = modifications.id
+        INNER JOIN car_engines AS engines ON engines.id = modifications.id_engine
+        INNER JOIN car_generations AS gen ON modifications.id_generation = gen.id
+		INNER JOIN car_models AS models ON gen.id_model = models.id
+        INNER JOIN car_marks AS marks ON models.id_car = marks.id
+        WHERE garage.id_user_garage = ${userId}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }
 
   modelMethods.getCarsModFromGarageWhereUserId = (userId) => {
     return new Promise((resolve, reject) => {

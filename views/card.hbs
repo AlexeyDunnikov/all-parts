@@ -1,0 +1,90 @@
+<section class="card page-section">
+  <div class="container">
+    <h1 class="card__title page-title">
+      Запчасть:
+      {{part.brand}}
+      {{part.articul}}
+    </h1>
+    <div class="card__inner">
+      <div class="card__img-box">
+        {{#if part.img}}
+          <img
+            class="card__img"
+            src="/images/parts/{{part.img}}"
+            alt="{{part.brand}}{{part.articul}}"
+          />
+        {{else}}
+          <img
+            class="card__img"
+            src="/images/no-photo.png"
+            alt="{{part.brand}}{{part.articul}}"
+          />
+        {{/if}}
+      </div>
+      <div class="card__content">
+        <div class="card__content__text-box">
+          <p class="card__text">
+            <strong>Бренд:</strong>
+            {{part.brand}}
+          </p>
+          <p class="card__text">
+            <strong>Артикул:</strong>
+            {{part.articul}}
+          </p>
+          <p class="card__text">
+            <strong>Категория:</strong>
+            {{part.subcategory}}
+          </p>
+          <p class="card__text">
+            <strong>Цена:</strong>
+            <span class="price">{{part.price}}</span>
+          </p>
+          <p class="card__text">
+            <strong>Наличие:</strong>
+            {{part.amount}}
+            шт.
+          </p>
+        </div>
+        {{#if part.user_id}}
+          <button
+            class="catalog__body-item__basket-btn btn active"
+            data-part-id="2"
+          ><svg
+              class="catalog__body-item__basket-btn__img"
+              width="20"
+              height="15"
+              viewBox="0 0 37 29"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M37 0L35.8545 3.22222H32.8807L27.5249 22.5556H7.11479L0 4.83333H25.9185L25.049 8.05556H4.63733L9.16521 19.3333H25.2417L30.5327 0H37V0ZM13.1042 24.1667C11.8277 24.1667 10.7917 25.2493 10.7917 26.5833C10.7917 27.9189 11.8277 29 13.1042 29C14.3807 29 15.4167 27.9189 15.4167 26.5833C15.4167 25.2493 14.3807 24.1667 13.1042 24.1667ZM23.7417 12.8889L20.8125 24.1667C19.536 24.1667 18.5 25.2477 18.5 26.5833C18.5 27.9189 19.536 29 20.8125 29C22.089 29 23.125 27.9189 23.125 26.5833C23.125 25.2493 22.089 24.1667 20.8125 24.1667L23.7417 12.8889Z"
+                fill="white"
+              ></path>
+            </svg><span class="catalog__body-item__basket-btn__text">
+              В корзину
+            </span></button>
+        {{else}}
+          <button
+            class="catalog__body-item__basket-btn btn"
+            data-part-id="2"
+          ><svg
+              class="catalog__body-item__basket-btn__img"
+              width="20"
+              height="15"
+              viewBox="0 0 37 29"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M37 0L35.8545 3.22222H32.8807L27.5249 22.5556H7.11479L0 4.83333H25.9185L25.049 8.05556H4.63733L9.16521 19.3333H25.2417L30.5327 0H37V0ZM13.1042 24.1667C11.8277 24.1667 10.7917 25.2493 10.7917 26.5833C10.7917 27.9189 11.8277 29 13.1042 29C14.3807 29 15.4167 27.9189 15.4167 26.5833C15.4167 25.2493 14.3807 24.1667 13.1042 24.1667ZM23.7417 12.8889L20.8125 24.1667C19.536 24.1667 18.5 25.2477 18.5 26.5833C18.5 27.9189 19.536 29 20.8125 29C22.089 29 23.125 27.9189 23.125 26.5833C23.125 25.2493 22.089 24.1667 20.8125 24.1667L23.7417 12.8889Z"
+                fill="white"
+              ></path>
+            </svg><span class="catalog__body-item__basket-btn__text">
+              В корзину
+            </span></button>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</section>

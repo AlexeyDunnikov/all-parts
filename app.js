@@ -62,6 +62,7 @@ app.use(varMiddleware(connection).basketAmount);
 app.use(varMiddleware(connection).categoriesList);
 
 //Routes
+require("./routes/pagesRoute")(app, connection);
 require("./routes/homeRoute")(app, connection);
 require("./routes/carRoute")(app, connection);
 require("./routes/userRoute")(app, connection);

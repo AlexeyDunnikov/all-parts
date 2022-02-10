@@ -1,10 +1,15 @@
 const userModelModule = require("../models/userModel");
+const orderModelModule = require("../models/orderModel");
+const carsModelModule = require("../models/carsModel");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
-const TITLES = require('../keys/titles');
+const TITLES = require("../keys/titles");
+const normalizeArr = require("../utils/normalizeArr");
 
 module.exports = (connection) => {
   const userModel = userModelModule(connection);
+  const orderModel = orderModelModule(connection);
+  const carsModel = carsModelModule(connection);
 
   const controllerMethods = {};
 
@@ -20,6 +25,55 @@ module.exports = (connection) => {
       title: TITLES.SIGNUP,
       signupError: req.flash("signupError"),
     });
+  };
+
+  controllerMethods.renderProfile = async (req, res) => {
+    try {
+      const userInfo = await userModel.getUserById(req.user.id);
+
+      let orders = await orderModel.getOrdersInfoByUserId(req.user.id);
+      orders = normalizeArr(orders, "id");
+
+      const orderParts = await orderModel.getPartsInUserOrders(req.user.id);
+      let boughtPartsAmount = 0;
+      let totalSpent = 0;
+
+      orderParts.forEach((orderPart) => {
+        boughtPartsAmount += orderPart.amount;
+        orderPart.totalPrice = orderPart.amount * orderPart.price;
+        totalSpent += orderPart.totalPrice;
+
+        const orderId = orderPart.order_id;
+        if (!orders[orderId].parts) {
+          orders[orderId].parts = [];
+        }
+        if (!orders[orderId].total) {
+          orders[orderId].total = 0;
+        }
+        orders[orderId].parts.push(orderPart);
+        orders[orderId].total += orderPart.totalPrice;
+      });
+
+      const ordersArr = [];
+      for (const value of Object.values(orders)) {
+        ordersArr.push(value);
+      }
+
+      ordersArr.reverse();
+
+      const garage = await carsModel.getCarsInfoFromGarageByUser(req.user.id);
+      res.render("profile", {
+        title: TITLES.PROFILE,
+        userInfo,
+        boughtPartsAmount,
+        totalSpent,
+        garage,
+        ordersArr,
+        profileError: req.flash("profileError"),
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   controllerMethods.signout = async (req, res) => {
@@ -72,7 +126,7 @@ module.exports = (connection) => {
 
       const hashPassword = await bcrypt.hash(password, 10);
 
-      userModel.createUser({
+      await userModel.createUser({
         email,
         name,
         password: hashPassword,
@@ -86,9 +140,15 @@ module.exports = (connection) => {
 
   controllerMethods.addAddress = async (req, res) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash("addressError", errors.array()[0].msg);
+        return res.status(422).redirect("/select-delivery");
+      }
+
       let addressId = await userModel.getAddressId(req.user.id, req.body);
 
-      if (!addressId){
+      if (!addressId) {
         const address = await userModel.addAddress(req.user.id, req.body);
         addressId = address.insertId;
       }
@@ -100,28 +160,66 @@ module.exports = (connection) => {
   };
 
   controllerMethods.addCard = async (req, res) => {
-    try{
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash("cardError", errors.array()[0].msg);
+        if(req.body.addressId) return res.status(422).redirect(`/select-pay?addressId=${req.body.addressId}`);
+        if(req.body.officeId) return res
+          .status(422)
+          .redirect(`/select-pay?officeId=${req.body.officeId}`);
+      }
+
       let cardId = await userModel.getCardId(req.user.id, req.body);
 
-      if(!cardId){
+      if (!cardId) {
         await userModel.addCard(req.user.id, req.body);
         cardId = await userModel.getCardId(req.user.id, req.body);
       }
 
-      if(req.body.addressId){
+      if (req.body.addressId) {
         res.redirect(
           `/confirm-order?addressId=${req.body.addressId}&cardId=${cardId}`
         );
-      }else if(req.body.officeId){
+      } else if (req.body.officeId) {
         res.redirect(
           `/confirm-order?officeId=${req.body.officeId}&cardId=${cardId}`
         );
       }
-
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
+
+  controllerMethods.changeEmail = async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash("profileError", errors.array()[0].msg);
+        return res.status(422).redirect("/profile");
+      }
+
+      await userModel.changeEmailByUserId(req.user.id, req.body.email);
+      res.redirect("/profile");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  controllerMethods.changeName = async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash("profileError", errors.array()[0].msg);
+        return res.status(422).redirect("/profile");
+      }
+
+      await userModel.changeNameByUserId(req.user.id, req.body.name);
+      res.redirect("/profile");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   controllerMethods.isUserAuth = (req, res) => {
     req.session.user ? res.json(true) : res.json(false);

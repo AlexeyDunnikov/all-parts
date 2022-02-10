@@ -6,6 +6,11 @@
     <p class="order-pay__text">
       Выберите способ оплаты
     </p>
+    {{#if cardError}}
+      <div class="castom-error">
+        {{cardError}}
+      </div>
+    {{/if}}
     <div class="order-pay__tabs-wrapper tabs__wrapper">
       <div class="order-pay__tabs tabs">
         <a class="order-pay__tab tab active" href="#pay-money">

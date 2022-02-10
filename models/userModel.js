@@ -141,5 +141,29 @@ module.exports = (connection) => {
     });
   };
 
+  modelMethods.changeEmailByUserId = (userId, newEmail) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE users SET email = "${newEmail}" WHERE (id = ${userId})`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }
+
+  modelMethods.changeNameByUserId = (userId, newName) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE users SET name = "${newName}" WHERE (id = ${userId})`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
   return modelMethods;
 };

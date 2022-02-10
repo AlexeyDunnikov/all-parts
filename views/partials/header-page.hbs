@@ -1,300 +1,516 @@
-<header class="header">
-  <div class="header__top">
-    <div class="container">
-      <div class="header__top-inner">
-        <ul class="nav-list">
+<div class="header__wrapper">
+  <aside class="header__aside">
+    <div class="header__aside-block">
+      {{#if isHome}}
+        <a class="header__aside__link active" href="/">
+          Главная
+        </a>
+      {{else}}
+        <a class="header__aside__link" href="/">
+          Главная
+        </a>
+      {{/if}}
 
-          <li class="nav-item">
-            {{#if isHome}}
-              <a class="nav-item__link active" href="/">
-                Главная
-              </a>
-            {{else}}
-              <a class="nav-item__link" href="/">
-                Главная
-              </a>
-            {{/if}}
-          </li>
+      {{#if isCatalog}}
+        <a class="header__aside__link active" href="/categories">
+          Каталог
+        </a>
+      {{else}}
+        <a class="header__aside__link" href="/categories">
+          Каталог
+        </a>
+      {{/if}}
 
-          <li class="nav-item">
-            {{#if isCatalog}}
-              <a class="nav-item__link active" href="/categories">
-                Каталог
-              </a>
-            {{else}}
-              <a class="nav-item__link" href="/categories">
-                Каталог
-              </a>
-            {{/if}}
-          </li>
+      {{#if isDelivery}}
+        <a class="header__aside__link active" href="/delivery">
+          Доставка
+        </a>
+      {{else}}
+        <a class="header__aside__link" href="/delivery">
+          Доставка
+        </a>
+      {{/if}}
 
-          <li class="nav-item">
-            {{#if isDelivery}}
-              <a class="nav-item__link active" href="/delivery">
-                Доставка
-              </a>
-            {{else}}
-              <a class="nav-item__link" href="/delivery">
-                Доставка
-              </a>
-            {{/if}}
-          </li>
+      {{#if isPayment}}
+        <a class="header__aside__link active" href="/payment">
+          Оплата
+        </a>
+      {{else}}
+        <a class="header__aside__link" href="/payment">
+          Оплата
+        </a>
+      {{/if}}
 
-          <li class="nav-item">
-            {{#if isPay}}
-              <a class="nav-item__link active" href="/pay">
-                Оплата
-              </a>
-            {{else}}
-              <a class="nav-item__link" href="/pay">
-                Оплата
-              </a>
-            {{/if}}
-          </li>
+      {{#if isAbout}}
+        <a class="header__aside__link active" href="/about">
+          О магазине
+        </a>
+      {{else}}
+        <a class="header__aside__link" href="/about">
+          О магазине
+        </a>
+      {{/if}}
 
-          <li class="nav-item">
-            {{#if isAbout}}
-              <a class="nav-item__link active" href="/about">
-                О магазине
-              </a>
-            {{else}}
-              <a class="nav-item__link" href="/about">
-                О магазине
-              </a>
-            {{/if}}
-          </li>
-
-          <li class="nav-item">
-            {{#if isGaranty}}
-              <a class="nav-item__link active" href="/garanty">
-                Гарантия
-              </a>
-            {{else}}
-              <a class="nav-item__link" href="/garanty">
-                Гарантия
-              </a>
-            {{/if}}
-          </li>
-
-        </ul>
-
-        <div class="header__top-info">
-          <a
-            class="header__top-info__phone"
-            href="tel:+375(33)390-33-03"
-          >+375(33)390-33-03</a>
-          <div class="header__top-info__address">
-            <img
-              class="header__top-info__address-img"
-              src="/images/icons/address.svg"
-              alt="address"
-            />
-            <a class="header__top-info__address-link" href="#">Гродно</a>
-          </div>
-        </div>
-      </div>
+      {{#if isGaranty}}
+        <a class="header__aside__link active" href="/garanty">
+          Гарантия
+        </a>
+      {{else}}
+        <a class="header__aside__link" href="/garanty">
+          Гарантия
+        </a>
+      {{/if}}
     </div>
-  </div>
-  <div class="header__content">
-    <div class="container">
-      <div class="header__content-inner">
-        <div class="logo-wrapper">
-          <a class="logo-link" href="/">
-            <img class="logo-img" src="/images/logo.png" alt="logo" />
-          </a>
-        </div>
 
-        <form class="header__search-form" action="">
-          <input
-            class="header__search-input"
-            placeholder="Введите название детали"
-            type="text"
-          />
-          <button class="header__search-btn">
+    <div class="header__aside-block header__aside-block--icons">
+      {{#if isAuth}}
+
+        <a class="header__aside__user-link" href="/profile">
+          <svg
+            class="header__aside__user-img"
+            width="30"
+            height="30"
+            viewBox="0 0 30 31"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M26.029 23.374C21.7301 22.3484 17.7287 21.4494 19.6663 17.6674C25.5665 6.15608 21.2301 0 15.0011 0C8.6484 0 4.42076 6.39246 10.336 17.6674C12.3323 21.4714 8.17963 22.3704 3.97324 23.374C0.131862 24.2911 -0.0118929 26.2622 0.000607543 29.7083L0.00560771 31H29.9941L29.9991 29.7484C30.0141 26.2764 29.8841 24.295 26.029 23.374V23.374Z"
+              fill="white"
+            ></path>
+          </svg>
+
+          <span class="header__aside__user-text">
+            Профиль
+          </span>
+        </a>
+
+      {{else}}
+
+        <a class="header__aside__user-link" href="/signin">
+          <svg
+            class="header__aside__user-img"
+            width="30"
+            height="30"
+            viewBox="0 0 30 31"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M26.029 23.374C21.7301 22.3484 17.7287 21.4494 19.6663 17.6674C25.5665 6.15608 21.2301 0 15.0011 0C8.6484 0 4.42076 6.39246 10.336 17.6674C12.3323 21.4714 8.17963 22.3704 3.97324 23.374C0.131862 24.2911 -0.0118929 26.2622 0.000607543 29.7083L0.00560771 31H29.9941L29.9991 29.7484C30.0141 26.2764 29.8841 24.295 26.029 23.374V23.374Z"
+              fill="white"
+            ></path>
+          </svg>
+
+          <span class="header__aside__user-text">
+            Войти
+          </span>
+        </a>
+
+      {{/if}}
+
+      {{#if isAuth}}
+
+        <a class="header__aside__user-link" href="/basket">
+          <div class="header__aside__user-link__img-box">
             <svg
-              class="header__search-btn__img"
-              width="25"
-              height="25"
-              viewBox="0 0 25 25"
+              class="header__aside__user-img"
+              width="32"
+              height="26"
+              viewBox="0 0 37 29"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M11.4584 4.16667C7.4313 4.16667 4.16671 7.43126 4.16671 11.4583C4.16671 15.4854 7.4313 18.75 11.4584 18.75C15.4854 18.75 18.75 15.4854 18.75 11.4583C18.75 7.43126 15.4854 4.16667 11.4584 4.16667ZM2.08337 11.4583C2.08337 6.28067 6.2807 2.08334 11.4584 2.08334C16.636 2.08334 20.8334 6.28067 20.8334 11.4583C20.8334 16.636 16.636 20.8333 11.4584 20.8333C6.2807 20.8333 2.08337 16.636 2.08337 11.4583Z"
-                fill="white"
-              ></path>
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M16.6072 16.6072C17.014 16.2004 17.6736 16.2004 18.0804 16.6072L22.6116 21.1384C23.0184 21.5452 23.0184 22.2048 22.6116 22.6116C22.2048 23.0184 21.5453 23.0184 21.1385 22.6116L16.6072 18.0803C16.2004 17.6735 16.2004 17.014 16.6072 16.6072Z"
+                d="M37 0L35.8545 3.22222H32.8807L27.5249 22.5556H7.11479L0 4.83333H25.9185L25.049 8.05556H4.63733L9.16521 19.3333H25.2417L30.5327 0H37V0ZM13.1042 24.1667C11.8277 24.1667 10.7917 25.2493 10.7917 26.5833C10.7917 27.9189 11.8277 29 13.1042 29C14.3807 29 15.4167 27.9189 15.4167 26.5833C15.4167 25.2493 14.3807 24.1667 13.1042 24.1667ZM23.7417 12.8889L20.8125 24.1667C19.536 24.1667 18.5 25.2477 18.5 26.5833C18.5 27.9189 19.536 29 20.8125 29C22.089 29 23.125 27.9189 23.125 26.5833C23.125 25.2493 22.089 24.1667 20.8125 24.1667L23.7417 12.8889Z"
                 fill="white"
               ></path>
             </svg>
+            <span class="basket-num">
+              {{basketAmount}}
+            </span>
+          </div>
 
-          </button>
-        </form>
+          <span class="header__aside__user-text">
+            Корзина
+          </span>
+        </a>
 
-        <ul class="header__content-nav">
-          {{#if isAuth}}
-            <li class="header__content-nav__item">
-              <a class="header__content-nav__item-link" href="/profile">
-                <svg
-                  class="header__content-nav__item-img"
-                  width="30"
-                  height="30"
-                  viewBox="0 0 30 31"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M26.029 23.374C21.7301 22.3484 17.7287 21.4494 19.6663 17.6674C25.5665 6.15608 21.2301 0 15.0011 0C8.6484 0 4.42076 6.39246 10.336 17.6674C12.3323 21.4714 8.17963 22.3704 3.97324 23.374C0.131862 24.2911 -0.0118929 26.2622 0.000607543 29.7083L0.00560771 31H29.9941L29.9991 29.7484C30.0141 26.2764 29.8841 24.295 26.029 23.374V23.374Z"
-                    fill="white"
-                  ></path>
-                </svg>
+        <a class="header__aside__user-link" href="/signout">
+          <div class="header__aside__user-link__img-box">
+            <svg
+              class="header__aside__user-img--logout"
+              width="30px"
+              height="30px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 12H19M19 12L16 15M19 12L16 9"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M19 6V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V18"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
 
-                <span class="header__content-nav__item-text">
-                  Профиль
-                </span>
-              </a>
+          </div>
+
+          <span class="header__aside__user-text">
+            Выйти
+          </span>
+        </a>
+
+      {{/if}}
+    </div>
+
+    <div class="header__aside-block">
+      <form class="header__aside__search-form" action="">
+            <input
+              class="header__search-input"
+              placeholder="Введите название детали"
+              type="text"
+            />
+            <button class="header__search-btn">
+              <svg
+                class="header__search-btn__img"
+                width="25"
+                height="25"
+                viewBox="0 0 25 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M11.4584 4.16667C7.4313 4.16667 4.16671 7.43126 4.16671 11.4583C4.16671 15.4854 7.4313 18.75 11.4584 18.75C15.4854 18.75 18.75 15.4854 18.75 11.4583C18.75 7.43126 15.4854 4.16667 11.4584 4.16667ZM2.08337 11.4583C2.08337 6.28067 6.2807 2.08334 11.4584 2.08334C16.636 2.08334 20.8334 6.28067 20.8334 11.4583C20.8334 16.636 16.636 20.8333 11.4584 20.8333C6.2807 20.8333 2.08337 16.636 2.08337 11.4583Z"
+                  fill="white"
+                ></path>
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M16.6072 16.6072C17.014 16.2004 17.6736 16.2004 18.0804 16.6072L22.6116 21.1384C23.0184 21.5452 23.0184 22.2048 22.6116 22.6116C22.2048 23.0184 21.5453 23.0184 21.1385 22.6116L16.6072 18.0803C16.2004 17.6735 16.2004 17.014 16.6072 16.6072Z"
+                  fill="white"
+                ></path>
+              </svg>
+
+            </button>
+          </form>
+    </div>
+  </aside>
+
+  <header class="header">
+
+    <div class="header__top">
+      <div class="container">
+        <div class="header__top-inner">
+          <ul class="nav-list">
+
+            <li class="nav-item">
+              {{#if isHome}}
+                <a class="nav-item__link active" href="/">
+                  Главная
+                </a>
+              {{else}}
+                <a class="nav-item__link" href="/">
+                  Главная
+                </a>
+              {{/if}}
             </li>
-          {{else}}
-            <li class="header__content-nav__item">
-              <a class="header__content-nav__item-link" href="/signin">
-                <svg
-                  class="header__content-nav__item-img"
-                  width="30"
-                  height="30"
-                  viewBox="0 0 30 31"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M26.029 23.374C21.7301 22.3484 17.7287 21.4494 19.6663 17.6674C25.5665 6.15608 21.2301 0 15.0011 0C8.6484 0 4.42076 6.39246 10.336 17.6674C12.3323 21.4714 8.17963 22.3704 3.97324 23.374C0.131862 24.2911 -0.0118929 26.2622 0.000607543 29.7083L0.00560771 31H29.9941L29.9991 29.7484C30.0141 26.2764 29.8841 24.295 26.029 23.374V23.374Z"
-                    fill="white"
-                  ></path>
-                </svg>
 
-                <span class="header__content-nav__item-text">
-                  Войти
-                </span>
-              </a>
+            <li class="nav-item">
+              {{#if isCatalog}}
+                <a class="nav-item__link active" href="/categories">
+                  Каталог
+                </a>
+              {{else}}
+                <a class="nav-item__link" href="/categories">
+                  Каталог
+                </a>
+              {{/if}}
             </li>
-          {{/if}}
 
-          {{#if isAuth}}
-            <li class="header__content-nav__item">
-              <a class="header__content-nav__item-link" href="/basket">
-                <div class="header__content-nav__item-link__img-box">
+            <li class="nav-item">
+              {{#if isDelivery}}
+                <a class="nav-item__link active" href="/delivery">
+                  Доставка
+                </a>
+              {{else}}
+                <a class="nav-item__link" href="/delivery">
+                  Доставка
+                </a>
+              {{/if}}
+            </li>
+
+            <li class="nav-item">
+              {{#if isPayment}}
+                <a class="nav-item__link active" href="/payment">
+                  Оплата
+                </a>
+              {{else}}
+                <a class="nav-item__link" href="/payment">
+                  Оплата
+                </a>
+              {{/if}}
+            </li>
+
+            <li class="nav-item">
+              {{#if isAbout}}
+                <a class="nav-item__link active" href="/about">
+                  О магазине
+                </a>
+              {{else}}
+                <a class="nav-item__link" href="/about">
+                  О магазине
+                </a>
+              {{/if}}
+            </li>
+
+            <li class="nav-item">
+              {{#if isGaranty}}
+                <a class="nav-item__link active" href="/garanty">
+                  Гарантия
+                </a>
+              {{else}}
+                <a class="nav-item__link" href="/garanty">
+                  Гарантия
+                </a>
+              {{/if}}
+            </li>
+
+          </ul>
+
+          <div class="header__top-info">
+            <a
+              class="header__top-info__phone"
+              href="tel:+375(33)390-33-03"
+            >+375(33)390-33-03</a>
+            <div class="header__top-info__address">
+              <img
+                class="header__top-info__address-img"
+                src="/images/icons/address.svg"
+                alt="address"
+              />
+              <a class="header__top-info__address-link" href="#">Гродно</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="header__content">
+
+      <div class="container">
+        <div class="header__content-inner">
+          <div class="logo-wrapper">
+            <a class="logo-link" href="/">
+              <img class="logo-img" src="/images/logo.png" alt="logo" />
+            </a>
+          </div>
+
+          <form class="header__search-form" action="">
+            <input
+              class="header__search-input"
+              placeholder="Введите название детали"
+              type="text"
+            />
+            <button class="header__search-btn">
+              <svg
+                class="header__search-btn__img"
+                width="25"
+                height="25"
+                viewBox="0 0 25 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M11.4584 4.16667C7.4313 4.16667 4.16671 7.43126 4.16671 11.4583C4.16671 15.4854 7.4313 18.75 11.4584 18.75C15.4854 18.75 18.75 15.4854 18.75 11.4583C18.75 7.43126 15.4854 4.16667 11.4584 4.16667ZM2.08337 11.4583C2.08337 6.28067 6.2807 2.08334 11.4584 2.08334C16.636 2.08334 20.8334 6.28067 20.8334 11.4583C20.8334 16.636 16.636 20.8333 11.4584 20.8333C6.2807 20.8333 2.08337 16.636 2.08337 11.4583Z"
+                  fill="white"
+                ></path>
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M16.6072 16.6072C17.014 16.2004 17.6736 16.2004 18.0804 16.6072L22.6116 21.1384C23.0184 21.5452 23.0184 22.2048 22.6116 22.6116C22.2048 23.0184 21.5453 23.0184 21.1385 22.6116L16.6072 18.0803C16.2004 17.6735 16.2004 17.014 16.6072 16.6072Z"
+                  fill="white"
+                ></path>
+              </svg>
+
+            </button>
+          </form>
+
+          <ul class="header__content-nav">
+            {{#if isAuth}}
+              <li class="header__content-nav__item">
+                <a class="header__content-nav__item-link" href="/profile">
                   <svg
                     class="header__content-nav__item-img"
-                    width="32"
-                    height="26"
-                    viewBox="0 0 37 29"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 30 31"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M37 0L35.8545 3.22222H32.8807L27.5249 22.5556H7.11479L0 4.83333H25.9185L25.049 8.05556H4.63733L9.16521 19.3333H25.2417L30.5327 0H37V0ZM13.1042 24.1667C11.8277 24.1667 10.7917 25.2493 10.7917 26.5833C10.7917 27.9189 11.8277 29 13.1042 29C14.3807 29 15.4167 27.9189 15.4167 26.5833C15.4167 25.2493 14.3807 24.1667 13.1042 24.1667ZM23.7417 12.8889L20.8125 24.1667C19.536 24.1667 18.5 25.2477 18.5 26.5833C18.5 27.9189 19.536 29 20.8125 29C22.089 29 23.125 27.9189 23.125 26.5833C23.125 25.2493 22.089 24.1667 20.8125 24.1667L23.7417 12.8889Z"
+                      d="M26.029 23.374C21.7301 22.3484 17.7287 21.4494 19.6663 17.6674C25.5665 6.15608 21.2301 0 15.0011 0C8.6484 0 4.42076 6.39246 10.336 17.6674C12.3323 21.4714 8.17963 22.3704 3.97324 23.374C0.131862 24.2911 -0.0118929 26.2622 0.000607543 29.7083L0.00560771 31H29.9941L29.9991 29.7484C30.0141 26.2764 29.8841 24.295 26.029 23.374V23.374Z"
                       fill="white"
                     ></path>
                   </svg>
-                  <span class="basket-num">
-                    {{basketAmount}}
+
+                  <span class="header__content-nav__item-text">
+                    Профиль
                   </span>
-                </div>
-
-                <span class="header__content-nav__item-text">
-                  Корзина
-                </span>
-              </a>
-            </li>
-            <li class="header__content-nav__item">
-              <a class="header__content-nav__item-link" href="/signout">
-                <div class="header__content-nav__item-link__img-box">
-                  <svg
-                    class="header__content-nav__item-img--logout"
-                    width="30px"
-                    height="30px"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 12H19M19 12L16 15M19 12L16 9"
-                      stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></path>
-                    <path
-                      d="M19 6V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V18"
-                      stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></path>
-                  </svg>
-
-                </div>
-
-                <span class="header__content-nav__item-text">
-                  Выйти
-                </span>
-              </a>
-            </li>
-
-          {{/if}}
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="header__menu">
-    <div class="container">
-      <div class="header__menu-inner">
-        {{#if categories.length}}
-          <ul class="header__menu-list">
-            {{#each categories}}
-              <li class="header__menu-item">
-                <a class="header__menu-item__link" href="/categories/{{id}}">
-                  <span class="header__menu-item__link-text">
-                    {{name}}</span>
-
-                  <svg
-                    class="header__menu-item__link-img"
-                    width="12"
-                    height="8"
-                    viewBox="0 0 12 8"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M10.6 0L6 4.6L1.4 0L0 1.4L6 7.4L12 1.4L10.6 0Z"
-                      fill="#2F3035"
-                    ></path>
-                  </svg>
-
                 </a>
-                {{#if subcategories.length}}
-                  <ul class="header__menu__dropdown-list">
-                    {{#each subcategories}}
-                      <li class="header__menu__dropdown-item">
-                        <a
-                          class="header__menu__dropdown-link"
-                          href="/subcategories/{{id}}"
-                        >{{name}}</a>
-                      </li>
-                    {{/each}}
-                  </ul>
-                {{/if}}
               </li>
-            {{/each}}
+            {{else}}
+              <li class="header__content-nav__item">
+                <a class="header__content-nav__item-link" href="/signin">
+                  <svg
+                    class="header__content-nav__item-img"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 30 31"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M26.029 23.374C21.7301 22.3484 17.7287 21.4494 19.6663 17.6674C25.5665 6.15608 21.2301 0 15.0011 0C8.6484 0 4.42076 6.39246 10.336 17.6674C12.3323 21.4714 8.17963 22.3704 3.97324 23.374C0.131862 24.2911 -0.0118929 26.2622 0.000607543 29.7083L0.00560771 31H29.9941L29.9991 29.7484C30.0141 26.2764 29.8841 24.295 26.029 23.374V23.374Z"
+                      fill="white"
+                    ></path>
+                  </svg>
+
+                  <span class="header__content-nav__item-text">
+                    Войти
+                  </span>
+                </a>
+              </li>
+            {{/if}}
+
+            {{#if isAuth}}
+              <li class="header__content-nav__item">
+                <a class="header__content-nav__item-link" href="/basket">
+                  <div class="header__content-nav__item-link__img-box">
+                    <svg
+                      class="header__content-nav__item-img"
+                      width="32"
+                      height="26"
+                      viewBox="0 0 37 29"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M37 0L35.8545 3.22222H32.8807L27.5249 22.5556H7.11479L0 4.83333H25.9185L25.049 8.05556H4.63733L9.16521 19.3333H25.2417L30.5327 0H37V0ZM13.1042 24.1667C11.8277 24.1667 10.7917 25.2493 10.7917 26.5833C10.7917 27.9189 11.8277 29 13.1042 29C14.3807 29 15.4167 27.9189 15.4167 26.5833C15.4167 25.2493 14.3807 24.1667 13.1042 24.1667ZM23.7417 12.8889L20.8125 24.1667C19.536 24.1667 18.5 25.2477 18.5 26.5833C18.5 27.9189 19.536 29 20.8125 29C22.089 29 23.125 27.9189 23.125 26.5833C23.125 25.2493 22.089 24.1667 20.8125 24.1667L23.7417 12.8889Z"
+                        fill="white"
+                      ></path>
+                    </svg>
+                    <span class="basket-num">
+                      {{basketAmount}}
+                    </span>
+                  </div>
+
+                  <span class="header__content-nav__item-text">
+                    Корзина
+                  </span>
+                </a>
+              </li>
+              <li class="header__content-nav__item">
+                <a class="header__content-nav__item-link" href="/signout">
+                  <div class="header__content-nav__item-link__img-box">
+                    <svg
+                      class="header__content-nav__item-img--logout"
+                      width="30px"
+                      height="30px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 12H19M19 12L16 15M19 12L16 9"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>
+                      <path
+                        d="M19 6V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V18"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>
+                    </svg>
+
+                  </div>
+
+                  <span class="header__content-nav__item-text">
+                    Выйти
+                  </span>
+                </a>
+              </li>
+            {{/if}}
           </ul>
-        {{/if}}
+
+          <button class="header__hamburger-btn">
+            <span></span>
+          </button>
+
+        </div>
       </div>
     </div>
-  </div>
-</header>
+    <div class="header__menu">
+      <div class="container">
+        <div class="header__menu-inner">
+          {{#if categories.length}}
+            <ul class="header__menu-list">
+              {{#each categories}}
+                <li class="header__menu-item">
+                  <a class="header__menu-item__link" href="/categories/{{id}}">
+                    <span class="header__menu-item__link-text">
+                      {{name}}</span>
+
+                    <svg
+                      class="header__menu-item__link-img"
+                      width="12"
+                      height="8"
+                      viewBox="0 0 12 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M10.6 0L6 4.6L1.4 0L0 1.4L6 7.4L12 1.4L10.6 0Z"
+                        fill="#2F3035"
+                      ></path>
+                    </svg>
+
+                  </a>
+                  {{#if subcategories.length}}
+                    <ul class="header__menu__dropdown-list">
+                      {{#each subcategories}}
+                        <li class="header__menu__dropdown-item">
+                          <a
+                            class="header__menu__dropdown-link"
+                            href="/subcategories/{{id}}"
+                          >{{name}}</a>
+                        </li>
+                      {{/each}}
+                    </ul>
+                  {{/if}}
+                </li>
+              {{/each}}
+            </ul>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </header>
+</div>

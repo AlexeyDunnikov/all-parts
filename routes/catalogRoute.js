@@ -5,4 +5,5 @@ module.exports = (app, connection) => {
   app.get("/categories", index.renderCategories);
   app.get("/categories/:id", index.renderSubcategories);
   app.get("/subcategories/:id", index.renderCatalog);
+  app.get('/parts/:id', index.renderPart);
 };

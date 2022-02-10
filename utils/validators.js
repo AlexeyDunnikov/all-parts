@@ -60,5 +60,73 @@ module.exports = (connection) => {
       .trim(),
   ];
 
+  validatorMethods.addressValidators = [
+    body("town", "Минимальная длина названия города должна быть 3 символа")
+      .isLength({
+        min: 3,
+        max: 54,
+      })
+      .trim(),
+
+    body("street", "Минимальная длина названия улицы должна быть 3 символа")
+      .isLength({
+        min: 3,
+        max: 54,
+      })
+      .trim(),
+
+    body("house", "Номер дома должен быть в числовом формате")
+      .isNumeric()
+      .isLength({
+        min: 1,
+        max: 4,
+      })
+      .trim(),
+
+    body("house", "Номер квартиры должен быть в числовом формате")
+      .isNumeric()
+      .isLength({
+        min: 0,
+        max: 4,
+      })
+      .trim(),
+  ];
+
+  validatorMethods.cardValidators = [
+    body("cardNumber", "Длина номера катры должна быть 16")
+      .isNumeric()
+      .isLength({ min: 12, max: 12 }),
+    body("cardDate", "Введите корректную дату карты").isLength({
+      min: 5,
+      max: 5,
+    }),
+    body("cvv", "Введите корректный cvv")
+      .isNumeric()
+      .isLength({ min: 3, max: 3 }),
+  ];
+
+  validatorMethods.emailValidators = [
+    body("email", "Введите корректный e-mail")
+      .isEmail()
+      .custom(async (value, { req }) => {
+        try {
+          const user = await userModel.getUserByEmail(value);
+          if (user) {
+            return Promise.reject("Пользователь с таким e-mail уже существует");
+          }
+          return true;
+        } catch (err) {
+          console.log(err);
+        }
+      })
+      .normalizeEmail(),
+  ];
+
+  validatorMethods.nameValidators = [
+    body("name", "Минимальная длина имени должна быть 3 символа")
+      .isLength({ min: 3 })
+      .trim(),
+  ];
+
   return validatorMethods;
 };

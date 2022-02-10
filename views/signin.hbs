@@ -5,7 +5,7 @@
       <div class="auth__form-body">
         <h1 class="auth__title page-title">Вход в аккаунт</h1>
         {{#if signinError}}
-          <p class="alert">{{signinError}}</p>
+          <div class="castom-error">{{signinError}}</div>
         {{/if}}
         <form class="auth__form" action="/signin" method="POST">
           <input
@@ -32,7 +32,7 @@
             Ещё нету аккаунта?
           </span>
           <a class="signig__help-link" href="/signup">
-            Зарегестрироваться
+            Зарегистрироваться
           </a>
         </div>
       </div>

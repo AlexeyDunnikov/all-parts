@@ -5,6 +5,7 @@ module.exports = (connection) => {
   const controllerMethods = {};
 
   controllerMethods.addCarModification = async (req, res) => {
+
     const carsModifications = await carsModel.getCarsModFromGarageWhereUserId(
       req.user.id
     );

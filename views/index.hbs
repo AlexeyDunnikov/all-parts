@@ -107,9 +107,9 @@
     <h3 class="categories__title page-title">
       Категории товаров
     </h3>
-    {{#if categories.length}}
+    {{#if allCategories.length}}
       <ul class="categories__list">
-        {{#each categories}}
+        {{#each allCategories}}
           <li class="categories__item">
             <a class="categories__item-link" href="/categories/{{id}}">
               <img
