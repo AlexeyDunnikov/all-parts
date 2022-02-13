@@ -28,7 +28,19 @@ module.exports = (connection) => {
   modelMethods.getAddresses = (userId) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM user_addresses WHERE id_user_addresses = ${userId}`,
+        `SELECT * FROM user_addresses WHERE id_user_addresses = ${userId} AND is_deleted = 0`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
+  modelMethods.deleteAddress = (addressId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE user_addresses SET is_deleted = 1 WHERE (id = ${addressId});`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -64,7 +76,7 @@ module.exports = (connection) => {
   modelMethods.getAddressId = (userId, { town, street, house, flat }) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT id FROM user_addresses WHERE id_user_addresses = ${userId} AND town = "${town}" AND street = "${street}" AND house = "${house}" AND flat = "${flat}"`,
+        `SELECT id FROM user_addresses WHERE id_user_addresses = ${userId} AND town = "${town}" AND street = "${street}" AND house = "${house}" AND flat = "${flat} AND is_deleted = 0"`,
         (err, result, fields) => {
           if (err) reject(err);
 
@@ -92,7 +104,7 @@ module.exports = (connection) => {
 
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT id FROM user_cards WHERE id_user_cards = ${userId} AND num = ${cardNumber} AND month = ${month} AND year = ${year} AND cvv = ${cvv}`,
+        `SELECT id FROM user_cards WHERE id_user_cards = ${userId} AND num = ${cardNumber} AND month = ${month} AND year = ${year} AND cvv = ${cvv} AND is_deleted = 0`,
         (err, result, fields) => {
           if (err) reject(err);
 
@@ -106,7 +118,7 @@ module.exports = (connection) => {
   modelMethods.getCards = (userId) => {
     return new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM user_cards WHERE id_user_cards = ${userId}`,
+        `SELECT * FROM user_cards WHERE id_user_cards = ${userId} AND is_deleted = 0`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);
@@ -157,6 +169,18 @@ module.exports = (connection) => {
     return new Promise((resolve, reject) => {
       connection.query(
         `UPDATE users SET name = "${newName}" WHERE (id = ${userId})`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result);
+        }
+      );
+    });
+  };
+
+  modelMethods.deleteCard = (cardId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `UPDATE user_cards SET is_deleted = 1 WHERE (id = ${cardId})`,
         (err, result, fields) => {
           if (err) reject(err);
           resolve(result);

@@ -31,6 +31,9 @@ module.exports = (connection) => {
     try {
       const userInfo = await userModel.getUserById(req.user.id);
 
+      const cards = await userModel.getCards(req.user.id);
+      const addresses = await userModel.getAddresses(req.user.id);
+
       let orders = await orderModel.getOrdersInfoByUserId(req.user.id);
       orders = normalizeArr(orders, "id");
 
@@ -65,6 +68,8 @@ module.exports = (connection) => {
       res.render("profile", {
         title: TITLES.PROFILE,
         userInfo,
+        cards,
+        addresses,
         boughtPartsAmount,
         totalSpent,
         garage,
@@ -159,22 +164,57 @@ module.exports = (connection) => {
     }
   };
 
+  controllerMethods.addAddressProfile = async (req, res) => {
+    try{
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash("profileError", errors.array()[0].msg);
+        return res.status(422).redirect("/profile");
+      }
+
+      const addressId = await userModel.getAddressId(req.user.id, req.body);
+
+      if (!addressId) {
+        await userModel.addAddress(req.user.id, req.body);
+      }
+
+      res.redirect('/profile');
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  controllerMethods.deleteAddress = async (req, res) => {
+    try {
+      const addressId = req.body.addressId;
+
+      await userModel.deleteAddress(addressId);
+      res.redirect("/profile#addresses");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   controllerMethods.addCard = async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         req.flash("cardError", errors.array()[0].msg);
-        if(req.body.addressId) return res.status(422).redirect(`/select-pay?addressId=${req.body.addressId}`);
-        if(req.body.officeId) return res
-          .status(422)
-          .redirect(`/select-pay?officeId=${req.body.officeId}`);
+        if (req.body.addressId)
+          return res
+            .status(422)
+            .redirect(`/select-pay?addressId=${req.body.addressId}`);
+        if (req.body.officeId)
+          return res
+            .status(422)
+            .redirect(`/select-pay?officeId=${req.body.officeId}`);
       }
 
       let cardId = await userModel.getCardId(req.user.id, req.body);
 
       if (!cardId) {
-        await userModel.addCard(req.user.id, req.body);
-        cardId = await userModel.getCardId(req.user.id, req.body);
+        const card = await userModel.addCard(req.user.id, req.body);
+        cardId = card.insertId;
       }
 
       if (req.body.addressId) {
@@ -186,6 +226,38 @@ module.exports = (connection) => {
           `/confirm-order?officeId=${req.body.officeId}&cardId=${cardId}`
         );
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  controllerMethods.addCardProfile = async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        req.flash("profileError", errors.array()[0].msg);
+        return res.status(422).redirect(`/profile`);
+      }
+
+      let cardId = await userModel.getCardId(req.user.id, req.body);
+
+      if (!cardId) {
+        const card = await userModel.addCard(req.user.id, req.body);
+        cardId = card.insertId;
+      }
+
+      res.redirect(`/profile`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  controllerMethods.deleteCard = async (req, res) => {
+    try {
+      const cardId = req.body.cardId;
+
+      await userModel.deleteCard(cardId);
+      res.redirect("/profile");
     } catch (err) {
       console.log(err);
     }

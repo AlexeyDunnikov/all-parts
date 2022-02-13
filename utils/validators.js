@@ -95,7 +95,7 @@ module.exports = (connection) => {
   validatorMethods.cardValidators = [
     body("cardNumber", "Длина номера катры должна быть 16")
       .isNumeric()
-      .isLength({ min: 12, max: 12 }),
+      .isLength({ min: 16, max: 16 }),
     body("cardDate", "Введите корректную дату карты").isLength({
       min: 5,
       max: 5,

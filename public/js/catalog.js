@@ -1,5 +1,5 @@
 import { isUserAuth } from "./helper.js";
-import {deleteFromBasket} from './helper.js';
+import { deleteFromBasket } from "./helper.js";
 
 function initialToBasketBtns() {
   const toBasketBtns = document.querySelectorAll(
@@ -51,18 +51,24 @@ async function delBasketHandler(evt) {
   const partId = target.dataset.partId;
 
   await deleteFromBasket(partId);
+  changeBasketAmount(false);
   target.classList.remove("active");
 
   initialToBasketBtns();
 }
 
-function increaseBasketAmount(){
-  const basketAmountEl = document.querySelector(".basket-num");
-  if(!basketAmountEl) return;
+function changeBasketAmount(isAdd){
+  const basketAmountEls = document.querySelectorAll(".basket-num");
+  if (!basketAmountEls) return;
 
-  basketAmountEl.textContent = +basketAmountEl.textContent + 1;
+  basketAmountEls.forEach(basketAmountEl => {
+    const amount = +basketAmountEl.dataset.value;
+    const curAmount = isAdd ? amount + 1 : amount - 1;
+
+    basketAmountEl.dataset.value = curAmount;
+    basketAmountEl.textContent = curAmount;
+  });
 }
-
 
 async function addToBasket(partId) {
   const isAuth = await isUserAuth();
@@ -71,7 +77,7 @@ async function addToBasket(partId) {
     return;
   }
 
-  increaseBasketAmount();
+  changeBasketAmount(true);
 
   await fetch("/add-to-basket", {
     method: "POST",
@@ -89,6 +95,5 @@ async function addToBasket(partId) {
 async function toSignin() {
   window.location.href = `/signin`;
 }
-
 
 initialToBasketBtns();
