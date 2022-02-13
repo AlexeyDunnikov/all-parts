@@ -12,7 +12,7 @@ module.exports = (connection) => {
 
   controllerMethods.render = async (req, res) => {
     const cars = await carsModel.getAllCars();
-    const allCategories = await catalogModel.getCategories();
+    const categories = await catalogModel.getCategories();
 
     const garage = [];
 
@@ -20,7 +20,7 @@ module.exports = (connection) => {
       title: TITLES.MAIN,
       isHome: true,
       cars,
-      allCategories,
+      categories,
       garage,
     };
 

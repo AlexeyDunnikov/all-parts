@@ -38,31 +38,8 @@ module.exports = (connection) => {
       orders = normalizeArr(orders, "id");
 
       const orderParts = await orderModel.getPartsInUserOrders(req.user.id);
-      let boughtPartsAmount = 0;
-      let totalSpent = 0;
-
-      orderParts.forEach((orderPart) => {
-        boughtPartsAmount += orderPart.amount;
-        orderPart.totalPrice = orderPart.amount * orderPart.price;
-        totalSpent += orderPart.totalPrice;
-
-        const orderId = orderPart.order_id;
-        if (!orders[orderId].parts) {
-          orders[orderId].parts = [];
-        }
-        if (!orders[orderId].total) {
-          orders[orderId].total = 0;
-        }
-        orders[orderId].parts.push(orderPart);
-        orders[orderId].total += orderPart.totalPrice;
-      });
-
-      const ordersArr = [];
-      for (const value of Object.values(orders)) {
-        ordersArr.push(value);
-      }
-
-      ordersArr.reverse();
+      
+      const {ordersArr, boughtPartsAmount, totalSpent} = joinPartsWithOrder(orders, orderParts);
 
       const garage = await carsModel.getCarsInfoFromGarageByUser(req.user.id);
       res.render("profile", {
@@ -80,6 +57,40 @@ module.exports = (connection) => {
       console.log(err);
     }
   };
+
+  function joinPartsWithOrder(orders, orderParts) {
+    let boughtPartsAmount = 0;
+    let totalSpent = 0;
+
+    orderParts.forEach((orderPart) => {
+      boughtPartsAmount += orderPart.amount;
+      orderPart.totalPrice = orderPart.amount * orderPart.price;
+      totalSpent += orderPart.totalPrice;
+
+      const orderId = orderPart.order_id;
+      if (!orders[orderId].parts) {
+        orders[orderId].parts = [];
+      }
+      if (!orders[orderId].total) {
+        orders[orderId].total = 0;
+      }
+      orders[orderId].parts.push(orderPart);
+      orders[orderId].total += orderPart.totalPrice;
+    });
+
+    const ordersArr = [];
+    for (const value of Object.values(orders)) {
+      ordersArr.push(value);
+    }
+
+    ordersArr.reverse();
+
+    return {
+      ordersArr,
+      boughtPartsAmount,
+      totalSpent,
+    };
+  }
 
   controllerMethods.signout = async (req, res) => {
     req.session.destroy(() => {

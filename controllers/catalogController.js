@@ -117,7 +117,6 @@ module.exports = (connection) => {
   controllerMethods.renderPart = async (req, res) => {
     const partId = req.params.id;
 
-    
     let part; 
     if (req.user) {
       part = await catalogModel.getPartInfoByIdAndUser(
