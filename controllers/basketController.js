@@ -86,6 +86,7 @@ module.exports = (connection) => {
         title: TITLES.DELIVERY_TYPE,
         addresses,
         offices,
+        addressError: req.flash("addressError"),
       });
     } catch (err) {
       console.log(err);
@@ -101,6 +102,7 @@ module.exports = (connection) => {
       const options = {
         title: TITLES.SELECT_PAY,
         cards,
+        cardError: req.flash("cardError"),
       };
 
       if (req.query.addressId) {

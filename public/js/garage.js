@@ -130,5 +130,19 @@ async function getModificationInfo(modificationId) {
   return await modificationInfo.json();
 }
 
+function initialProfileAddBtn(){
+  const addBtn = document.querySelector(".garage__item-add__btn");
+  if(!addBtn) return;
+
+  addBtn.addEventListener('click', profileAddHandler);
+}
+
+function profileAddHandler(evt){
+  const selectCarEl = document.querySelector(".select-car--profile");
+
+  selectCarEl.classList.add('active');
+}
+
 renderGarage();
 initialDelBtns();
+initialProfileAddBtn();

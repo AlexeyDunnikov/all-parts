@@ -6,6 +6,11 @@
     <p class="delivery__text">
       Выберите способ доставки
     </p>
+    {{#if addressError}}
+      <div class="castom-error">
+        {{addressError}}
+      </div>
+    {{/if}}
     <div class="delivery__tabs-wrapper tabs__wrapper">
       <div class="delivery__tabs tabs">
         <a class="delivery__tab tab active" href="#delivery-pickup">
@@ -83,7 +88,7 @@
               <div class="delivery-courier__dropdown-list js__dropdown-list">
                 <form
                   class="delivery-courier__form"
-                  action="add-address"
+                  action="/add-address"
                   method="POST"
                 >
                   <div class="delivery-courier__form-inner">

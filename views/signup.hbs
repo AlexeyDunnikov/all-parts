@@ -4,7 +4,7 @@
       <div class="auth__form-body">
         <h1 class="auth__title page-title">Регистрация</h1>
         {{#if signupError}}
-          <p class="alert">{{signupError}}</p>
+          <div class="castom-error">{{signupError}}</div>
         {{/if}}
         <form class="auth__form" action="/signup" method="POST">
           <input
@@ -36,7 +36,7 @@
             required
           />
           <button class="auth__btn btn" type="submit">
-            Зарегестрироваться
+            Зарегистрироваться
           </button>
         </form>
 

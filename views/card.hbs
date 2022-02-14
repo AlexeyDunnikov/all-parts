@@ -1,0 +1,62 @@
+<section class="card page-section">
+  <div class="container">
+    <h1 class="card__title page-title">
+      Запчасть:
+      {{part.brand}}
+      {{part.articul}}
+    </h1>
+    <div class="card__inner">
+      <div class="card__img-box">
+        {{#if part.img}}
+          <img
+            class="card__img"
+            src="/images/parts/{{part.img}}"
+            alt="{{part.brand}}{{part.articul}}"
+          />
+        {{else}}
+          <img
+            class="card__img"
+            src="/images/no-photo.png"
+            alt="{{part.brand}}{{part.articul}}"
+          />
+        {{/if}}
+      </div>
+      <div class="card__content">
+        <div class="card__content__text-box">
+          <p class="card__text">
+            <strong>Бренд:</strong>
+            {{part.brand}}
+          </p>
+          <p class="card__text">
+            <strong>Артикул:</strong>
+            {{part.articul}}
+          </p>
+          <p class="card__text">
+            <strong>Категория:</strong>
+            {{part.subcategory}}
+          </p>
+          <p class="card__text">
+            <strong>Цена:</strong>
+            <span class="price">{{part.price}}</span>
+          </p>
+          <p class="card__text">
+            <strong>Наличие:</strong>
+            {{part.amount}}
+            шт.
+          </p>
+        </div>
+        {{#if part.user_id}}
+          <button
+            class="catalog__body-item__basket-btn btn active"
+            data-part-id="2"
+          ></button>
+        {{else}}
+          <button
+            class="catalog__body-item__basket-btn btn"
+            data-part-id="2"
+          ></button>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</section>

@@ -50,9 +50,11 @@
             <strong>Способ оплаты: </strong>Карта
           </p>
           <p class="confirm-order__info-body__text">
-            <strong>Данные карты: </strong>Номер:
-            {{card.num}}, срок:
-            {{card.month}}/{{card.year}}
+            <strong>Номер карты: </strong>
+            {{card.num}}
+          </p>
+          <p class="confirm-order__info-body__text">
+            <strong>Срок: </strong>{{card.month}}/{{card.year}}
           </p>
         {{else}}
           <p class="confirm-order__info-body__text">
@@ -148,6 +150,13 @@
       {{else}}
         <input type="hidden" name="deliveryType" value="самовывоз" />
         <input type="hidden" name="deliveryAddressId" value="{{office.id}}" />
+      {{/if}}
+
+      {{#if card}}
+        <input type="hidden" name="paymentType" value="карта" />
+        <input type="hidden" name="cardId" value="{{card.id}}" />
+      {{else}}
+        <input type="hidden" name="paymentType" value="наличные" />
       {{/if}}
 
       <input

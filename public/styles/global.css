@@ -32,6 +32,12 @@ body {
   padding: 0 15px;
 }
 
+button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 svg path {
   transition: ease 0.3s;
 }

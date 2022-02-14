@@ -2,6 +2,40 @@ const normalizeArr = require("../utils/normalizeArr");
 
 module.exports = (connection) => {
   const modelMethods = {};
+
+  modelMethods.getPartInfoById = (id) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT parts.id, parts.img, parts.price, parts.articul, parts.amount, brand.name AS brand, subcat.name AS subcategory FROM parts 
+        INNER JOIN parts_brands AS brand ON parts.id_brand = brand.id
+        INNER JOIN parts_subcategories AS subcat ON subcat.id = parts.id_subcategory
+        WHERE parts.id = ${id}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result[0]);
+        }
+      );
+    });
+  };
+
+  modelMethods.getPartInfoByIdAndUser = (id, userId) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT parts.id, parts.img, parts.price, parts.articul, parts.amount, brand.name AS brand, subcat.name AS subcategory, basket.id_user_basket AS user_id FROM parts 
+        LEFT JOIN (
+          SELECT * FROM basket WHERE basket.id_user_basket = ${userId}
+        ) AS basket ON basket.id_part_basket = parts.id
+        INNER JOIN parts_brands AS brand ON parts.id_brand = brand.id
+        INNER JOIN parts_subcategories AS subcat ON subcat.id = parts.id_subcategory
+        WHERE parts.id = ${id}`,
+        (err, result, fields) => {
+          if (err) reject(err);
+          resolve(result[0]);
+        }
+      );
+    });
+  };
+
   modelMethods.getCategories = () => {
     return new Promise((resolve, reject) => {
       connection.query(
@@ -82,10 +116,14 @@ module.exports = (connection) => {
     let categories = await this.getCategories();
     const subcategories = await this.getSubcategories();
 
+    if (categories.length > 5) {
+      categories = categories.slice(0, 5);
+    }
     categories = normalizeArr(categories, "id");
 
     subcategories.forEach((subcategory) => {
       const catId = subcategory.id_category;
+      if (!categories[catId]) return;
       if (!categories[catId].subcategories) {
         categories[catId].subcategories = [];
       }
@@ -150,7 +188,11 @@ module.exports = (connection) => {
     });
   };
 
-  modelMethods.getPartsByUserAndModIdAndSubcatId = (userId, modId, subcatId) => {
+  modelMethods.getPartsByUserAndModIdAndSubcatId = (
+    userId,
+    modId,
+    subcatId
+  ) => {
     return new Promise((resolve, reject) => {
       connection.query(
         `

@@ -1,0 +1,682 @@
+<section class="profile page-section">
+  <div class="container">
+    {{#if profileError}}
+      <div class="castom-error">
+        {{profileError}}
+      </div>
+    {{/if}}
+    <div class="profile__name">
+      {{userInfo.name}}
+    </div>
+    <ul class="profile__stats-list">
+      <li class="profile__stats-item">
+        <img
+          class="profile__stats-item__img"
+          src="/images/icons/parts.svg"
+          alt="image"
+        />
+        <p class="profile__stats-item__value">
+          {{boughtPartsAmount}}
+        </p>
+        <div class="profile__stats-item__text">
+          Куплено запчастей
+        </div>
+      </li>
+      <li class="profile__stats-item">
+        <img
+          class="profile__stats-item__img"
+          src="/images/icons/orders.svg"
+          alt="image"
+        />
+        <p class="profile__stats-item__value">
+          {{ordersArr.length}}
+        </p>
+        <div class="profile__stats-item__text">
+          Оформлено заказов
+        </div>
+      </li>
+      <li class="profile__stats-item">
+        <img
+          class="profile__stats-item__img"
+          src="/images/icons/money.svg"
+          alt="image"
+        />
+        <p class="profile__stats-item__value price">
+          {{totalSpent}}
+        </p>
+        <div class="profile__stats-item__text">
+          Потрачено
+        </div>
+      </li>
+      <li class="profile__stats-item">
+        <img
+          class="profile__stats-item__img"
+          src="/images/icons/car.svg"
+          alt="image"
+        />
+        <p class="profile__stats-item__value">
+          {{garage.length}}
+        </p>
+        <div class="profile__stats-item__text">
+          Авто в гараже
+        </div>
+      </li>
+    </ul>
+
+    <div class="profile__tabs-wrapper tabs__wrapper">
+      <ul class="profile__tabs-list tabs">
+        <li class="profile__tabs-item">
+          <a class="profile__tab tab active" href="#info">
+            Информация
+          </a>
+        </li>
+        <li class="profile__tabs-item">
+          <a class="profile__tab tab" href="#orders">
+            Заказы
+          </a>
+        </li>
+        <li class="profile__tabs-item">
+          <a class="profile__tab tab" href="#garage">
+            Гараж
+          </a>
+        </li>
+        <li class="profile__tabs-item">
+          <a class="profile__tab tab" href="#cards">
+            Мои карты
+          </a>
+        </li>
+        <li class="profile__tabs-item">
+          <a class="profile__tab tab" href="#addresses">
+            Мои адреса
+          </a>
+        </li>
+
+      </ul>
+      <div class="profile__tabs-container tabs-container">
+        <div class="profile__tabs-content tabs-content active" id="info">
+          <div class="profile__tabs-content__forms">
+
+            <form
+              class="profile__tabs-content__form change-info__form"
+              action="/change-name"
+              method="POST"
+            >
+              <label
+                class="profile__tabs-content__form-label change-info__label"
+                for="name"
+              >
+                Имя:
+              </label>
+              <input
+                class="profile__tabs-content__form-input change-info__input"
+                type="text"
+                name="name"
+                value="{{userInfo.name}}"
+                data-old-value="{{userInfo.name}}"
+                id="name"
+                disabled
+              />
+              <div
+                class="profile__tabs-content__form-btns change-info__form-btns"
+              >
+                <button
+                  class="profile__tabs-content__form__change-btn change-info__change-btn active"
+                >
+                  <img
+                    class="profile__tabs-content__form__change-btn__img"
+                    src="/images/icons/pencil.svg"
+                    width="20"
+                    height="20"
+                    alt="change"
+                  />
+                </button>
+
+                <button
+                  type="submit"
+                  class="profile__tabs-content__form__apply-btn change-info__apply-btn"
+                >
+                  <img
+                    class="profile__tabs-content__form__apply-btn__img"
+                    src="/images/icons/check-mark.svg"
+                    width="20"
+                    height="20"
+                    alt="apply"
+                  />
+                </button>
+
+                <button
+                  class="profile__tabs-content__form__cancel-btn change-info__cancel-btn"
+                >
+                  <img
+                    class="profile__tabs-content__form__cancel-btn__img"
+                    src="/images/icons/cross-edit.svg"
+                    width="20"
+                    height="20"
+                    alt="cancel"
+                  />
+                </button>
+              </div>
+
+            </form>
+            <form
+              class="profile__tabs-content__form change-info__form"
+              action="/change-email"
+              method="POST"
+            >
+              <label
+                class="profile__tabs-content__form-label change-info__label"
+                for="email"
+              >
+                E-mail:
+              </label>
+              <input
+                class="profile__tabs-content__form-input change-info__input"
+                type="text"
+                name="email"
+                value="{{userInfo.email}}"
+                data-old-value="{{userInfo.email}}"
+                id="email"
+                disabled
+              />
+              <div
+                class="profile__tabs-content__form-btns change-info__form-btns"
+              >
+                <button
+                  class="profile__tabs-content__form__change-btn change-info__change-btn active"
+                >
+                  <img
+                    class="profile__tabs-content__form__change-btn__img"
+                    src="/images/icons/pencil.svg"
+                    width="20"
+                    height="20"
+                    alt="change"
+                  />
+                </button>
+
+                <button
+                  type="submit"
+                  class="profile__tabs-content__form__apply-btn change-info__apply-btn"
+                >
+                  <img
+                    class="profile__tabs-content__form__apply-btn__img"
+                    src="/images/icons/check-mark.svg"
+                    width="20"
+                    height="20"
+                    alt="apply"
+                  />
+                </button>
+
+                <button
+                  class="profile__tabs-content__form__cancel-btn change-info__cancel-btn"
+                >
+                  <img
+                    class="profile__tabs-content__form__cancel-btn__img"
+                    src="/images/icons/cross-edit.svg"
+                    width="20"
+                    height="20"
+                    alt="cancel"
+                  />
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+        <div class="profile__tabs-content tabs-content" id="orders">
+          {{#if ordersArr.length}}
+            <ul class="profile__orders-list">
+              {{#each ordersArr}}
+                <li class="profile__orders-item">
+                  <div
+                    class="profile__orders-item__header profile__orders-item__section"
+                  >
+                    <p class="profile__orders-item__header-num">
+                      Номер заказа:
+                      {{id}}
+                    </p>
+                    <p class="profile__orders-item__header-date">
+                      Время:
+                      {{date}}
+                    </p>
+                  </div>
+                  <div
+                    class="profile__orders-item__parts profile__orders-item__section"
+                  >
+                    <p class="profile__orders-item__section-title">
+                      Запчасти
+                    </p>
+                    <ul class="profile__orders-item__parts-list">
+                      {{#each parts}}
+                        <li class="profile__orders-item__parts-item">
+                          <a
+                            class="profile__orders-item__parts-item__link"
+                            href="/parts/{{id}}"
+                          >
+                            {{brand}}
+                            {{articul}}
+                          </a>
+                          <span
+                            class="profile__orders-item__parts-item__subcat"
+                          >
+                            {{subcat}}
+                          </span>
+                          <span
+                            class="profile__orders-item__parts-item__price-one price"
+                          >
+                            {{price}}
+                          </span>
+                          X
+                          <span
+                            class="profile__orders-item__parts-item__amount"
+                          >
+                            {{amount}}
+                          </span>
+                          =
+                          <span
+                            class="profile__orders-item__parts-item__price-total price"
+                          >
+                            {{totalPrice}}
+                          </span>
+                        </li>
+                      {{/each}}
+                    </ul>
+                  </div>
+
+                  <div
+                    class="profile__orders-item__delivery profile__orders-item__section"
+                  >
+                    <p class="profile__orders-item__section-title">
+                      Доставка
+                    </p>
+                    <p class="profile__orders-item__delivery-type">
+                      Способ доставки:
+                      {{delivery_type}}
+                    </p>
+                    {{#if user_town}}
+                      <p class="profile__orders-item__delivery-address">
+                        Адрес доставки:
+                        {{user_town}}, ул.{{user_street}}
+                        {{user_house}}{{#if user_flat}}/{{user_flat}}{{/if}}
+                      </p>
+                    {{else}}
+                      <p class="profile__orders-item__delivery-address">
+                        Адрес пункта выдачи:
+                        {{office_town}}, ул.{{office_street}}
+                        {{office_house}}{{#if office_flat}}/{{office_flat}}{{/if}}
+                      </p>
+                      <p class="profile__orders-item__delivery-work">
+                        Время работы:
+                        {{office_from_time}}
+                        -
+                        {{office_to_time}}
+                        ({{office_from_day}}
+                        -
+                        {{office_to_day}})
+                      </p>
+                    {{/if}}
+                  </div>
+
+                  <div
+                    class="profile__orders-item__payment profile__orders-item__section"
+                  >
+                    <p class="profile__orders-item__section-title">
+                      Оплата
+                    </p>
+                    <p class="profile__orders-item__payment-type">
+                      Способ оплаты:
+                      {{payment_type}}
+                    </p>
+                    {{#if card_num}}
+                      <p class="profile__orders-item__payment-card-num">
+                        Номер:
+                        {{card_num}},
+                      </p>
+                      <p class="profile__orders-item__payment-card-date">
+                        Срок:
+                        {{card_month}}/{{card_year}}
+                    {{/if}}
+                  </div>
+
+                  <div
+                    class="profile__orders-item__addition profile__orders-item__section"
+                  >
+                    <p class="profile__orders-item__section-title">
+                      Дополнительно
+                    </p>
+                    <p class="profile__orders-item__addition-note">
+                        Примечания к заказу: {{#if notes}}{{notes}}{{else}}нет{{/if}}
+                    </p>
+                  </div>
+
+                  <div
+                    class="profile__orders-item__total profile__orders-item__section"
+                  >
+                    <p class="profile__orders-item__total-wrapper">
+                       <span class="profile__orders-item__total-text">
+                    Итого:
+
+                    </span>
+                    <span class="profile__orders-item__total-value price">
+                        {{total}}
+                    </span> 
+                    </p>
+                    
+                  </div>
+                </li>
+              {{/each}}
+            </ul>
+          {{else}}
+            <h3 class="profile__tabs-content__title">
+              Список заказов пуст
+            </h3>
+          {{/if}}
+
+        </div>
+        <div class="profile__tabs-content tabs-content" id="garage">
+          <div class="select-car select-car--profile">
+
+            <div
+              class="select-car__inner"
+              style="background-image: url('./images/select-car-bg.png');"
+            >
+              <h3 class="select-car__title">
+                Выберите свой автомобиль
+              </h3>
+              <p class="select-car__text">
+                Это поможет ускорить подбор необходимых вам запчастей
+              </p>
+              <form class="select-car__form" action="">
+                <select class="select-car__input" name="car-year" id="car-year">
+                  <option disabled selected>Год выпуска</option>
+                </select>
+                <select class="select-car__input" name="car-mark" id="car-mark">
+                  <option disabled selected>Марка</option>
+                </select>
+                <select
+                  class="select-car__input"
+                  name="car-model"
+                  id="car-model"
+                >
+                  <option disabled selected>Модель</option>
+                </select>
+                <select
+                  class="select-car__input"
+                  name="car-generation"
+                  id="car-generation"
+                >
+                  <option disabled selected>Поколение</option>
+                </select>
+                <select
+                  class="select-car__input"
+                  name="car-modification"
+                  id="car-modification"
+                >
+                  <option disabled selected>Модификация</option>
+                </select>
+              </form>
+            </div>
+
+          </div>
+          <ul class="garage__list">
+            {{#if garage}}
+              {{#each garage}}
+                <li class="garage__item">
+                  <a href="/categories?mod_id={{id}}" class="garage__item-link">
+                    <img
+                      class="garage__item-img"
+                      src="/images/cars-images/{{img}}"
+                      alt="car"
+                    />
+                    <div class="garage__item-content">
+                      <p class="garage__item-name">
+                        {{mark}}
+                        {{model}}
+                        {{generation}}
+                        {{engine_value}}
+                      </p>
+                      <p class="garage__item-description">
+                        Двигатель:
+                        {{engine_name}},
+                        {{engine_horses}}
+                        л.с.,
+                        {{engine_power}}
+                        к.в.,
+                        {{year_from}}
+                        -
+                        {{year_to}}
+                      </p>
+                    </div>
+                  </a>
+                  <button class="garage__item-delete" data-mod-id="{{id}}">
+                    <svg
+                      class="garage__item-delete__img"
+                      width="26"
+                      height="26"
+                      viewBox="0 0 26 26"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.9374 13L24.8957 4.06248C25.288 3.67018 25.5084 3.13811 25.5084 2.58331C25.5084 2.02852 25.288 1.49645 24.8957 1.10415C24.5034 0.711847 23.9713 0.491455 23.4165 0.491455C22.8617 0.491455 22.3297 0.711847 21.9374 1.10415L12.9999 10.0625L4.06237 1.10415C3.67007 0.711847 3.138 0.491455 2.58321 0.491455C2.02841 0.491455 1.49634 0.711847 1.10404 1.10415C0.71174 1.49645 0.491348 2.02852 0.491348 2.58331C0.491348 3.13811 0.71174 3.67018 1.10404 4.06248L10.0624 13L1.10404 21.9375C0.908772 22.1311 0.753784 22.3616 0.648016 22.6154C0.542248 22.8693 0.487793 23.1416 0.487793 23.4166C0.487793 23.6917 0.542248 23.964 0.648016 24.2178C0.753784 24.4717 0.908772 24.7021 1.10404 24.8958C1.29771 25.0911 1.52813 25.2461 1.782 25.3518C2.03588 25.4576 2.30818 25.5121 2.58321 25.5121C2.85823 25.5121 3.13053 25.4576 3.38441 25.3518C3.63828 25.2461 3.8687 25.0911 4.06237 24.8958L12.9999 15.9375L21.9374 24.8958C22.1311 25.0911 22.3615 25.2461 22.6153 25.3518C22.8692 25.4576 23.1415 25.5121 23.4165 25.5121C23.6916 25.5121 23.9639 25.4576 24.2177 25.3518C24.4716 25.2461 24.702 25.0911 24.8957 24.8958C25.091 24.7021 25.246 24.4717 25.3517 24.2178C25.4575 23.964 25.512 23.6917 25.512 23.4166C25.512 23.1416 25.4575 22.8693 25.3517 22.6154C25.246 22.3616 25.091 22.1311 24.8957 21.9375L15.9374 13Z"
+                        fill="#111"
+                      ></path>
+                    </svg>
+                  </button>
+                </li>
+              {{/each}}
+            {{/if}}
+            <li class="garage__item-add">
+              <button class="garage__item-add__btn">
+                <img
+                  class="garage__item-add__btn-img garage__item-add__btn-img--plus"
+                  src="/images/icons/plus.svg"
+                  alt=""
+                />
+                <span class="garage__item-add__btn-text">
+                  Добавить авто
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="profile__tabs-content tabs-content" id="cards">
+          
+          <form
+                  class="select-card__form select-card__form--profile"
+                  action="/add-card-profile"
+                  method="POST"
+                >
+                     <div class="select-card__form-inner">
+        
+                    <input
+                      class="select-card__form-input"
+                      type="text"
+                      name="cardNumber"
+                      placeholder="Номер карты"
+                      required
+                    />
+                    <input
+                      class="select-card__form-input"
+                      type="text"
+                      name="cardDate"
+                      placeholder="мм/гг"
+                      required
+                    />
+                    <input
+                      class="select-card__form-input"
+                      type="text"
+                      name="cvv"
+                      placeholder="CVV"
+                      required
+                    />
+                  </div>
+
+                  <button
+                    class="select-card__form-btn btn"
+                    type="submit"
+                  >
+                    Добавить
+                  </button>
+
+                </form>
+          <ul class="profile__cards-list">
+              {{#each cards}}
+                  <li class="profile__cards-item">
+                    
+                    <svg class="profile__card-img" width="48px" height="48px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="48" height="48" fill="white" fill-opacity="0.01"/>
+<path d="M4 10C4 8.89543 4.89543 8 6 8H42C43.1046 8 44 8.89543 44 10V38C44 39.1046 43.1046 40 42 40H6C4.89543 40 4 39.1046 4 38V10Z" fill="#2F88FF" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<path d="M4 16H44" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="round"/>
+<path d="M27 32H36" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44 10V26" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4 10V26" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+                    <div class="profile__card-text">
+                      <p class="profile__card-num">
+                      {{num}}
+                    </p>
+                    <p class="profile__card-date">
+                      {{month}}/{{year}}
+                    </p>
+                    </div>
+                      <button class="profile__card__delete-form__btn" data-card-id="{{id}}">
+                        <svg class="profile__card__delete-form__btn-img" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.9374 13L24.8957 4.06248C25.288 3.67018 25.5084 3.13811 25.5084 2.58331C25.5084 2.02852 25.288 1.49645 24.8957 1.10415C24.5034 0.711847 23.9713 0.491455 23.4165 0.491455C22.8617 0.491455 22.3297 0.711847 21.9374 1.10415L12.9999 10.0625L4.06237 1.10415C3.67007 0.711847 3.138 0.491455 2.58321 0.491455C2.02841 0.491455 1.49634 0.711847 1.10404 1.10415C0.71174 1.49645 0.491348 2.02852 0.491348 2.58331C0.491348 3.13811 0.71174 3.67018 1.10404 4.06248L10.0624 13L1.10404 21.9375C0.908772 22.1311 0.753784 22.3616 0.648016 22.6154C0.542248 22.8693 0.487793 23.1416 0.487793 23.4166C0.487793 23.6917 0.542248 23.964 0.648016 24.2178C0.753784 24.4717 0.908772 24.7021 1.10404 24.8958C1.29771 25.0911 1.52813 25.2461 1.782 25.3518C2.03588 25.4576 2.30818 25.5121 2.58321 25.5121C2.85823 25.5121 3.13053 25.4576 3.38441 25.3518C3.63828 25.2461 3.8687 25.0911 4.06237 24.8958L12.9999 15.9375L21.9374 24.8958C22.1311 25.0911 22.3615 25.2461 22.6153 25.3518C22.8692 25.4576 23.1415 25.5121 23.4165 25.5121C23.6916 25.5121 23.9639 25.4576 24.2177 25.3518C24.4716 25.2461 24.702 25.0911 24.8957 24.8958C25.091 24.7021 25.246 24.4717 25.3517 24.2178C25.4575 23.964 25.512 23.6917 25.512 23.4166C25.512 23.1416 25.4575 22.8693 25.3517 22.6154C25.246 22.3616 25.091 22.1311 24.8957 21.9375L15.9374 13Z" fill="#111"/>
+</svg>
+
+                      </button>
+                  </li>
+              {{/each}}
+              <li class="profile__cards-item--add">
+                <button class="profile__card__add-btn">
+                <img class="profile__card__add-btn__img profile__card__add-btn__img--plus" src="/images/icons/plus.svg" alt="">
+                <span class="profile__card__add-btn__text">
+                  Добавить карту
+                </span>
+              </button>
+              </li>
+          </ul>
+        
+        </div>
+        <div class="profile__tabs-content tabs-content" id="addresses">
+          <form
+              class="delivery-courier__form delivery-courier__form--profile"
+              action="/add-address-profile"
+              method="POST"
+            >
+              <div class="delivery-courier__form-inner">
+                <input
+                  class="delivery-courier__form-input"
+                  type="text"
+                  name="town"
+                  placeholder="Город"
+                  required
+                />
+                <input
+                  class="delivery-courier__form-input"
+                  type="text"
+                  name="street"
+                  placeholder="Улица"
+                  required
+                />
+                <input
+                  class="delivery-courier__form-input"
+                  type="text"
+                  name="house"
+                  placeholder="Дом"
+                  required
+                />
+                <input
+                  class="delivery-courier__form-input"
+                  type="text"
+                  name="flat"
+                  placeholder="Квартира"
+                />
+              </div>
+
+              <button
+                class="delivery-courier__form-btn btn"
+                type="submit"
+              >
+                Добавить
+              </button>
+            </form>
+
+          <ul class="profile__addresses-list">
+            {{#each addresses}}
+              <li class="profile__addresses-item">
+                
+                <svg class="profile__address-img" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                <g>
+                  <g>
+                    <path d="M46.916,338.768c-5.632,0-10.199,4.566-10.199,10.199v3.45c0,5.633,4.567,10.199,10.199,10.199
+                      c5.632,0,10.199-4.566,10.199-10.199v-3.45C57.116,343.334,52.548,338.768,46.916,338.768z"/>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <path d="M46.916,371.548c-5.632,0-10.199,4.566-10.199,10.199v68.15c0,5.633,4.567,10.199,10.199,10.199
+                      c5.632,0,10.199-4.566,10.199-10.199v-68.15C57.116,376.116,52.548,371.548,46.916,371.548z"/>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <path d="M430.787,246.759v-82.015c0-1.704-0.424-3.309-1.164-4.721c-0.003-0.005,0-0.009-0.003-0.015l-0.052-0.1
+                      c-0.007-0.013-0.013-0.025-0.02-0.039L358.096,23.588c-1.761-3.359-5.24-5.463-9.032-5.463H84.069
+                      c-3.743,0-7.186,2.051-8.969,5.342L1.247,159.856C0.453,161.308,0,162.973,0,164.744v318.931c0,5.633,4.566,10.199,10.199,10.199
+                      h410.388c0.906,0,2.14-0.26,3.166-0.527c1.529-0.398,3.01-0.982,4.334-1.845c0.572-0.372,1.116-0.8,1.459-1.24
+                      c0.831-1.065,20.593-26.445,40.69-57.738C497.949,389.368,512,357.156,512,336.779C512,290.014,476.343,251.421,430.787,246.759z
+                      M90.145,38.523h252.75l60.83,116.021H27.321L90.145,38.523z M261.476,473.475h-92.165V329.718h92.165V473.475z M281.874,473.475
+                      V319.519c0-5.633-4.567-10.199-10.199-10.199H159.112c-5.632,0-10.199,4.566-10.199,10.199v153.956H20.398V174.943h389.99v72.027
+                      c-44.672,5.497-79.374,43.675-79.374,89.809c0,20.377,14.051,52.589,41.764,95.743c10.295,16.031,20.495,30.5,28.114,40.953
+                      H281.874z M421.507,467.132c-25.098-33.752-70.095-100.454-70.095-130.353c0-38.651,31.444-70.095,70.095-70.095
+                      s70.095,31.445,70.095,70.095C491.602,366.679,446.606,433.38,421.507,467.132z"/>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <path d="M421.507,297.139c-21.858,0-39.64,17.783-39.64,39.64s17.783,39.64,39.64,39.64c21.857,0,39.64-17.782,39.64-39.64
+                      S443.364,297.139,421.507,297.139z M421.507,356.021c-10.61,0-19.242-8.632-19.242-19.242s8.632-19.242,19.242-19.242
+                      c10.61,0,19.242,8.632,19.242,19.242S432.118,356.021,421.507,356.021z"/>
+                  </g>
+                </g>
+
+                </svg>
+
+                {{#if flat}}
+                  <div class="profile__address-text">
+                    <p>{{town}}, ул.{{street}}, {{house}}/{{flat}}</p>
+                  </div>
+                {{else}}
+                  <div class="profile__address-text">
+                    <p>{{town}}, ул.{{street}}, {{house}}</p>
+                  </div>
+                {{/if}}
+
+                      <button class="profile__address__delete-form__btn" data-address-id="{{id}}">
+                        <svg class="profile__address__delete-form__btn-img" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.9374 13L24.8957 4.06248C25.288 3.67018 25.5084 3.13811 25.5084 2.58331C25.5084 2.02852 25.288 1.49645 24.8957 1.10415C24.5034 0.711847 23.9713 0.491455 23.4165 0.491455C22.8617 0.491455 22.3297 0.711847 21.9374 1.10415L12.9999 10.0625L4.06237 1.10415C3.67007 0.711847 3.138 0.491455 2.58321 0.491455C2.02841 0.491455 1.49634 0.711847 1.10404 1.10415C0.71174 1.49645 0.491348 2.02852 0.491348 2.58331C0.491348 3.13811 0.71174 3.67018 1.10404 4.06248L10.0624 13L1.10404 21.9375C0.908772 22.1311 0.753784 22.3616 0.648016 22.6154C0.542248 22.8693 0.487793 23.1416 0.487793 23.4166C0.487793 23.6917 0.542248 23.964 0.648016 24.2178C0.753784 24.4717 0.908772 24.7021 1.10404 24.8958C1.29771 25.0911 1.52813 25.2461 1.782 25.3518C2.03588 25.4576 2.30818 25.5121 2.58321 25.5121C2.85823 25.5121 3.13053 25.4576 3.38441 25.3518C3.63828 25.2461 3.8687 25.0911 4.06237 24.8958L12.9999 15.9375L21.9374 24.8958C22.1311 25.0911 22.3615 25.2461 22.6153 25.3518C22.8692 25.4576 23.1415 25.5121 23.4165 25.5121C23.6916 25.5121 23.9639 25.4576 24.2177 25.3518C24.4716 25.2461 24.702 25.0911 24.8957 24.8958C25.091 24.7021 25.246 24.4717 25.3517 24.2178C25.4575 23.964 25.512 23.6917 25.512 23.4166C25.512 23.1416 25.4575 22.8693 25.3517 22.6154C25.246 22.3616 25.091 22.1311 24.8957 21.9375L15.9374 13Z" fill="#111"/>
+</svg>
+
+                      </button>
+                    
+              </li>
+            {{/each}}
+            <li class="profile__address-item--add">
+                <button class="profile__address__add-btn">
+                <img class="profile__address__add-btn__img profile__address__add-btn__img--plus" src="/images/icons/plus.svg" alt="">
+                <span class="profile__address__add-btn__text">
+                  Добавить адрес
+                </span>
+              </button>
+              </li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

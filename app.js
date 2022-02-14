@@ -62,6 +62,10 @@ app.use(varMiddleware(connection).basketAmount);
 app.use(varMiddleware(connection).categoriesList);
 
 //Routes
+require("./routes/deliveryRoute")(app, connection);
+require("./routes/paymentRoute")(app, connection);
+require("./routes/aboutRoute")(app, connection);
+require("./routes/guaranteeRoute")(app, connection);
 require("./routes/homeRoute")(app, connection);
 require("./routes/carRoute")(app, connection);
 require("./routes/userRoute")(app, connection);

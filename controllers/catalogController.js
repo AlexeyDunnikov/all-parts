@@ -25,7 +25,6 @@ module.exports = (connection) => {
   };
 
   controllerMethods.renderSubcategories = async (req, res) => {
-
     const subcategories = await catalogModel.getSubcategoriesByCategoryId(
       req.params.id
     );
@@ -113,6 +112,28 @@ module.exports = (connection) => {
     }
 
     res.render("catalog", options);
+  };
+
+  controllerMethods.renderPart = async (req, res) => {
+    const partId = req.params.id;
+
+    let part; 
+    if (req.user) {
+      part = await catalogModel.getPartInfoByIdAndUser(
+        partId,
+        req.user.id
+      );
+    } else {
+      part = await catalogModel.getPartInfoById(partId);
+    }
+
+    const options = {
+      title: `${part.brand}-${part.articul}`,
+      part,
+      isCatalog: true,
+    };
+
+    res.render("card", options);
   };
 
   return controllerMethods;
